@@ -13,7 +13,8 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 
 If the client does not find any connections automatically, you can add one of the following:
 
--	node-1.hddcoin.org Port 28444
--	node-2.hddcoin.org Port 28444
--	node-3.hddcoin.org Port 28444
--	node-4.hddcoin.org Port 28444
+- dns-introducer.hddcoin.org port 28444 (recommended)
+-	node-1.hddcoin.org Port 28444 (fallback)
+-	node-2.hddcoin.org Port 28444 (fallback)
+-	node-3.hddcoin.org Port 28444 (fallback)
+-	node-4.hddcoin.org Port 28444 (fallback)
