@@ -18,11 +18,11 @@ Easily nstall using the binaries available in our [Releases page](https://github
 
 When installing for the first time on Linux, pull from the repository using:
 
-- git clone https://github.com/Chia-Network/chia-blockchain.git
+- git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
 
 When upgrading, pull all latest changes to the repository since your last install using:
 
-- git clone https://github.com/Chia-Network/chia-blockchain.git -b main
+- git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git -b main
 
 
 If the client does not find any connections automatically, you can add one of the following:
