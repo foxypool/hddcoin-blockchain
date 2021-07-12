@@ -14,13 +14,15 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 
 INSTALL INSTRUCTIONS:
 
-Easily nstall using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases) or build from Source.
+Easily install using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from Source.
+
 
 When installing for the first time on Linux, pull from the repository using:
 
 - git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
 
-When upgrading, pull all latest changes to the repository since your last install using:
+
+When updating/upgrading, pull all latest changes to the repository since your last install using:
 
 - git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git -b main
 
@@ -31,4 +33,3 @@ If the client does not find any connections automatically, you can add one of th
 -	node-1.hddcoin.org Port 28444 (fallback)
 -	node-2.hddcoin.org Port 28444 (fallback)
 -	node-3.hddcoin.org Port 28444 (fallback)
--	node-4.hddcoin.org Port 28444 (fallback)
