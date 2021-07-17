@@ -17,7 +17,7 @@ INSTALL INSTRUCTIONS:
 
 ***********************************************
 
-If you were installing for the very first time, please do the following:
+**If you were installing for the very first time, please do the following:**
 
 Install using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases).
 
@@ -37,8 +37,8 @@ If the client does not find any connections automatically, you can add one of th
 
 ***********************************************
 
-If you were on the old version, please do the following to get onto the new version:
-
+**If you were on the old version, please do the following to get onto the new version:
+**
 -------------
 
 
