@@ -12,19 +12,23 @@ HDDcoin is not affiliated with Chia Network, Inc., but uses their open-sourced s
 Securing the blockchain via Proof of Space Time is called farming, and instead of using specialized equipment that uses huge amounts of energy for Proof of Work consensus, the amount of storage on your Hard Disk Drives allocated to HDDcoin secures the Network.
 
 
+
 INSTALL INSTRUCTIONS:
 
-Easily install using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from Source.
 
 
-When installing for the first time on Linux, pull from the repository using:
+
+
+***********************************************
+
+If you were installing for the very first time, please do the following:
+
+Install using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases).
+
+
+On Linux, you can build from source by pulling from the repository using:
 
 - git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
-
-
-When updating/upgrading, pull all latest changes to the repository since your last install using:
-
-- git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git -b main
 
 
 If the client does not find any connections automatically, you can add one of the following:
@@ -33,3 +37,68 @@ If the client does not find any connections automatically, you can add one of th
 -	node-1.hddcoin.org Port 28444 (fallback)
 -	node-2.hddcoin.org Port 28444 (fallback)
 -	node-3.hddcoin.org Port 28444 (fallback)
+
+
+***********************************************
+
+If you were on the old version, please do the following to get onto the new version:
+
+-------------
+
+
+LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
+
+1)
+Backup your config.yaml file in ~/.hddcoin/mainnet/config
+2)
+Open Terminal and run the following commands:
+cd hddcoin-blockchain
+. ./activate
+hddcoin stop all
+hddcoin stop -d all
+deactivate
+3)
+"Delete the "".hddcoin"" folder 
+(VERY IMPORTANT -  The update will fail if you miss this step, and you will lose sync)"
+4)
+Go back to Terminal and continue running the following commands:
+git fetch
+git checkout main
+git reset --hard FETCH_HEAD
+sh install.sh
+. ./activate
+hddcoin init
+5)
+Restore your config.yaml file back to ~/.hddcoin/mainnet/config
+6)
+Download the latest blockchain database file from http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite 
+7)
+Restore the blockchain database to ~/.hddcoin/mainnet/db
+8)
+Start HDDcoin and verify that you are able to sync, and that you are getting challenges.
+
+
+-------------
+
+
+WINDOWS INSTRUCTIONS FOR UPDATING TO NEW VERSION
+
+1)
+Backup your config.yaml file in %systemdrive%\Users%username%.hddcoin\mainnet\config
+2)
+Close the HDDCoin client and wait for it to fully close. Otherwise click close ("X") on the HDDcoin Clinet window.
+3)
+Navigate back to C:\Users%username%\ and delete the ".hddcoin" folder (VERY IMPORTANT - The update will fail if you miss this step, and you will lose sync)
+"Download and install a fresh copy of HDDcoin from https://github.com/HDDcoin-Network/hddcoin-blockchain/releases 
+(If HDDcoin automatically launches after the install, wait for the login screen, then exit the app)"
+4)
+Restore your previously backed up config.yaml file back to %systemdrive%\Users%username%.hddcoin\mainnet\config
+5)
+Download the latest blockchain database file from http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite 
+6)
+Restore the blockchain database to %systemdrive%\Users%username%.hddcoin\mainnet\db
+7)
+Start HDDcoin and verify that you are able to sync, and that you are getting challenges.
+
+
+--------------
