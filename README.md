@@ -11,6 +11,8 @@ HDDcoin is not affiliated with Chia Network, Inc., but uses their open-sourced s
 
 Securing the blockchain via Proof of Space Time is called farming, and instead of using specialized equipment that uses huge amounts of energy for Proof of Work consensus, the amount of storage on your Hard Disk Drives allocated to HDDcoin secures the Network.
 
+Join our [Discord Server](https://discord.gg/5va3txyzVH) to get the latest updates and engage with our community.
+
 
 ***********************************************
 
