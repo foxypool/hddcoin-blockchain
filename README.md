@@ -66,30 +66,30 @@ LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
 1) Backup your config.yaml file in ~/.hddcoin/mainnet/config
 2) Open Terminal and run the following commands:
   
-   cd hddcoin-blockchain
+     cd hddcoin-blockchain
   
-   . ./activate
+     . ./activate
   
-   hddcoin stop all
+     hddcoin stop all
  
-   hddcoin stop -d all
+     hddcoin stop -d all
  
-   deactivate
+     deactivate
    
 3) Delete the ".hddcoin" folder (VERY IMPORTANT -  The update will fail if you miss this step, and you will lose sync)
 4) Go back to Terminal and continue running the following commands:
    
-   git fetch
+     git fetch
    
-   git checkout main
+     git checkout main
    
-   git reset --hard FETCH_HEAD
+     git reset --hard FETCH_HEAD
    
-   sh install.sh
+     sh install.sh
    
-   . ./activate
+     . ./activate
    
-   hddcoin init
+     hddcoin init
    
 5) Restore your config.yaml file back to ~/.hddcoin/mainnet/config
 6) Download the latest blockchain database file from our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or this mirror: http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
