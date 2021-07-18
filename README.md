@@ -16,7 +16,7 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 
 **NOTES ABOUT OUR LASTEST UPDATE (17 JULY 2021):**
 
-HDDcoin v1.2.1.1 (build: 1.2.29)
+**HDDcoin v1.2.1.1 (build: 1.2.29)**
 
 We updated our blockchain server certs to prevent invalid peers from connecting to HDDcoin farmers. Even though they get kicked almost immediately, their connection was causing sync issues for almost everyone. To fix that, the new changes were deployed in this REQUIRED update. Reasons to use it include:
 
