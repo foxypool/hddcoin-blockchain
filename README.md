@@ -64,7 +64,8 @@ If the client does not find any connections automatically, you can add one of th
 LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
 
 1) Backup your config.yaml file in ~/.hddcoin/mainnet/config
-2) Open Terminal and run the following commands:
+2) OPTIONAL STEP: Backup your blockchain database file (blockchain_v1_mainnet.sqlite) in ~/.hddcoin/mainnet/db, if you do not want to resync from height 0 after this update.
+3) Open Terminal and run the following commands:
   
      cd hddcoin-blockchain
   
@@ -92,8 +93,7 @@ LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
      hddcoin init
    
 5) Restore your config.yaml file back to ~/.hddcoin/mainnet/config
-6) Download the latest blockchain database file from our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or this mirror: http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
-7) Restore the blockchain database to ~/.hddcoin/mainnet/db
+7) OPTIONAL STEP: Restore your previously backed up blockchain database to ~/.hddcoin/mainnet/db
 8) Start HDDcoin and verify that you are able to sync, and that you are getting challenges.
 
 
@@ -103,12 +103,12 @@ LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
 WINDOWS INSTRUCTIONS FOR UPDATING TO NEW VERSION
 
 1) Backup your config.yaml file in %systemdrive%\Users%username%.hddcoin\mainnet\config
-2) Close the HDDCoin client and wait for it to fully close. Otherwise click close ("X") on the HDDcoin Clinet window.
-3) Navigate back to C:\Users%username%\ and delete the ".hddcoin" folder (VERY IMPORTANT - The update will fail if you miss this step, and you will lose sync)
-4) Download and install a fresh copy of HDDcoin from https://github.com/HDDcoin-Network/hddcoin-blockchain/releases (If HDDcoin automatically launches after the install, wait for the login screen, then exit the app)
-5) Restore your previously backed up config.yaml file back to %systemdrive%\Users%username%.hddcoin\mainnet\config
-6) Download the latest blockchain database file from our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or this mirror:  http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
-7) Restore the blockchain database to %systemdrive%\Users%username%.hddcoin\mainnet\db
-8) Start HDDcoin and verify that you are able to sync, and that you are getting challenges.
+2) OPTIONAL STEP: Backup your blockchain database file (blockchain_v1_mainnet.sqlite) in %systemdrive%\Users%username%.hddcoin\mainnet\db, if you do not want to resync from height 0 after this update.
+3) Close the HDDCoin client and wait for it to fully close. Otherwise click close ("X") on the HDDcoin Clinet window.
+4) Navigate back to C:\Users%username%\ and delete the ".hddcoin" folder (VERY IMPORTANT - The update will fail if you miss this step, and you will lose sync)
+5) Download and install a fresh copy of HDDcoin from https://github.com/HDDcoin-Network/hddcoin-blockchain/releases (If HDDcoin automatically launches after the install, wait for the login screen, then exit the app)
+6) Restore your previously backed up config.yaml file back to %systemdrive%\Users%username%.hddcoin\mainnet\config
+7) OPTIONAL STEP: Restore your backed up blockchain database to %systemdrive%\Users%username%.hddcoin\mainnet\db
+9) Start HDDcoin and verify that you are able to sync, and that you are getting challenges.
 
 --------------
