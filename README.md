@@ -22,10 +22,6 @@ Join our [Discord Server](https://discord.gg/5va3txyzVH) to get the latest updat
 
 We updated our blockchain server certs to prevent invalid peers from connecting to HDDcoin farmers. Even though they get kicked almost immediately, their connection was causing sync issues for almost everyone. To fix that, the new changes were deployed in this REQUIRED update. Reasons to use it include:
 
-1) All rewards farmed on that old version (after we released the update) are invalid and are lost. Any coins farmed before the update are still good. After you update, any coins you farm on the updated version are valid and added to your already farmed coins.
-2) The old version will continue to experience sync issues due to peers from other block-chains interfering with syncing.
-3) The difficulty level of the new version will be automatically reduced, such that earning blocks will be faster for those using the updated version.
-4) Read point #1 again. We can't stress this enough... you really don't want to be on the old version!
 
 
 ***********************************************
