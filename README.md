@@ -20,7 +20,7 @@ Join our [Discord Server](https://discord.gg/5va3txyzVH) to get the latest updat
 
 **HDDcoin v1.2.1.1 (build: 1.2.29)**
 
-We updated our blockchain server certs to prevent invalid peers from connecting to HDDcoin farmers. Even though they get kicked almost immediately, their connection was causing sync issues for almost everyone. To fix that, the new changes were deployed in this REQUIRED update. Reasons to use it include:
+We updated our blockchain server certs to prevent invalid peers from connecting to HDDcoin farmers. Even though they get kicked almost immediately, their connection was causing sync issues for almost everyone. To fix that, the new changes were deployed in this REQUIRED update.
 
 
 
