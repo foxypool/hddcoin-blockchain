@@ -73,7 +73,7 @@ LINUX INSTRUCTIONS FOR UPDATING TO NEW VERSION
  
      deactivate
    
-3) Delete the "**.hddcoin**" folder (VERY IMPORTANT - The update will fail if you miss this step, and you will lose sync)
+3) Delete the "**.hddcoin**" folder _(VERY IMPORTANT - The update will fail if you miss this step, and you will lose sync)_
 4) Go back to Terminal and continue running the following commands:
    
      git fetch
