@@ -1,4 +1,4 @@
-# hddcoin-blockchain-testnet
+# hddcoin-blockchain
  HDDcoin Blockchain
 
 ![Alt text](https://hddcoin.org/wp-content/uploads/2021/07/hdd_coin_logo_website_75.png)
@@ -34,7 +34,7 @@ If the client does not find any connections automatically, you can add any of th
 
 ***********************************************
 
-You can update from previous version using the binaries available in our Releases page, or build from source:
+You can update from previous version using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from source:
 
 ```
   cd hddcoin-blockchain
