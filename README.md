@@ -26,3 +26,30 @@ If the client does not find any connections automatically, you can add any of th
 - dns-introducer.hddcoin.org / Port: 28444
 -	node-1.hddcoin.org / Port: 28444
 -	node-2.hddcoin.org / Port: 28444
+
+
+***********************************************
+
+UPDATE/UPGRADE INSTRUCTIONS:
+
+***********************************************
+
+You can update from previous version using the binaries available in our Releases page, or build from source:
+
+cd hddcoin-blockchain
+. ./activate
+hddcoin stop -d all
+deactivate
+git fetch
+git checkout main
+git reset --hard FETCH_HEAD
+sh install.sh
+. ./activate
+hddcoin init
+
+# GUI Update:
+cd hddcoin-blockchain-gui
+git fetch
+cd ..
+chmod +x ./install-gui.sh
+./install-gui.sh
