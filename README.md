@@ -13,30 +13,47 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 
 
 ***********************************************
-
 **INSTALL INSTRUCTIONS:**
-
 ***********************************************
 
-You can build from source or install using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases).
+You can install from the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from source:
+
+```
+   sudo apt-get update
+   sudo apt-get upgrade -y
+
+# Install Git
+   sudo apt install git -y
+
+# Checkout the source and install**
+   git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
+   cd hddcoin-blockchain
+   sh install.sh
+   . ./activate
+   hddcoin init
+
+# Install and run GUI
+   sh install-gui.sh
+   cd hddcoin-blockchain-gui
+   npm run electron &
+```
 
 If the client does not find any connections automatically, you can add any of the following:
 
 - introducer.hddcoin.org / Port: 28444
 - dns-introducer.hddcoin.org / Port: 28444
--	node-1.hddcoin.org / Port: 28444
--	node-2.hddcoin.org / Port: 28444
+- node-1.hddcoin.org / Port: 28444
+- node-2.hddcoin.org / Port: 28444
 
 
 ***********************************************
-
 **UPDATE/UPGRADE INSTRUCTIONS:**
-
 ***********************************************
 
 You can update from previous version using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from source:
 
 ```
+# Checkout the source and update
   cd hddcoin-blockchain
   . ./activate
   hddcoin stop -d all
@@ -47,10 +64,8 @@ You can update from previous version using the binaries available in our [Releas
   sh install.sh
   . ./activate
   hddcoin init
-```
 
-**GUI Update**
-```
+# Update GUI
   cd hddcoin-blockchain-gui
   git fetch
   cd ..
