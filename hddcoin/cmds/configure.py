@@ -12,6 +12,7 @@ def configure(
     set_farmer_peer: str,
     set_node_introducer: str,
     set_fullnode_port: str,
+    set_harvester_port: str,
     set_log_level: str,
     enable_upnp: str,
     set_outbound_peer_count: str,
@@ -59,6 +60,11 @@ def configure(
         config["introducer"]["port"] = int(set_fullnode_port)
         print("Default full node port updated")
         change_made = True
+    if set_harvester_port:
+        config["harvester"]["port"] = int(set_harvester_port)
+        config["farmer"]["harvester_peer"]["port"] = int(set_harvester_port)
+        print("Default harvester port updated")
+        change_made = True
     if set_log_level:
         levels = ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"]
         if set_log_level in levels:
@@ -85,9 +91,9 @@ def configure(
     if testnet is not None:
         if testnet == "true" or testnet == "t":
             print("Setting Testnet")
-            testnet_port = "58444"
-            testnet_introducer = "beta1_introducer.hddcoin.org"
-            testnet = "testnet7"
+            testnet_port = "38444"
+            testnet_introducer = "testnet1_introducer.hddcoin.org"
+            testnet = "testnet1"
             config["full_node"]["port"] = int(testnet_port)
             config["full_node"]["introducer_peer"]["port"] = int(testnet_port)
             config["farmer"]["full_node_peer"]["port"] = int(testnet_port)
@@ -110,7 +116,7 @@ def configure(
 
         elif testnet == "false" or testnet == "f":
             print("Setting Mainnet")
-            mainnet_port = "8444"
+            mainnet_port = "28444"
             mainnet_introducer = "introducer.hddcoin.org"
             net = "mainnet"
             config["full_node"]["port"] = int(mainnet_port)
@@ -156,6 +162,11 @@ def configure(
     type=str,
 )
 @click.option(
+    "--set-harvester-port",
+    help="Set the port to use for the harvester, useful for testing",
+    type=str,
+)
+@click.option(
     "--set-log-level",
     "--log-level",
     "-log-level",
@@ -181,6 +192,7 @@ def configure_cmd(
     set_farmer_peer,
     set_node_introducer,
     set_fullnode_port,
+    set_harvester_port,
     set_log_level,
     enable_upnp,
     set_outbound_peer_count,
@@ -192,6 +204,7 @@ def configure_cmd(
         set_farmer_peer,
         set_node_introducer,
         set_fullnode_port,
+        set_harvester_port,
         set_log_level,
         enable_upnp,
         set_outbound_peer_count,

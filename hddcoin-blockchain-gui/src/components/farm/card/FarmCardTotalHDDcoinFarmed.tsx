@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../modules/rootReducer';
 import FarmCard from './FarmCard';
-import { mojo_to_hddcoin } from '../../../util/hddcoin';
+import { byte_to_hddcoin } from '../../../util/hddcoin';
 import useCurrencyCode from '../../../hooks/useCurrencyCode';
 
 export default function FarmCardTotalHDDcoinFarmed() {
@@ -20,7 +20,7 @@ export default function FarmCardTotalHDDcoinFarmed() {
   const totalHDDcoinFarmed = useMemo(() => {
     if (farmedAmount !== undefined) {
       const val = BigInt(farmedAmount.toString());
-      return mojo_to_hddcoin(val);
+      return byte_to_hddcoin(val);
     }
   }, [farmedAmount]);
 
@@ -31,4 +31,4 @@ export default function FarmCardTotalHDDcoinFarmed() {
       loading={loading}
     />
   );
-} 
+}

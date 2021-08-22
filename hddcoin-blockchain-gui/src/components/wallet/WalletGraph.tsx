@@ -9,7 +9,7 @@ import useWallet from '../../hooks/useWallet';
 import TransactionType from '../../constants/TransactionType';
 import type Transaction from '../../types/Transaction';
 import type Peak from '../../types/Peak';
-import { mojo_to_hddcoin } from '../../util/hddcoin';
+import { byte_to_hddcoin } from '../../util/hddcoin';
 import usePeak from '../../hooks/usePeak';
 import useCurrencyCode from '../../hooks/useCurrencyCode';
 import blockHeightToTimestamp from '../../util/blockHeightToTimestamp';
@@ -197,8 +197,8 @@ function prepareGraphPoints(
   const points = [
     {
       x: peak.height,
-      y: mojo_to_hddcoin(start),
-      tooltip: mojo_to_hddcoin(balance),
+      y: Math.max(0, byte_to_hddcoin(start)),
+      tooltip: byte_to_hddcoin(balance),
     },
   ];
 
@@ -209,8 +209,8 @@ function prepareGraphPoints(
 
     points.push({
       x: timestamp,
-      y: mojo_to_hddcoin(start),
-      tooltip: mojo_to_hddcoin(start),
+      y: Math.max(0, byte_to_hddcoin(start)),
+      tooltip: byte_to_hddcoin(start),
     });
   });
 

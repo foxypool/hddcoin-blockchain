@@ -5,7 +5,6 @@ import { Delete as DeleteIcon } from '@material-ui/icons';
 import styled from 'styled-components';
 import {
   Card,
-  Flex,
   FormatBytes,
   FormatLargeNumber,
   Loading,
@@ -117,9 +116,7 @@ export default function Connections() {
       {connections ? (
         <Table cols={cols} rows={connections} />
       ) : (
-        <Flex justifyContent="center">
-          <Loading />
-        </Flex>
+        <Loading center />
       )}
     </Card>
   );

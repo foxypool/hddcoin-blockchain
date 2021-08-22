@@ -8,7 +8,7 @@ from hddcoin.types.blockchain_format.program import Program, SerializedProgram
 from hddcoin.types.announcement import Announcement
 from hddcoin.types.blockchain_format.coin import Coin
 from hddcoin.types.blockchain_format.sized_bytes import bytes32
-from hddcoin.types.coin_solution import CoinSolution as CoinSpend
+from hddcoin.types.coin_spend import CoinSpend
 from hddcoin.types.spend_bundle import SpendBundle
 from hddcoin.util.condition_tools import ConditionOpcode
 from hddcoin.util.ints import uint64
@@ -119,7 +119,7 @@ def solve_anyone_can_spend_with_padding(
 def solve_singleton(solver: Solver, puzzle_db: PuzzleDB, args: List[Program], kwargs: Dict) -> Program:
     """
     `lineage_proof`: a `Program` that proves the parent is also a singleton (or the launcher).
-    `coin_amount`: a necessarily-odd value of mojos in this coin.
+    `coin_amount`: a necessarily-odd value of bytes in this coin.
     """
     singleton_struct, inner_puzzle = args
     inner_solution = solver.solve(puzzle_db, inner_puzzle, **kwargs)
@@ -419,7 +419,7 @@ def spend_coin_to_singleton(
 
     additions, removals = coin_store.update_coin_store_for_spend_bundle(spend_bundle, now, MAX_BLOCK_COST_CLVM)
 
-    launcher_coin = launcher_spend_bundle.coin_solutions[0].coin
+    launcher_coin = launcher_spend_bundle.coin_spends[0].coin
 
     assert_coin_spent(coin_store, launcher_coin)
     assert_coin_spent(coin_store, farmed_coin)

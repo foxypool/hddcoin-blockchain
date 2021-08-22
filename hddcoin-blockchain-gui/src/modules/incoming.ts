@@ -20,6 +20,7 @@ export function getTransaction(transactionId: string) {
       dispatch,
       getTransactionMessage(transactionId),
       false,
+      true,
     );
 
     return data?.transaction;
@@ -32,6 +33,7 @@ export function getPwStatus(walletId: number) {
       dispatch,
       pwStatusMessage(walletId),
       false,
+      true,
     );
 
     return {
@@ -43,7 +45,12 @@ export function getPwStatus(walletId: number) {
 
 export function getWallets() {
   return async (dispatch): Promise<Wallet[]> => {
-    const { data } = await async_api(dispatch, getWalletsMessage(), false);
+    const { data } = await async_api(
+      dispatch,
+      getWalletsMessage(),
+      false,
+      true,
+    );
 
     return data?.wallets;
   };
@@ -55,6 +62,7 @@ export function getWalletBalance(walletId: number) {
       dispatch,
       get_balance_for_wallet(walletId),
       false,
+      true,
     );
 
     return data?.wallet_balance;

@@ -10,6 +10,7 @@ import {
   CopyToClipboard,
   Flex,
   Card,
+  ConfirmDialog,
 } from '@hddcoin/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +42,7 @@ import {
   send_transaction,
   farm_block,
 } from '../../../modules/message';
-import { /* mojo_to_hddcoin_string, */ hddcoin_to_mojo } from '../../../util/hddcoin';
+import { /* byte_to_hddcoin_string, */ hddcoin_to_byte } from '../../../util/hddcoin';
 import { openDialog } from '../../../modules/dialog';
 import { get_transaction_result } from '../../../util/transaction_result';
 import config from '../../../config/config';
@@ -52,6 +53,7 @@ import { deleteUnconfirmedTransactions } from '../../../modules/incoming';
 // import WalletGraph from '../WalletGraph';
 import WalletCards from './WalletCards';
 import WalletStatus from '../WalletStatus';
+import useOpenDialog from '../../../hooks/useOpenDialog';
 
 const drawerWidth = 240;
 
@@ -236,7 +238,7 @@ function BalanceCardSubSection(props: BalanceCardSubSectionProps) {
         </Box>
         <Box>
           <Typography variant="subtitle1">
-            {mojo_to_hddcoin_string(props.balance)} {currencyCode}
+            {byte_to_hddcoin_string(props.balance)} {currencyCode}
           </Typography>
         </Box>
       </Box>
@@ -394,6 +396,7 @@ function SendCard(props: SendCardProps) {
   const { sending_transaction, send_transaction_result } = wallet;
 
   const result = get_transaction_result(send_transaction_result);
+
   const result_message = result.message;
   const result_class = result.success
     ? classes.resultSuccess
@@ -467,8 +470,8 @@ function SendCard(props: SendCardProps) {
       address = address.slice(2);
     }
 
-    const amountValue = Number.parseFloat(hddcoin_to_mojo(amount));
-    const feeValue = Number.parseFloat(hddcoin_to_mojo(fee));
+    const amountValue = Number.parseFloat(hddcoin_to_byte(amount));
+    const feeValue = Number.parseFloat(hddcoin_to_byte(fee));
 
     dispatch(send_transaction(wallet_id, amountValue, feeValue, address));
 
@@ -617,9 +620,23 @@ type StandardWalletProps = {
 export default function StandardWallet(props: StandardWalletProps) {
   const { wallet_id } = props;
   const dispatch = useDispatch();
+  const openDialog = useOpenDialog();
 
-  function handleDeleteUnconfirmedTransactions() {
-    dispatch(deleteUnconfirmedTransactions(wallet_id));
+  async function handleDeleteUnconfirmedTransactions() {
+    const deleteConfirmed = await openDialog(
+      <ConfirmDialog
+        title={<Trans>Confirmation</Trans>}
+        confirmTitle={<Trans>Delete</Trans>}
+        confirmColor="danger"
+      >
+        <Trans>Are you sure you want to delete unconfirmed transactions?</Trans>
+      </ConfirmDialog>,
+    );
+
+    // @ts-ignore
+    if (deleteConfirmed) {
+      dispatch(deleteUnconfirmedTransactions(wallet_id));
+    }
   }
 
   return (

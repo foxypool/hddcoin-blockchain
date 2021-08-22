@@ -3,6 +3,7 @@ These are quick-to-run test that check spends can be added to the blockchain whe
 or that they're failing for the right reason when they're invalid.
 """
 
+import atexit
 import logging
 import time
 
@@ -19,18 +20,26 @@ from hddcoin.consensus.constants import ConsensusConstants
 from hddcoin.types.announcement import Announcement
 from hddcoin.types.blockchain_format.program import Program
 from hddcoin.types.coin_record import CoinRecord
-from hddcoin.types.coin_solution import CoinSolution
+from hddcoin.types.coin_spend import CoinSpend
 from hddcoin.types.condition_opcodes import ConditionOpcode
 from hddcoin.types.full_block import FullBlock
 from hddcoin.types.spend_bundle import SpendBundle
-from tests.block_tools import BlockTools, test_constants
 from hddcoin.util.errors import Err
 from hddcoin.util.ints import uint32
+from tests.block_tools import create_block_tools, test_constants
+from tests.util.keyring import TempKeyring
 
 from .ram_db import create_ram_blockchain
 
 
-bt = BlockTools(constants=test_constants)
+def cleanup_keyring(keyring: TempKeyring):
+    keyring.cleanup()
+
+
+temp_keyring = TempKeyring()
+keychain = temp_keyring.get_keychain()
+atexit.register(cleanup_keyring, temp_keyring)  # Attempt to cleanup the temp keychain
+bt = create_block_tools(constants=test_constants, keychain=keychain)
 
 
 log = logging.getLogger(__name__)
@@ -112,8 +121,8 @@ async def check_conditions(
     blocks = initial_blocks()
     coin = list(blocks[spend_reward_index].get_included_reward_coins())[0]
 
-    coin_solution = CoinSolution(coin, EASY_PUZZLE, condition_solution)
-    spend_bundle = SpendBundle([coin_solution], G2Element())
+    coin_spend = CoinSpend(coin, EASY_PUZZLE, condition_solution)
+    spend_bundle = SpendBundle([coin_spend], G2Element())
 
     # now let's try to create a block with the spend bundle and ensure that it doesn't validate
 

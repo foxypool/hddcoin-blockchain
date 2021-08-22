@@ -1,4 +1,20 @@
 #!/bin/bash
+
+# Check current HDDcoin SSL version to prevent update on old SSL
+if [ -e ../.hddcoin/mainnet/config/ssl/ca/hddcoin_ca.crt ]; then
+	HDDCOIN_SSL_SERIAL=$(openssl x509 -noout -in ../.hddcoin/mainnet/config/ssl/ca/hddcoin_ca.crt -serial)
+	if [ $HDDCOIN_SSL_SERIAL = "serial=5C8A71239328650EB9FEF85CEC32BF779CA6A0C5" ]; then 
+		echo ""
+		echo "WARNING:"
+		echo "Old version of HDDcoin Blockchain SSL has been detected."
+		echo "Please visit https://hddcoin.org/sslupdate/ for further instructions."
+		echo ""
+		echo "Exiting installer..."
+		echo ""
+		exit 1
+	fi
+fi
+
 set -e
 UBUNTU=false
 DEBIAN=false
