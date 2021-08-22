@@ -47,7 +47,7 @@ sh install.sh
 . ./activate
 hddcoin init
 
-# GUI Update:
+**GUI Update**
 cd hddcoin-blockchain-gui
 git fetch
 cd ..
