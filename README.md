@@ -14,7 +14,7 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 
 ***********************************************
 
-INSTALL INSTRUCTIONS:
+**INSTALL INSTRUCTIONS:**
 
 ***********************************************
 
@@ -30,12 +30,13 @@ If the client does not find any connections automatically, you can add any of th
 
 ***********************************************
 
-UPDATE/UPGRADE INSTRUCTIONS:
+**UPDATE/UPGRADE INSTRUCTIONS:**
 
 ***********************************************
 
 You can update from previous version using the binaries available in our Releases page, or build from source:
 
+```
   cd hddcoin-blockchain
   . ./activate
   hddcoin stop -d all
@@ -46,10 +47,13 @@ You can update from previous version using the binaries available in our Release
   sh install.sh
   . ./activate
   hddcoin init
+```
 
 **GUI Update**
+```
   cd hddcoin-blockchain-gui
   git fetch
   cd ..
   chmod +x ./install-gui.sh
   ./install-gui.sh
+```
