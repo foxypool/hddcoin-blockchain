@@ -1,7 +1,7 @@
 from hddcoin.util.ints import uint32, uint64
 
-# 1 HDDcoin coin = 1,000,000,000,000 = 1 trillion mojo.
-_mojo_per_hddcoin = 1000000000000
+# 1 HDDcoin coin = 1,000,000,000,000 = 1 trillion byte.
+_byte_per_hddcoin = 1000000000000
 _blocks_per_year = 1681920  # 32 * 6 * 24 * 365
 
 
@@ -15,17 +15,17 @@ def calculate_pool_reward(height: uint32) -> uint64:
     """
 
     if height == 0:
-        return uint64(int((7 / 8) * 3500000 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 3500000 * _byte_per_hddcoin))
     elif height < 3 * _blocks_per_year:
-        return uint64(int((7 / 8) * 2 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 2 * _byte_per_hddcoin))
     elif height < 6 * _blocks_per_year:
-        return uint64(int((7 / 8) * 1 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 1 * _byte_per_hddcoin))
     elif height < 9 * _blocks_per_year:
-        return uint64(int((7 / 8) * 0.5 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 0.5 * _byte_per_hddcoin))
     elif height < 12 * _blocks_per_year:
-        return uint64(int((7 / 8) * 0.25 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 0.25 * _byte_per_hddcoin))
     else:
-        return uint64(int((7 / 8) * 0.125 * _mojo_per_hddcoin))
+        return uint64(int((7 / 8) * 0.125 * _byte_per_hddcoin))
 
 
 def calculate_base_farmer_reward(height: uint32) -> uint64:
@@ -38,14 +38,14 @@ def calculate_base_farmer_reward(height: uint32) -> uint64:
     rates increase continuously.
     """
     if height == 0:
-        return uint64(int((1 / 8) * 3500000 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 3500000 * _byte_per_hddcoin))
     elif height < 3 * _blocks_per_year:
-        return uint64(int((1 / 8) * 2 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 2 * _byte_per_hddcoin))
     elif height < 6 * _blocks_per_year:
-        return uint64(int((1 / 8) * 1 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 1 * _byte_per_hddcoin))
     elif height < 9 * _blocks_per_year:
-        return uint64(int((1 / 8) * 0.5 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 0.5 * _byte_per_hddcoin))
     elif height < 12 * _blocks_per_year:
-        return uint64(int((1 / 8) * 0.25 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 0.25 * _byte_per_hddcoin))
     else:
-        return uint64(int((1 / 8) * 0.125 * _mojo_per_hddcoin))
+        return uint64(int((1 / 8) * 0.125 * _byte_per_hddcoin))

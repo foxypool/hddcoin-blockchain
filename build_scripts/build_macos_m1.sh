@@ -18,22 +18,14 @@ echo "Installing npm and electron packagers"
 npm install electron-installer-dmg -g
 npm install electron-packager -g
 npm install electron/electron-osx-sign -g
-npm install notarize-cli -g
+npm install @hddcoin-network/notarize-cli -g
 
 echo "Create dist/"
 sudo rm -rf dist
 mkdir dist
 
 echo "Install pyinstaller and build bootloaders for M1"
-#pip install pyinstaller==4.3
-# Once there is a 4.4, we can clone that tag and build that
-# M1 support isn't in a tag yet.
-# Alternatively, if the m1 bootloaders are distributed with pip in the future, can just use those
-git clone https://github.com/pyinstaller/pyinstaller.git
-cd pyinstaller/bootloader
-python ./waf all
-pip install ..
-cd ../..
+pip install pyinstaller==4.5
 
 echo "Create executables with pyinstaller"
 SPEC_FILE=$(python -c 'import hddcoin; print(hddcoin.PYINSTALLER_SPEC_PATH)')

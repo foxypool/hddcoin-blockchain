@@ -1,5 +1,4 @@
-from unittest import TestCase
-
+import pytest
 from clvm_tools import binutils
 from clvm_tools.clvmc import compile_clvm_text
 
@@ -84,7 +83,7 @@ EXPECTED_OUTPUT = (
 )
 
 
-class TestROM(TestCase):
+class TestROM:
     def test_rom_inputs(self):
         # this test checks that the generator just works
         # It's useful for debugging the generator prior to having the ROM invoke it.
@@ -95,14 +94,17 @@ class TestROM(TestCase):
         assert cost == EXPECTED_ABBREVIATED_COST
         assert r.as_bin().hex() == EXPECTED_OUTPUT
 
-    def test_get_name_puzzle_conditions(self):
+    @pytest.mark.parametrize("rust_checker", [True, False])
+    def test_get_name_puzzle_conditions(self, rust_checker: bool):
         # this tests that extra block or coin data doesn't confuse `get_name_puzzle_conditions`
 
         gen = block_generator()
         cost, r = run_generator(gen, max_cost=MAX_COST)
         print(r)
 
-        npc_result = get_name_puzzle_conditions(gen, max_cost=MAX_COST, cost_per_byte=COST_PER_BYTE, safe_mode=False)
+        npc_result = get_name_puzzle_conditions(
+            gen, max_cost=MAX_COST, cost_per_byte=COST_PER_BYTE, safe_mode=False, rust_checker=rust_checker
+        )
         assert npc_result.error is None
         assert npc_result.clvm_cost == EXPECTED_COST
         cond_1 = ConditionWithArgs(ConditionOpcode.CREATE_COIN, [bytes([0] * 31 + [1]), int_to_bytes(500)])
@@ -126,7 +128,7 @@ class TestROM(TestCase):
         coin_spends = r.first()
         for coin_spend in coin_spends.as_iter():
             extra_data = coin_spend.rest().rest().rest().rest()
-            self.assertEqual(extra_data.as_atom_list(), b"extra data for coin".split())
+            assert extra_data.as_atom_list() == b"extra data for coin".split()
 
     def test_block_extras(self):
         # the ROM supports extra data after the coin spend list. This test checks that it actually gets passed through
@@ -134,4 +136,4 @@ class TestROM(TestCase):
         gen = block_generator()
         cost, r = run_generator(gen, max_cost=MAX_COST)
         extra_block_data = r.rest()
-        self.assertEqual(extra_block_data.as_atom_list(), b"extra data for block".split())
+        assert extra_block_data.as_atom_list() == b"extra data for block".split()

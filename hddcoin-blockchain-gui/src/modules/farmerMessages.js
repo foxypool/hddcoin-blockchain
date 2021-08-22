@@ -87,24 +87,65 @@ export const getPoolState = () => {
         command: 'get_pool_state',
       }),
       false,
+      true,
     );
 
     return data?.pool_state;
   };
 };
 
-export const setPoolPayoutInstructions = (
-  singletonGenesis,
-  poolPayoutInstructions,
+export const setPayoutInstructions = (
+  launcherId,
+  payoutInstructions,
 ) => {
   return async (dispatch) => {
     const { data } = await async_api(
       dispatch,
       farmerMessage({
-        command: 'set_pool_payout_instructions',
+        command: 'set_payout_instructions',
         data: {
-          singleton_genesis: singletonGenesis,
-          pool_payout_instructions: poolPayoutInstructions,
+          launcher_id: launcherId,
+          payout_instructions: payoutInstructions,
+        },
+      }),
+      false,
+    );
+
+    /*
+    console.log('data', data);
+    /*
+    const { success, error } = data;
+    if (!success) {
+      throw new Error(error);
+    }
+    */
+
+    return data;
+  };
+};
+
+export function getHarvesters() {
+  return async (dispatch) => {
+    const { data } = await async_api(
+      dispatch,
+      farmerMessage({
+        command: 'get_harvesters',
+      }),
+      false,
+    );
+
+    return data;
+  };
+}
+
+export function getPoolLoginLink(launcherId) {
+  return async (dispatch) => {
+    const { data } = await async_api(
+      dispatch,
+      farmerMessage({
+        command: 'get_pool_login_link',
+        data: {
+          launcher_id: launcherId,
         },
       }),
       false,
@@ -112,18 +153,4 @@ export const setPoolPayoutInstructions = (
 
     return data;
   };
-};
-
-export const getPlots = () => {
-  return async (dispatch) => {
-    const { data } = await async_api(
-      dispatch,
-      farmerMessage({
-        command: 'get_plots',
-      }),
-      false,
-    );
-
-    return data;
-  };
-};
+}

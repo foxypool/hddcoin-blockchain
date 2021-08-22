@@ -24,7 +24,7 @@ import {
 } from '../../../modules/createWallet';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { recover_did_action } from '../../../modules/message';
-import { hddcoin_to_mojo } from '../../../util/hddcoin';
+import { hddcoin_to_byte } from '../../../util/hddcoin';
 import { openDialog } from '../../../modules/dialog';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 

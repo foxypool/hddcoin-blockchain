@@ -27,7 +27,7 @@ import {
   sha256,
 } from '../../util/utils';
 import { getBlockRecord, getBlock } from '../../modules/fullnodeMessages';
-import { mojo_to_hddcoin } from '../../util/hddcoin';
+import { byte_to_hddcoin } from '../../util/hddcoin';
 import {
   calculatePoolReward,
   calculateBaseFarmerReward,
@@ -127,9 +127,7 @@ export default function Block() {
   if (loading) {
     return (
       <LayoutMain title={<Trans>Block</Trans>}>
-        <Flex justifyContent="center">
-          <Loading />
-        </Flex>
+        <Loading center />
       </LayoutMain>
     );
   }
@@ -173,13 +171,13 @@ export default function Block() {
       ? blockRecord.weight - prevBlockRecord.weight
       : blockRecord?.weight ?? 0;
 
-  const poolReward = mojo_to_hddcoin(calculatePoolReward(blockRecord.height));
-  const baseFarmerReward = mojo_to_hddcoin(
+  const poolReward = byte_to_hddcoin(calculatePoolReward(blockRecord.height));
+  const baseFarmerReward = byte_to_hddcoin(
     calculateBaseFarmerReward(blockRecord.height),
   );
 
   const hddcoinFees = blockRecord.fees
-    ? mojo_to_hddcoin(BigInt(blockRecord.fees))
+    ? byte_to_hddcoin(BigInt(blockRecord.fees))
     : '';
 
   const rows = [

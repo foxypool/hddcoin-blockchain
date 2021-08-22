@@ -126,7 +126,7 @@ export default function PlotNFTSelectBase(props: Props) {
                           name="poolUrl"
                           label="Pool URL"
                           variant="filled"
-                          autoComplete="pool-url"
+                          autoComplete="on"
                           onClick={handleDisableSelfPooling}
                           onChange={handleDisableSelfPooling}
                           fullWidth
@@ -158,11 +158,7 @@ export default function PlotNFTSelectBase(props: Props) {
             <Alert severity="warning">{poolInfo.error.message}</Alert>
           )}
 
-          {poolInfo.loading && (
-            <Flex alignItems="center">
-              <Loading />
-            </Flex>
-          )}
+          {poolInfo.loading && <Loading center />}
 
           {poolInfo.poolInfo && <PoolInfo poolInfo={poolInfo.poolInfo} />}
         </CardStep>

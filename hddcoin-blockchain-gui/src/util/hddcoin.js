@@ -83,32 +83,32 @@ hddcoin_formatter.setFiat = (currency, rate, display = null) => {
   units.setUnit(currency, 1 / rate, display);
 };
 
-export const mojo_to_hddcoin = (mojo) => {
-  return hddcoin_formatter(Number.parseInt(mojo), 'mojo').to('hddcoin').value();
+export const byte_to_hddcoin = (byte) => {
+  return hddcoin_formatter(Number.parseInt(byte), 'byte').to('hddcoin').value();
 };
 
-export const hddcoin_to_mojo = (hddcoin) => {
+export const hddcoin_to_byte = (hddcoin) => {
   return hddcoin_formatter(Number.parseFloat(Number(hddcoin)), 'hddcoin')
-    .to('mojo')
+    .to('byte')
     .value();
 };
 
-export const mojo_to_hddcoin_string = (mojo) => {
-  return hddcoin_formatter(Number(mojo), 'mojo').to('hddcoin').toString();
+export const byte_to_hddcoin_string = (byte) => {
+  return hddcoin_formatter(Number(byte), 'byte').to('hddcoin').toString();
 };
 
-export const mojo_to_colouredcoin = (mojo) => {
-  return hddcoin_formatter(Number.parseInt(mojo), 'mojo')
+export const byte_to_colouredcoin = (byte) => {
+  return hddcoin_formatter(Number.parseInt(byte), 'byte')
     .to('colouredcoin')
     .value();
 };
 
-export const colouredcoin_to_mojo = (colouredcoin) => {
+export const colouredcoin_to_byte = (colouredcoin) => {
   return hddcoin_formatter(Number.parseFloat(Number(colouredcoin)), 'colouredcoin')
-    .to('mojo')
+    .to('byte')
     .value();
 };
 
-export const mojo_to_colouredcoin_string = (mojo) => {
-  return hddcoin_formatter(Number(mojo), 'mojo').to('colouredcoin').toString();
+export const byte_to_colouredcoin_string = (byte) => {
+  return hddcoin_formatter(Number(byte), 'byte').to('colouredcoin').toString();
 };

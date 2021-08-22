@@ -9,7 +9,7 @@ from hddcoin.full_node.signage_point import SignagePoint
 from hddcoin.protocols import full_node_protocol
 from hddcoin.rpc.full_node_rpc_api import FullNodeRpcApi
 from hddcoin.rpc.full_node_rpc_client import FullNodeRpcClient
-from hddcoin.rpc.rpc_server import start_rpc_server
+from hddcoin.rpc.rpc_server import NodeType, start_rpc_server
 from hddcoin.simulator.simulator_protocol import FarmNewBlockProtocol
 from hddcoin.types.spend_bundle import SpendBundle
 from hddcoin.types.unfinished_block import UnfinishedBlock
@@ -113,6 +113,18 @@ class TestRpc:
             print(coins)
             assert len(coins) >= 1
 
+            pid = list(blocks[-1].get_included_reward_coins())[0].parent_coin_info
+            pid_2 = list(blocks[-1].get_included_reward_coins())[1].parent_coin_info
+            coins = await client.get_coin_records_by_parent_ids([pid, pid_2])
+            print(coins)
+            assert len(coins) == 2
+
+            name = list(blocks[-1].get_included_reward_coins())[0].name()
+            name_2 = list(blocks[-1].get_included_reward_coins())[1].name()
+            coins = await client.get_coin_records_by_names([name, name_2])
+            print(coins)
+            assert len(coins) == 2
+
             additions, removals = await client.get_additions_and_removals(blocks[-1].header_hash)
             assert len(additions) >= 2 and len(removals) == 0
 
@@ -186,7 +198,9 @@ class TestRpc:
 
             await time_out_assert(10, num_connections, 1)
             connections = await client.get_connections()
-
+            assert NodeType(connections[0]["type"]) == NodeType.FULL_NODE.value
+            assert len(await client.get_connections(NodeType.FULL_NODE)) == 1
+            assert len(await client.get_connections(NodeType.FARMER)) == 0
             await client.close_connection(connections[0]["node_id"])
             await time_out_assert(10, num_connections, 0)
         finally:

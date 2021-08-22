@@ -20,7 +20,7 @@ import {
 } from '../../../modules/createWallet';
 import { useStyles } from './WalletCreate';
 import { create_rl_admin_action } from '../../../modules/message';
-import { hddcoin_to_mojo } from '../../../util/hddcoin';
+import { hddcoin_to_byte } from '../../../util/hddcoin';
 import { openDialog } from '../../../modules/dialog';
 
 export const customStyles = makeStyles((theme) => ({
@@ -156,12 +156,12 @@ export const CreateRLAdminWallet = () => {
     dispatch(createState(true, true));
     const interval = interval_input.value;
     const interval_value = Number.parseInt(Number(interval));
-    const hddcoinper = hddcoin_to_mojo(hddcoinper_input.value);
+    const hddcoinper = hddcoin_to_byte(hddcoinper_input.value);
     const hddcoinper_value = Number.parseInt(Number(hddcoinper));
     const userpubkey = userpubkey_input.value;
-    const amount = hddcoin_to_mojo(amount_input.value);
+    const amount = hddcoin_to_byte(amount_input.value);
     const amount_value = Number.parseInt(Number(amount));
-    // var fee = hddcoin_to_mojo(fee_input.value);
+    // var fee = hddcoin_to_byte(fee_input.value);
     // TODO(lipa): send fee to server
     // const fee_value = parseInt(Number(fee));
     dispatch(
