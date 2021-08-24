@@ -397,16 +397,16 @@ if (!handleSquirrelEvent()) {
               );
             },
           },
-          {
-            label: i18n._(/* i18n */ { id: 'Chat on KeyBase' }),
-            click: () => {
-              openExternal('https://keybase.io/team/hddcoin_network.public');
-            },
-          },
+          //{
+            //label: i18n._(/* i18n */ { id: 'Chat on KeyBase' }),
+            //click: () => {
+              //openExternal('https://keybase.io/team/hddcoin_network.public');
+            //},
+          //},
           {
             label: i18n._(/* i18n */ { id: 'Follow on Twitter' }),
             click: () => {
-              openExternal('https://twitter.com/hddcoin_project');
+              openExternal('https://twitter.com/hddcoin');
             },
           },
         ],
