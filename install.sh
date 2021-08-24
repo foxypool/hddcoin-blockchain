@@ -137,8 +137,6 @@ python -m pip install -e . --extra-index-url https://pypi.chia.net/simple/
 
 echo ""
 echo "HDDcoin blockchain install.sh complete."
-echo "For assistance join us on Keybase in the #testnet chat channel:"
-echo "https://keybase.io/team/hddcoin_network.public"
 echo ""
 echo "Try the Quick Start Guide to running hddcoin-blockchain:"
 echo "https://github.com/HDDcoin-Network/hddcoin-blockchain/wiki/Quick-Start-Guide"
