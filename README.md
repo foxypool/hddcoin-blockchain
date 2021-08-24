@@ -1,5 +1,5 @@
-# hddcoin-blockchain-testnet
- HDDcoin Blockchain (TestNet)
+# hddcoin-blockchain
+ HDDcoin Blockchain
 
 ![Alt text](https://hddcoin.org/wp-content/uploads/2021/07/hdd_coin_logo_website_75.png)
 
@@ -11,15 +11,15 @@ HDDcoin is not affiliated with Chia Network, Inc., but uses their open-sourced s
 
 Securing the blockchain via Proof of Space Time is called farming, and instead of using specialized equipment that uses huge amounts of energy for Proof of Work consensus, the amount of storage on your Hard Disk Drives allocated to HDDcoin secures the Network.
 
-Website: https://hddcoin.org/
-Discord: https://discord.gg/AZdGSFnqAR
-Twitter: https://twitter.com/hddcoin
-Explorer: https://alltheblocks.net/hddcoin
-Calculator: https://chiaforkscalculator.com/hddcoin
-HDD DB: http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
-Launched: July 2021
-Block Reward: 2 HDD
-Blocks Per Day: 4,608, halved every 3 years.
+- Website: https://hddcoin.org/
+- Discord: https://discord.gg/AZdGSFnqAR
+- Twitter: https://twitter.com/hddcoin
+- Explorer: https://alltheblocks.net/hddcoin
+- Calculator: https://chiaforkscalculator.com/hddcoin
+- HDD DB: http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
+- Launch date: July 8th 2021
+- Block Reward: 2 HDD
+- Blocks Per Day: 4,608 (halved every 3 years).
 
 ***********************************************
 **INSTALL INSTRUCTIONS:**
