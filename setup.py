@@ -2,7 +2,7 @@ from setuptools import setup
 
 dependencies = [
     "blspy==1.0.5",  # Signature library
-    "chiavdf==1.0.2",  # timelord and vdf verification
+    "chiavdf==1.0.3",  # timelord and vdf verification
     "chiabip158==1.0",  # bip158-style wallet filters
     "chiapos==1.0.4",  # proof of space
     "clvm==0.9.7",
@@ -46,7 +46,7 @@ dev_dependencies = [
 kwargs = dict(
     name="hddcoin-blockchain",
     author="Mariano Sorgente",
-    author_email="mariano@hddcoin.org",
+    author_email="info@hddcoin.org",
     description="HDDcoin blockchain full node, farmer, timelord, and wallet.",
     url="https://hddcoin.org/",
     license="Apache License",

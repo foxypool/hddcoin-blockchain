@@ -38,8 +38,8 @@ def make_semver(version_str):
 
     version = "{0}.{1}.{2}".format(major, minor, patch)
 
-    if prerelease:
-        version += "-{0}".format(prerelease)
+    #if prerelease:
+        #version += "-{0}".format(prerelease)
     if local:
         version += "+{0}".format(local)
 
@@ -53,7 +53,7 @@ def update_version():
     version: str = "0.0"
     output = subprocess.run(["hddcoin", "version"], capture_output=True)
     if output.returncode == 0:
-        version = str(output.stdout.strip(), "utf-8")
+        version = str(output.stdout.strip(), "utf-8").splitlines()[-1]
 
     data["version"] = make_semver(version)
 
