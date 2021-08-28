@@ -45,6 +45,7 @@ from hddcoin.types.header_block import HeaderBlock
 from hddcoin.types.mempool_inclusion_status import MempoolInclusionStatus
 from hddcoin.types.peer_info import PeerInfo
 from hddcoin.util.byte_types import hexstr_to_bytes
+from hddcoin.util.check_fork_next_block import check_fork_next_block
 from hddcoin.util.errors import Err, ValidationError
 from hddcoin.util.ints import uint32, uint128
 from hddcoin.util.keychain import Keychain
