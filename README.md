@@ -16,7 +16,7 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 - Twitter: https://twitter.com/hddcoin
 - Explorer: https://alltheblocks.net/hddcoin
 - Calculator: https://chiaforkscalculator.com/hddcoin
-- HDD DB: http://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
+- HDDcoin DB: https://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
 - Launch date: July 8th 2021
 - Block Reward: 2 HDD
 - Blocks Per Day: 4,608 (halved every 3 years).
@@ -34,7 +34,7 @@ You can install from the binaries available in our [Releases page](https://githu
 # Install Git
    sudo apt install git -y
 
-# Checkout the source and install**
+# Checkout the source and install
    git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
    cd hddcoin-blockchain
    sh install.sh
@@ -69,7 +69,7 @@ You can update from previous version using the binaries available in our [Releas
   deactivate
   git fetch
   git checkout main
-  git reset --hard FETCH_HEAD
+  git reset --hard FETCH_HEAD --recurse-submodules
   sh install.sh
   . ./activate
   hddcoin init
