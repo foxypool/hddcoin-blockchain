@@ -1,6 +1,6 @@
 # hddcoin-blockchain
 
-![Alt text](https://hddcoin.org/wp-content/uploads/2021/07/hdd_coin_logo_website_75.png)
+![Alt text](https://hddcoin.org/images/hdd_coin_logo_website_75.png)
 
 HDDcoin is an eco-friendly blockchain that supports digital money, global payments and applications.
 
@@ -62,7 +62,7 @@ You can update from previous version using the binaries available in our [Releas
 
 ```
 # Checkout the source and update
-  cd hddcoin-blockchain
+  cd hddcoin-blockchain-beta
   . ./activate
   hddcoin stop -d all
   deactivate

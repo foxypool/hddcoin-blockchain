@@ -353,7 +353,15 @@ if (!handleSquirrelEvent()) {
       {
         label: i18n._(/* i18n */ { id: 'Help' }),
         role: 'help',
-        submenu: [
+        submenu: [		
+		  {
+            label: i18n._(/* i18n */ { id: 'Visit HDDcoin Website' }),
+            click: () => {
+              openExternal(
+                'https://hddcoin.org',
+              );
+            },
+          },		
           {
             label: i18n._(/* i18n */ { id: 'HDDcoin Blockchain Wiki' }),
             click: () => {
