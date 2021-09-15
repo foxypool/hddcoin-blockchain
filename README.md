@@ -24,23 +24,45 @@ Securing the blockchain via Proof of Space Time is called farming, and instead o
 **INSTALL INSTRUCTIONS:**
 ***********************************************
 
-You can install from the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from source:
+You can install HDDcoin by building from source, or by using the latest binaries for your operating system.
+
+(A.) To **install from available binaries**, download executables from the correct **Releases page**:
+
+   - for pool farming with FoxyPool (OG), get them here ->
+   https://github.com/felixbrucker/hddcoin-blockchain/releases
+   - for solo farming, get them here ->
+   https://github.com/HDDcoin-Network/hddcoin-blockchain/releases
+
+
+(B.) To **build from source**, do the following:
 
 ```
+# Update / Upgrade OS
+
    sudo apt-get update
    sudo apt-get upgrade -y
 
 # Install Git
+
    sudo apt install git -y
 
-# Checkout the source and install
+# Checkout the correct source (either for pool or solo farming)
+
+   ## for pool farming with FoxyPool (OG), use this source ## ->
+   git clone https://github.com/felixbrucker/hddcoin-blockchain.git
+
+   ## for solo farming, use this source ## ->
    git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
+   
+# Install the Blockchain
+
    cd hddcoin-blockchain
    sh install.sh
    . ./activate
    hddcoin init
 
-# Install and run GUI
+# Install and run the GUI
+
    sh install-gui.sh
    cd hddcoin-blockchain-gui
    npm run electron &
@@ -58,11 +80,12 @@ If the client does not find any connections automatically, you can add any of th
 **UPDATE/UPGRADE INSTRUCTIONS:**
 ***********************************************
 
-You can update from previous version using the binaries available in our [Releases page](https://github.com/HDDcoin-Network/hddcoin-blockchain/releases), or build from source:
+You can update HDDcoin from a previous version by downloading and installing the latest executable for your operating system, available from the correct **Releases page**, as described above, or by building from source:
 
 ```
 # Checkout the source and update
-  cd hddcoin-blockchain-beta
+
+  cd hddcoin-blockchain
   . ./activate
   hddcoin stop -d all
   deactivate
@@ -73,7 +96,8 @@ You can update from previous version using the binaries available in our [Releas
   . ./activate
   hddcoin init
 
-# Update GUI
+# Update the GUI
+
   cd hddcoin-blockchain-gui
   git fetch
   cd ..
