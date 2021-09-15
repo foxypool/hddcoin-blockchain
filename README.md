@@ -62,7 +62,7 @@ You can update from previous version using the binaries available in our [Releas
 
 ```
 # Checkout the source and update
-  cd hddcoin-blockchain-beta
+  cd hddcoin-blockchain
   . ./activate
   hddcoin stop -d all
   deactivate
