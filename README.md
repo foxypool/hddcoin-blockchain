@@ -1,4 +1,4 @@
-# hddcoin-blockchain
+# hddcoin-blockchain 
 
 ![Alt text](https://hddcoin.org/images/hdd_coin_logo_website_75.png)
 
