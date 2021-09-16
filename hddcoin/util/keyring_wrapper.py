@@ -296,7 +296,7 @@ class KeyringWrapper:
         )
 
     def verify_migration_results(self, migration_results: MigrationResults) -> bool:
-        from chia.util.keychain import Keychain
+        from hddcoin.util.keychain import Keychain
 
         # Stop using the legacy keyring. This will direct subsequent reads to the new keyring.
         self.legacy_keyring = None
@@ -363,7 +363,7 @@ class KeyringWrapper:
         perform a before/after comparison of the keyring contents, and on success we'll prompt
         to cleanup the legacy keyring.
         """
-        from chia.cmds.passphrase_funcs import async_update_daemon_migration_completed_if_running
+        from hddcoin.cmds.passphrase_funcs import async_update_daemon_migration_completed_if_running
 
         # Make sure the user is ready to begin migration.
         response = self.confirm_migration()
