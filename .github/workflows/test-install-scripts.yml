@@ -1,5 +1,4 @@
 name: Test Install Scripts
-#HDDcoin Blockchain
 
 on:
   push:

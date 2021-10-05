@@ -7,7 +7,7 @@ from hddcoin.types.blockchain_format.program import Program
 from hddcoin.types.blockchain_format.sized_bytes import bytes32
 from hddcoin.types.condition_opcodes import ConditionOpcode
 from hddcoin.util.ints import uint64
-from hddcoin.wallet.hddcoinlisp import sexp
+from hddcoin.wallet.chialisp import sexp
 from hddcoin.wallet.puzzles.load_clvm import load_clvm
 
 RATE_LIMITED_MODE = 1

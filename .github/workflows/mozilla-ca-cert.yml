@@ -1,6 +1,4 @@
 name: "Update Mozilla CA sub module"
-#HDDcoin Blockchain
-
 on:
   workflow_dispatch:
     branches:

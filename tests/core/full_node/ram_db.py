@@ -6,6 +6,7 @@ from hddcoin.consensus.blockchain import Blockchain
 from hddcoin.consensus.constants import ConsensusConstants
 from hddcoin.full_node.block_store import BlockStore
 from hddcoin.full_node.coin_store import CoinStore
+from hddcoin.full_node.hint_store import HintStore
 from hddcoin.util.db_wrapper import DBWrapper
 
 
@@ -14,5 +15,6 @@ async def create_ram_blockchain(consensus_constants: ConsensusConstants) -> Tupl
     db_wrapper = DBWrapper(connection)
     block_store = await BlockStore.create(db_wrapper)
     coin_store = await CoinStore.create(db_wrapper)
-    blockchain = await Blockchain.create(coin_store, block_store, consensus_constants)
+    hint_store = await HintStore.create(db_wrapper)
+    blockchain = await Blockchain.create(coin_store, block_store, consensus_constants, hint_store)
     return connection, blockchain

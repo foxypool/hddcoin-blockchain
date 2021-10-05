@@ -71,14 +71,18 @@ export default function Amount(props: AmountProps) {
         }}
         {...rest}
       />
-      {!!byte && (
-        <FormHelperText>
+
+        <FormHelperText component='div' >
           <Flex alignItems="center" gap={2}>
             <Flex flexGrow={1} gap={1}>
-              <FormatLargeNumber value={byte} />
-              <Box>
-                <Plural value={byte} one="byte" other="bytes" />
-              </Box>
+              {!!byte && (
+                <>
+                  <FormatLargeNumber value={byte} />
+                  <Box>
+                    <Plural value={byte} one="byte" other="bytes" />
+                  </Box>
+                </>
+              )}
             </Flex>
             {children &&
               children({
@@ -87,7 +91,6 @@ export default function Amount(props: AmountProps) {
               })}
           </Flex>
         </FormHelperText>
-      )}
     </FormControl>
   );
 }

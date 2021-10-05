@@ -8,6 +8,7 @@ from hddcoin.util.config import create_default_hddcoin_config, initial_config_fi
 from hddcoin.util.path import mkdir
 from multiprocessing import Pool
 from pathlib import Path
+from threading import Thread
 from time import sleep
 from typing import Dict
 
@@ -52,10 +53,14 @@ async def create_reader_and_writer_tasks(root_path: Path, default_config: Dict):
     """
     Spin-off reader and writer threads and wait for completion
     """
-    await asyncio.gather(
-        asyncio.to_thread(write_config, root_path, default_config),
-        asyncio.to_thread(read_and_compare_config, root_path, default_config),
-    )
+    thread1 = Thread(target=write_config, kwargs={"root_path": root_path, "config": default_config})
+    thread2 = Thread(target=read_and_compare_config, kwargs={"root_path": root_path, "default_config": default_config})
+
+    thread1.start()
+    thread2.start()
+
+    thread1.join()
+    thread2.join()
 
 
 def run_reader_and_writer_tasks(root_path: Path, default_config: Dict):
@@ -143,7 +148,7 @@ class TestConfig:
         config: Dict = load_config(root_path=root_path, filename="config.yaml")
         assert config is not None
         # Expect: config values should match the defaults (from a small sampling)
-        assert config["daemon_port"] == default_config_dict["daemon_port"] == 55400
+        assert config["daemon_port"] == default_config_dict["daemon_port"] == 25400
         assert config["self_hostname"] == default_config_dict["self_hostname"] == "localhost"
         assert (
             config["farmer"]["network_overrides"]["constants"]["mainnet"]["GENESIS_CHALLENGE"]
