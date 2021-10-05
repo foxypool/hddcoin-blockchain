@@ -6,6 +6,69 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project does not yet adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 for setuptools_scm/PEP 440 reasons.
 
+## 1.2.9 HDDcoin blockchain 2021-10-01
+
+### Changed
+
+- Changed "About" section in client to indicate correct release version.
+
+## 1.2.8 HDDcoin blockchain 2021-09-30
+
+### Added
+
+- Added RPC updates to support keyring migration and to support adding a passphrase for wallets in an upcoming release.
+- Added plot memo caching in PlotManager, speeding initial loading and cached loading, by enabling harvester to save the parsed plot memo on disk on shutdown, then load it back into memory on startup so that it can skip key parsing calculations for all already known plots.
+- Added a debug option to log all SQL commands.
+- Added support for DID, our decentralized identity solution, as a building block toward HDDcoin's broader set of DID capabilities.
+- Thanks @olivernyc for the addition of a query in CoinStore to special case height 0 to avoid querying all unspent coins.
+- Starting logging the timing of applying additions and removals to the coin store.
+- Made max message size configurable in config.yaml, as a possible workaround for very large farms where reporting plot information exceeds the maximum message size.
+- Added a config option for peer_connect_timeout.
+- Added support for unhardened key derivations.
+- Various CoinStore benchmark and performance improvements.
+- Beta builds are built on every merge to main, and are now available from <https://hddcoin.org/download/>.
+- Thanks @Radexito for adding support for Raspberry Pi 4 64Bit to the GUI installation script.
+- Added macOS keyring.yaml support, migrating keys from macOS Keychain to keyring.yaml to support an upcoming release in which we'll add an optional passphrase to wallets.
+- We have made many full node changes to support our upcoming HDDcoin Asset Token (CAT) standard and our upcoming standalone light wallet, which will use HDDcoin's new electrum-style protocol to enable faster wallet syncing.
+- We have many new translations added in this release. Thanks to the following community members for their contributions: Albanian @ATSHOOTER; Arabic @younes.huawei.test; Belarusian @LUXDAD; Catalan @Poliwhirl; Chinese Traditional @MongWu-NeiTherHwoGer-Long, @danielrangel6; Chinese, Simplified @SupperDog; Croatian @vjukopila5 @marko.anti12; Czech @HansCZ; Danish @loppefaaret; Dutch @netlob;English @sharjeelaziz @darkflare; English, Australia @nzjake; English, New Zealand @nzjake @sharjeelaziz; Finnish @f00b4r; French @burnt; Hungarian @SirGeoff; Hebrew @Arielzikri; Indonesian @lespau;Lithuanian @Mariusxz; Polish @bartlomiej.tokarzewski; Portuguese @darkflare; Portuguese, Brazilian @fsavaget; Sinhala @HelaBasa;Slovak @atomsymbol; Spanish @needNRG; Spanish, Argentina @juands1644 @gdestribats; Spanish, Mexico @danielrangel6; Swedish @MrDyngrak; Thai @3bb.pintakam.7m1 @taweesak0803650558 @taweesak.25may1993 @3bb.pintakam.7m1; Turkish @baturman @ExtremeSTRAUSSER.
+
+### Changed
+
+- Bluebox proofs are now randomized instead of looking at the oldest part of the blockchain first to find uncompacted proofs.
+- Bumped sortedcontainers to version 2.4.0.
+- Dropped some redundant code in plotting/manager.py
+- Updated some hooks: Update `flake8` to 3.9.2, `pre-commit-hooks` to 4.0.1, `black` to 21.8b0
+- Bump clvm_rs to 0.1.14.
+- Added tests for invalid list terminators in conditions.
+- Updated blspy to 1.0.6.
+- Made a change to allow the host to be configurable for the timelord launcher.
+- Thanks @dkackman for adding the ability to collect the IDs of plots as they are queued and return them with the response.
+- Made the SpendBundle.debug use the default genesis challenge by default.
+- Changes in full node to execute sqlite pragmas only once, at the level where the database is opened, and changed pragma synchronous=FULL to OFF to improve disk I/O performance. Also removed redundant database pragmas in wallet.
+- Made a change to remove CoinStore's dependency on FullBlock to just pass in the parts of the block necessary to add the block.
+- Improved log formatting.
+- A change to logging to only log warnings when more than 10 seconds has passed, to reduce the number of warning logs.
+- Improved and fixed some outdated messages in CLI. Thanks @jack60612 for the assist!
+- We previously added a Rust condition checker, to replace our existing Python-based condition checker. In this release, we're removing the old Python code.
+- Several clvm_rs updates to support our upcoming HDDcoin Asset Token (CAT) standard.
+
+### Fixed
+
+- Thanks @mgraczyk for the fix to keyring_path.
+- Fixed an issue blocking the Ubuntu installer that required manual installation of Python 3.9 as a workaround.
+- Fixed an issue where the config.yaml and keyring.yaml are only partially written out to, if another process is attempting to read the config while it's being written.
+- Fixed rmtree call in create_pool_plot.
+- Thanks @Knight1 for fixing an issue in which fix-ssl-permissions shows the current 'mode' not the 'updated mode'.
+- Fixed Mypy issues on Python 3.9.7 that generated many errors when running mypy.
+- Thanks @olivernyc for fixing an edge case with negative inputs to 'truncate_to_significant_bits'.
+- Added a fix for Windows installs that were seeing exceptions when writing to the keyring.
+
+## 1.2.7 HDDcoin blockchain 2021-09-16
+
+### Fixed
+
+- Thanks to @jack60612 for fixing a bug that displayed 25 words instead of 24 words in some instances in the GUI.
+
 ## 1.2.6 HDDcoin blockchain 2021-09-09
 
 Today we’re releasing version 1.2.6 to address a resource bug with nodes, and we want to stress the importance of updating to it at the earliest convenience. The fix prevents a node from consuming excessive memory when many Bluebox Timelords are active on the chain.
@@ -25,7 +88,7 @@ Today we’re releasing version 1.2.6 to address a resource bug with nodes, and 
 
 ### Fixed
 
-- Fixed errors in the Linux GUI install script, which impacted only Linux users.  
+- Fixed errors in the Linux GUI install script, which impacted only Linux users.
 
 ## 1.2.4 HDDcoin blockchain 2021-08-26
 
@@ -42,7 +105,7 @@ Today we’re releasing version 1.2.6 to address a resource bug with nodes, and 
 - Enabled querying AAAA records for DNS Introducer.
 - We now set the version for the GUI when doing a manual install using the install-gui.sh script. Uses a python helper to get the version of the hddcoin install and then converts it into proper npm format and puts that into package.json.
 - Added some new class methods to the Program objects to improve ease of use.
-- Added an option to sign bytes as well as UTF-8 strings, which is particularly helpful if you're writing HDDcoinlisp puzzles that require signatures and you want to test them without necessarily writing a whole python script for signing the relevant data.
+- Added an option to sign bytes as well as UTF-8 strings, which is particularly helpful if you're writing Chialisp puzzles that require signatures and you want to test them without necessarily writing a whole python script for signing the relevant data.
 - Added a first version of .pre-commit-config.yaml and applied the changes required by the following initial hooks in separate commits. To use this you need to install pre-commit, see <https://pre-commit.com/#installation/>.
 - We have added many new translations in this release based on community
 submissions. Thanks to @RuiZhe for Chinese, Traditional; @HansCZ for Czech;
@@ -54,7 +117,7 @@ submissions. Thanks to @RuiZhe for Chinese, Traditional; @HansCZ for Czech;
 - Thanks @altendky for changing the default to paginate to hddcoin wallet get_transactions to address cases such as piping and output redirection to a file where the command previously just hung while waiting for the user to press c for the next page.
 - Removed commented-out debug breakpoints.
 - Enabled Rust condition checker to add the ability to parse the output conditions from a  generator program in Rust. It also validates some of the conditions in Rust.
-- Switched IP address lookup to first use HDDcoin's service ip.hddcoin.net.
+- Switched IP address lookup to first use HDDcoin's service ip.hddcoin.org.
 - Made changes so that when creating SSL certificate and private key files, we ensure that files are written with the proper file permissions.
 - Define a new encrypted keyring format to be used to store keys, and which is optionally encrypted to a user-supplied passphrase. GUI for the passphrase will come in an upcoming release.
 - Removed initial transaction freeze put in place at mainnet launch as it is no longer necessary.
@@ -92,13 +155,13 @@ submissions. Thanks to @RuiZhe for Chinese, Traditional; @HansCZ for Czech;
 - Thanks @aarcro for adding timing metrics to plot check.
 - Thanks @chadwick2143 for adding the ability to set the port to use for the harvester.
 - Added more friendly error reporting for peername errors.
-- We have added many new translations in this release. Thanks to @L3Sota,  @hodokami and @L3Sota for Japanese; @danielrangel6, @memph1x and @dvd101x for Spanish (Mexico); @fsavaget, @semnosao and @ygalvao for Portuguese (Brazilian); @juands1644 for Spanish (Argentina); @darkflare for Portuguese; @wong8888, @RuiZhe, @LM_MA, @ezio20121225, @GRIP123, @11221206 and @nicko1122 for Chinese Traditional; @atomsymbol for Slovak; @SirGeoff and @rolandfarkasCOM for Hungarian; @ordtrogen for Swedish; @HansCZ and @kafkic for Czech; @SupperDog for Chinese Simplified; @baturman and @Ansugo for Turkish; @thebacktrack for Russian; @itservicelukaswinter for German; @saeed508, @Amirr_ezA and @themehran for Persian; @hgthtung for Vietnamese; @f00b4r for Finnish; @IMIMIM for Latvian; @Rothnita and @vanntha85 for Khmer; @Rothnita and @Gammaubl for Thai; @marcin1990 for Polish; @mydienst for Bosnian; @dvd101x and @darkflare for Spanish; @ATSHOOTER for Albanian; @Munyuk81 for Indonesian; @loppefaaret for Danish; @sharjeelazizn and @nzjake for English; @nzjake for English (New Zealand). We apologize if we missed anyone and welcome corrections.
+- We have added many new translations in this release. Thanks to @L3Sota,  @hodokami and @L3Sota for Japanese; @danielrangel6, @memph1x and @dvd101x for Spanish (Mexico); @fsavaget, @semnosao and @ygalvao for Portuguese (Brazilian); @juands1644 for Spanish (Argentina); @darkflare for Portuguese; @wong8888, @RuiZhe, @LM_MA, @ezio20121225, @GRIP123, @11221206 and @nicko1122 for Chinese Traditional; @atomsymbol for Slovak; @SirGeoff and @rolandfarkasCOM for Hungarian; @ordtrogen for Swedish; @HansCZ and @kafkic for Czech; @SupperDog for Chinese Simplified; @baturman and @Ansugo for Turkish; @thebacktrack for Russian; @itservicelukaswinter for German; @saeed508, @Amirr_ezA and @themehran for Persian; @hgthtung for Vietnamese; @f00b4r for Finnish; @IMIMIM for Latvian; @Rothnita and @vanntha85 for Khmer; @Rothnita and @Gammaubl for Thai; @marcin1990 for Polish; @mydienst for Bosnian; @dvd101x and @darkflare for Spanish; @ATSHOOTER for Albanian; @Munyuk81 for Indonesian; @loppefaaret for Danish; @sharjeelaziz and @nzjake for English; @nzjake for English (New Zealand). We apologize if we missed anyone and welcome corrections.
 
 ### Changed
 
 - Updated blspy to 1.0.5.
-- Updated hddcoinpos to 1.0.4.
-- Included all HDDcoinlisp files in source distribution.
+- Updated chiapos to 1.0.4.
+- Included all Chialisp files in source distribution.
 - Removed left-over debug logging from test_wallet_pool_store.
 - Made changes to allow us to use the name coin_spend everywhere in our code, without changing it in the API requests, both outgoing and incoming. Enables us to decide at a later date when to cut over completely to the coin_spend name.
 - Thanks @mishan for your change to 'hddcoin plotnft show' to display Percent Successful Points.
@@ -163,15 +226,15 @@ OG plots made before this release can continue to be farmed side by side with th
 ### Changed
 
 - We have made a host of changes to the GUI to support pooling and to improve the wallet experience.
-- We updated hddcoinpos to version 1.0.3. This adds parallel reads to GetFullProof. Thanks to @marcoabreu ! We now print target/final directory early in the logs refs and log process ID. Thanks to @grayfallstown ! We are now using Gulrak 1.5.6.
-@683280 optimized code in phase1.hpp. @jespino and @mrhacky started migrating to flags instead of booleans parameters for `show_progress` and `nobitfield`. If you are providing third-party tools you may need to make adjustments if relying on the hddcoinpos log.
-- Updated hddcoinvdf to version 1.0.2 to fix certain tests.
+- We updated chiapos to version 1.0.3. This adds parallel reads to GetFullProof. Thanks to @marcoabreu ! We now print target/final directory early in the logs refs and log process ID. Thanks to @grayfallstown ! We are now using Gulrak 1.5.6.
+@683280 optimized code in phase1.hpp. @jespino and @mrhacky started migrating to flags instead of booleans parameters for `show_progress` and `nobitfield`. If you are providing third-party tools you may need to make adjustments if relying on the chiapos log.
+- Updated chiavdf to version 1.0.2 to fix certain tests.
 - Windows builds now rely upon Python 3.9 which obviates the fix in 1.1.7.
 - We are now using miniupnpc version 2.2.2 so that we can support Python 3.9 on Windows.
 - We updated to clvm 0.9.6 and clvm_rs 0.1.8. CLVMObject now lazily converts python types to CLVM types as elements are inspected in clvm. cvlm_rs now returns python objects rather than a serialized object.
 - We now have rudimentary checks to makes sure that fees are less than the amount being spent.
 - The harvester API no longer relies upon time:time with thanks to @x1957.
-- We have increased the strictness of validating HDDcoinlisp in the mempool and clvm.
+- We have increased the strictness of validating Chialisp in the mempool and clvm.
 - Thanks to @ruslanskorb for improvements to the human-readable forms in the CLI.
 - Thanks to @etr2460 for improvements to the plotting progress bar in the GUI and enhancements to human-readable sizes.
 - @dkackman changed the way that configuration was found on startup.
@@ -239,7 +302,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - Optimized Streamable parsing by avoiding extra post-init checks, making parsing block records from database up to 40% faster.
 - Made the serialization of Coin follow the normal protocol of implementing stream().
 - Minor improvements to add_spendbundle and weight proofs.
-- We now use version 1.0.2 of hddcoinpos. We now reopen files on read or write failure with thanks to @mreid-moz! We also prevent hddcoinpos prover crashing for more bad plots.
+- We now use version 1.0.2 of chiapos. We now reopen files on read or write failure with thanks to @mreid-moz! We also prevent chiapos prover crashing for more bad plots.
 - Disabled deletion of running plot for Windows users as the crash/lockup bug has returned.
 - We more clearly prohibit root from installing/running the GUI.
 - Thanks to @sargonas for improvements to the template for creating Issues.
@@ -288,7 +351,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 
 - We now require node 12.x to build the GUI. Installers have been building using node 12.x for quite some time.
 - Node will now farm while syncing.
-- We changed hddcoinlisp singletons to take a puzzlehash as its origin. We also updated the DID wallet to use this.
+- We changed chialisp singletons to take a puzzlehash as its origin. We also updated the DID wallet to use this.
 - Transactions are now cached for 10 minutes in mempool to retry if there is a failure of a spending attempt.
 - Thank you to @Chida82 who made the log rotation count fully configurable. Apologies to him for not initially being included here.
 - Thank you to @fiveangle for making install.sh more resilient across python installations.
@@ -302,7 +365,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - @martomi added logging of added coins back.
 - Thank you to @aisk for additional type checking.
 - @aisk added error checking in bech32m
-- HDDcoinlisp programs now remained serialized in Node for better performance.
+- Chialisp programs now remained serialized in Node for better performance.
 - Mempool is now set to be 50 times the single block size.
 - Mitigate 1-3 byte dust attacks.
 - CLI now switches to EiB for netspace display as appropriate.
@@ -352,7 +415,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 ### Added
 
 - This fork release includes full transaction support for the HDDcoin Blockchain. Transactions are still disabled until 5/3/2021 at 10:00AM PDT. It is hard to overstate how much work and clean up went into this release.
-- This is the 1.0 release of HDDcoinlisp. Much has been massaged and finalized. We will be putting a focus on updating and expanding the documentation on [hddcoinlisp.com](https://hddcoinlisp.com) shortly.
+- This is the 1.0 release of Chialisp. Much has been massaged and finalized. We will be putting a focus on updating and expanding the documentation on [chialisp.com](https://chialisp.com) shortly.
 - Farmers now compress blocks using code snippets from previous blocks. This saves storage space and allows larger smart coins to have a library of sorts on chain.
 - We now support offline signing of coins.
 - You can now ask for an offset wallet receive address in the cli. Thanks @jespino.
@@ -426,13 +489,13 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 ### Fixed
 
 - An incorrect merge brought in unreleased features and broke `hddcoin keys`.
-- Omitted from the 1.0.2 changelog, we fixed one crash in harvester with the release of hddcoinpos 1.0.0 as well.
+- Omitted from the 1.0.2 changelog, we fixed one crash in harvester with the release of chiapos 1.0.0 as well.
 
 ## 1.0.2 HDDcoin Blockchain 2021-03-30
 
 ### Added
 
-- We have released version 1.0.0 of [hddcoinpos](https://github.com/HDDcoin-Network/hddcoinpos). This includes a 20% speed increase for bitfield plotting compared to the previous version on the same machine. In many cases this will mean that bitfield plotting is as fast or faster than non bitfield plotting.
+- We have released version 1.0.0 of [chiapos](https://github.com/HDDcoin-Network/chiapos). This includes a 20% speed increase for bitfield plotting compared to the previous version on the same machine. In many cases this will mean that bitfield plotting is as fast or faster than non bitfield plotting.
 - @xorinox improved our support for RedHat related distributions in `install.sh`.
 - @ayaseen improved our support for RedHat related distributions in `install-timelord.sh`.
 - We have added Dutch and Polish to supported translations. Thanks @psydafke, @WesleyVH, @pieterhauwaerts, @bartlomiej.tokarzewski, @abstruso, @feel.the.code, and @Axadiw for contributions to [translations on Crowdin](https://crowdin.com/project/hddcoin-blockchain).
@@ -586,9 +649,9 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 
 - Remove `hddcoin plots "-s" "--stripe_size"` and the strip size setting in the Advanced section of the GUI. We now always use the best default of 64K for the GUI and cli.
 - `hddcoin keys add` takes secret words a prompt on the command line or stdin instead of command line arguments for security.
-- Version 1.0.1 of hddcoinvdf was added. This brought MPIR on Windows to the most recent release. Additionally we removed inefficient ConvertIntegerToBytes() and ConvertBytesToInt() functions, use GMP library's mpz_export/mpz_import for big integers and simple helper functions for built-in integer types. The latter are taken from hddcoinvdf. We now require compressed forms to be encoded canonically when deserializing. This should prevent potential grinding attacks where some non-canonical encodings of a compressed form could be used to change its hash and thus the next challenges derived from it. Canonically encoded compressed forms must be reduced and must produce the same string when deserialized and serialized again.
+- Version 1.0.1 of chiavdf was added. This brought MPIR on Windows to the most recent release. Additionally we removed inefficient ConvertIntegerToBytes() and ConvertBytesToInt() functions, use GMP library's mpz_export/mpz_import for big integers and simple helper functions for built-in integer types. The latter are taken from chiavdf. We now require compressed forms to be encoded canonically when deserializing. This should prevent potential grinding attacks where some non-canonical encodings of a compressed form could be used to change its hash and thus the next challenges derived from it. Canonically encoded compressed forms must be reduced and must produce the same string when deserialized and serialized again.
 - Version 1.0 of our BLS signature library is included. We brought Relic, gmp and MPIR up to their most recent releases. We again thank the Dash team for their fixes and improvements.
-- We now hand build Apple Silicon native binary wheels for all hddcoin-blockchain dependencies and host them at [https://pypi.hddcoin.net/simple](https://pypi.hddcoin.net/simple). We are likely to hand build a MacOS ARM64 dmg available and certainly will for 1.0. You can install natively on M1 now with the `git clone` developer method today. Just make sure Python 3.9 is installed. `python3 --version` works.
+- We now hand build Apple Silicon native binary wheels for all hddcoin-blockchain dependencies and host them at [https://pypi.chia.net/simple](https://pypi.chia.net/simple). We are likely to hand build a MacOS ARM64 dmg available and certainly will for 1.0. You can install natively on M1 now with the `git clone` developer method today. Just make sure Python 3.9 is installed. `python3 --version` works.
 - The GUI now shows you which network you are connected to on the Full Node page. It will also wait patiently for the green flag to drop on a network launch.
 - In the GUI you can only plot k=32 or larger with the single exception of k=25 for testing. You will have to confirm choosing k=25 however. Thanks to @jespino for help on this and limiting the cli as well.
 - The restore smart wallets from backup prompt has been improved to better get the intent across and that it can be skipped.
@@ -599,7 +662,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - There are new timestamp consensus rules. A block N must have a greater timestamp than block N-1. Also, a block's timestamp cannot be more than 5 minutes in the future. Note that we have decided that work factor difficulty resets are now going to be 24 hours on mainnet but are still shorter on testnet.
 - A List[Tuple[uint16, str]] is added to the peer network handshake. These are the capabilities that the node supports, to add new features to the protocol in an easy - soft fork - manner. The message_id is now before the data in each message.
 - Peer gossip limits were set.
-- Generators have been re-worked in CLVM. We added a hddcoinlisp deserialization puzzle and improved the low-level generator. We reduce the accepted atom size to 1MB during HDDcoinLisp native deserialization.
+- Generators have been re-worked in CLVM. We added a chialisp deserialization puzzle and improved the low-level generator. We reduce the accepted atom size to 1MB during HDDcoinLisp native deserialization.
 - When processing mempool transactions, Coin IDs are now calculated from parent coin ID and amount
 - We implemented rate limiting for full node. This can and will lead to short term bans of certain peers that didn't behave in expected ways. This is ok and normal, but strong defense against many DDOS attacks.
 - `requirements-dev.txt` has been removed in favor of the CI actions and test scripts.
@@ -633,7 +696,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - We have added Romanian to the GUI translations. Thank you to @bicilis on [Crowdin](https://crowdin.com/project/hddcoin-blockchain). We also added a couple of additional target languages. Klingon anyone?
 - `hddcoin wallet` now takes get_address to get a new wallet receive address from the CLI.
 - `hddcoin plots check` will list out all the failed plot filenames at the end of the report. Thanks for the PR go to @eFishCent.
-- HDDcoinlisp and the clvm have had the standard puzzle updated and we replaced `((c P A))` with `(a P A)`.
+- Chialisp and the clvm have had the standard puzzle updated and we replaced `((c P A))` with `(a P A)`.
 
 ## Changed
 
@@ -643,14 +706,14 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - We have updated the display of peer nodes and moved adding a peer to it's own pop up in the GUI.
 - Block searching in the GUI has been improved.
 - @jespino added i18n support and refactored how locales are loaded in the GUI. Additionally he moved more strings into the translation infrastructure for translators.
-- In hddcoinvdf we changed n-Wesolowski proofs to include B instead of y in segments. Proof segments now have the form (iters, B, proof) instead of (iters, y, proof). This reduces proof segment size from 208 to 141 bytes.
-- The new hddcoinvdf proof format is not compatible with the old one, however zero-Wesolowski proofs are not affected as they have zero proof segments and consist only of (y, proof).
-- We made two HashPrime optimizations in hddcoinvdf. This forces numbers being tested for primality to be odd and avoids an unnecessary update of the sprout vector by stopping after the first non-zero value. This is a breaking change as it changes the prime numbers generated from a given seed. We believe this is the final breaking change for hddcoinvdf.
-- hddcoinbip158 was set to a gold 1.0 version.
-- Comments to HDDcoinlisp and clvm source have been updated for all of the HDDcoinlisp changes over the proceeding three weeks.
+- In chiavdf we changed n-Wesolowski proofs to include B instead of y in segments. Proof segments now have the form (iters, B, proof) instead of (iters, y, proof). This reduces proof segment size from 208 to 141 bytes.
+- The new chiavdf proof format is not compatible with the old one, however zero-Wesolowski proofs are not affected as they have zero proof segments and consist only of (y, proof).
+- We made two HashPrime optimizations in chiavdf. This forces numbers being tested for primality to be odd and avoids an unnecessary update of the sprout vector by stopping after the first non-zero value. This is a breaking change as it changes the prime numbers generated from a given seed. We believe this is the final breaking change for chiavdf.
+- chiabip158 was set to a gold 1.0 version.
+- Comments to Chialisp and clvm source have been updated for all of the Chialisp changes over the proceeding three weeks.
 - And thanks yet again to @jespino for a host of PRs to add more detailed typing to various components in hddcoin-blockchain.
 - aiohttp was updated to 3.7.4 to address a low severity [security issue](https://github.com/advisories/GHSA-v6wp-4m6f-gcjg).
-- calccrypto/uint128_t was updated in the Windows hddcoinpos implementation. HDDcoinpos required some changes its build process to support MacOS ARM64.
+- calccrypto/uint128_t was updated in the Windows chiapos implementation. Chiapos required some changes its build process to support MacOS ARM64.
 
 ### Fixed
 
@@ -677,9 +740,9 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 
 ### Added
 
-- RC3 is a new chain to support the last major hddcoinlisp changes. THDD from the RC1/2 chain do not come forward to this chain but plots and keys continue to work as usual.
+- RC3 is a new chain to support the last major chialisp changes. THDD from the RC1/2 chain do not come forward to this chain but plots and keys continue to work as usual.
 - We have lowered the transaction lock to the first 5000 blocks to facilitate testing. We also started this chain at a lower difficulty.
-- A new RPC api: /push_tx. Using this RPC, you can spend custom hddcoinlisp programs. You need to make a SpendBundle, which includes the puzzle reveal (hddcoinlisp), a solution (hddcoinlisp) and a signature.
+- A new RPC api: /push_tx. Using this RPC, you can spend custom chialisp programs. You need to make a SpendBundle, which includes the puzzle reveal (chialisp), a solution (chialisp) and a signature.
 - You can now use the RPC apis to query the mempool.
 - There are now Swedish, Spanish, and Slovak translations. Huge thanks to @ordtrogen (Swedish), @jespino and @dvd101x (Spanish), and our own @seeden (Slovak). Also thanks were due to @f00b4r (Finnish), @A-Caccese (Italian), and @Bibop182 and @LeonidShamis (Russian). Quite a few more are almost complete and ready for inclusion. You can help translate and review translations at our [crowdin project](https://crowdin.com/project/hddcoin-blockchain).
 - You can obtain a new wallet receive address on the command line with `hddcoin wallet new_address`. Thanks to @jespino for this and a lot more in the next section below.
@@ -687,7 +750,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 
 ### Changed
 
-- All hddcoinlisp opcodes have been renumbered. This should be the last major breaking change for hddcoinlisp and the clvm. There are a couple minor enhancements still needed for mainnet launch, but they may or may not require minor breaking changes. We will be restarting testnet chains on a mostly weekly basis either way.
+- All chialisp opcodes have been renumbered. This should be the last major breaking change for chialisp and the clvm. There are a couple minor enhancements still needed for mainnet launch, but they may or may not require minor breaking changes. We will be restarting testnet chains on a mostly weekly basis either way.
 - Node batch syncing performance was increased, and it now avoids re-validating blocks that node had already validated.
 - The entire CLI has been ported to [Click](https://click.palletsprojects.com/en/7.x/). Huge thanks to @jespino for the big assist and @unparalleled-js for the [recommendation and the initial start](https://github.com/HDDcoin-Network/hddcoin-blockchain/issues/464). This will make building out the CLI much easier. There are some subtle changes and some shortcuts are not there anymore. `hddcoin -h` and `hddcoin SUBCOMMAND -h` can be your guide.
 - We have upgraded Electron to 11.3 to support Apple Silicon. There are still one or two issues in our build chain for Apple Silicon but we should have an M1 native build shortly.
@@ -730,7 +793,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 
 ### Added
 
-- This is the first release in our release candidate series. There are still a few things that will change at the edges but the blockchain, clvm, and hddcoinlisp are in release form. We have one major change to hddcoinlisp/clvm that we have chosen to schedule for the next release as in this release we're breaking the way q/quote works. We also have one more revision to the VDF that will decrease the sizes of the proofs of time. We expect a few more releases in the release candidate series.
+- This is the first release in our release candidate series. There are still a few things that will change at the edges but the blockchain, clvm, and chialisp are in release form. We have one major change to chialisp/clvm that we have chosen to schedule for the next release as in this release we're breaking the way q/quote works. We also have one more revision to the VDF that will decrease the sizes of the proofs of time. We expect a few more releases in the release candidate series.
 - Installers will now be of the pattern HDDcoinSetup-0.2.1.exe. `0.2` is release candidate and the final `.1` is the first release candidate.
 - Use 'hddcoin wallet get_transactions' in the command line to see your transactions.
 - 'hddcoin wallet show' now shows your wallet's height.
@@ -755,7 +818,7 @@ all fields that referred to sub blocks are changed to blocks.
 
 ### Fixed
 
-- We updated hddcoinpos to hopefully address some harvester crashes when moving plot files.
+- We updated chiapos to hopefully address some harvester crashes when moving plot files.
 - Many of the cards on the Farming page have had bugs addressed including last block farmed, block rewards, and user fees.
 - Improved validation of overflow blocks.
 
@@ -765,13 +828,13 @@ all fields that referred to sub blocks are changed to blocks.
 
 - The Beta 27 chain is a hard fork. All THDD from previous releases has been reset on this chain. Your keys and plots of k=32 or larger continue to work just fine on this new chain.
 - We now use the rust version of clvm, clvm_rs, in preference to validate transactions. We have additionally published binary wheels or clvm_rs for all four platforms and all three supported python versions. The rust version is approximately 50 times faster than the python version used to validate on chain transactions in previous versions.
-- We have moved to compressed quadratic forms for VDFs. Using compressed representation of quadratic forms reduces their serialized size from 130 to 100 bytes (for forms with 1024-bit discriminant). This shrinks the size of VDF outputs and VDF proofs, and it's a breaking change as the compressed representation is not compatible with the older uncompressed (a, b) representation. Compressed forms are also used in calls to hddcoinvdf and in timelord's communication with VDF clients. The form compression algorithm is based on ["Trustless Groups of Unknown Order with Hyperelliptic Curves"](https://eprint.iacr.org/2020/196) by Samuel Dobson, Steven D. Galbraith and Benjamin Smith.
+- We have moved to compressed quadratic forms for VDFs. Using compressed representation of quadratic forms reduces their serialized size from 130 to 100 bytes (for forms with 1024-bit discriminant). This shrinks the size of VDF outputs and VDF proofs, and it's a breaking change as the compressed representation is not compatible with the older uncompressed (a, b) representation. Compressed forms are also used in calls to chiavdf and in timelord's communication with VDF clients. The form compression algorithm is based on ["Trustless Groups of Unknown Order with Hyperelliptic Curves"](https://eprint.iacr.org/2020/196) by Samuel Dobson, Steven D. Galbraith and Benjamin Smith.
 - Last Attempted Proof on the Farm tab of the GUI now shows hours:minutes:seconds instead of just hours:minutes. This makes it much easier to see that your farmer is responding to recent challenges at a glance.
 - You can now send and receive transactions with the command line. Try `hddcoin wallet -h` to learn more. Also, `hddcoin wallet` now requires a third argument of `show`, therefor you will use `hddcoin wallet show` to see your wallet balance.
 - We have added the [Crowdin](https://crowdin.com/) translation platform to [hddcoin blockchain gui](https://crowdin.com/project/hddcoin-blockchain). We are still getting it fully set up, but helping to translate the GUI is going to be much easier.
 - Full Node > Connections in the GUI now shows the peak sub block height your connected peers believe they are at. A node syncing from you will not be at the true peak sub block height until it gets into sync.
 - `hddcoin init -c [directory]` will create new TLS certificates signed by your CA located in `[directory]`. Use this feature to configure a new remote harvester. Type `hddcoin init -h` to get instructions. Huge thanks to a very efficient @eFishCent for this quick and thorough pull request.
-- We build both MacOS x86_64 and MacOS universal wheels for hddcoinpos, hddcoinvdf, blpsy, and hddcoinbip158 in Python 3.9. The universal build allows M1 Macs to run these dependencies in ARM64 native mode.
+- We build both MacOS x86_64 and MacOS universal wheels for chiapos, chiavdf, blpsy, and chiabip158 in Python 3.9. The universal build allows M1 Macs to run these dependencies in ARM64 native mode.
 - On first run in the GUI (or when there are no plot directories) there is now an "Add Plot Directories" on the Farm tab also.
 
 ### Changed
@@ -817,7 +880,7 @@ all fields that referred to sub blocks are changed to blocks.
 - Peers that have not sent data in the last hour are now disconnected.
 - We have made the "Help Translate" button in the GUI open in your default web browser and added instructions for adding new translations and more phrases in existing translations at that [URL](https://github.com/HDDcoin-Network/hddcoin-blockchain/tree/main/electron-react/src/locales). Try the "Help Translate" option on the language selection pull down to the left of the dark/light mode selection at the top right of the GUI.
 - Sync store now tracks all connected peers and removes them as they get removed.
-- The Rate Limited Wallet has been ported to new consensus and updated HDDcoinlisp methods.
+- The Rate Limited Wallet has been ported to new consensus and updated Chialisp methods.
 - We are down to only one sub dependency that does not ship binary wheels for all four platforms. The only platform still impacted is ARM64 (generally Raspberry Pi) but that only means that you still need the minor build tools as outlined on the [wiki](https://github.com/HDDcoin-Network/hddcoin-blockchain/wiki/Raspberry-Pi).
 - We upgraded to Electron 9.4.2 for the GUI.
 - We have upgraded to py-setproctitle 1.2.2. We now have binary wheels for setproctitle on all four platforms and make it a requirement in setup.py. It is run-time optional if you wish to disable it.
@@ -829,7 +892,7 @@ all fields that referred to sub blocks are changed to blocks.
 - Plot filename is now back in the Plots table of the GUI.
 - There was a bug in adding a sub block to weight proofs and an issue in the weight proof index.
 - Over time the node would think that there were no peers attached with peak sub block heights higher than 0.
-- There was a potential bug in Python 3.9.0 that required us to update blspy, hddcoinpos, hddcoinvdf, and hddcoinbip158.
+- There was a potential bug in Python 3.9.0 that required us to update blspy, chiapos, chiavdf, and chiabip158.
 - An off by one issue could cause syncing to ask for 1 sub block when it should ask for e.g. 32.
 - Short sync and backtrack sync both had various issues.
 - There was an edge case in bip158 handling.
@@ -960,7 +1023,7 @@ all fields that referred to sub blocks are changed to blocks.
 - The GUI now warns if you attempt to create a plot smaller than k=32.
 - Added Chinese language localization (zh-cn). A big thank you to @goomario for their pull request!
 - You can now specify which private key to use for `hddcoin plots create`. After obtaining the fingerprint from `hddcoin keys show`, try `hddcoin plots create -a FINGERPRINT`. Thanks to @eFishCent for this pull request!
-- We use a faster hash to prime function for hddcoinvdf from the current release of gmp-6.2.1 which we have upgraded hddcoinvdf and blspy to support.
+- We use a faster hash to prime function for chiavdf from the current release of gmp-6.2.1 which we have upgraded chiavdf and blspy to support.
 - There is a new cli command - `hddcoin configure`. This allows you to update certain configuration details like log level in config.yaml from the command line. This is particularly useful in containerization and linux automation. Try `hddcoin configure -h`. Note that if hddcoin services are running and you issue this command you will have to restart them for changes to take effect but you can use this command in the venv when no services are running or call it directly by path in the venv without activating the venv. Expect the options for this command to expand.
 - We now fully support Python 3.9.
 
@@ -977,16 +1040,16 @@ all fields that referred to sub blocks are changed to blocks.
 - We have moved to taproot across all of our transactions and smart transactions.
 - We have adopted chech32m encoding of keys and addresses in parallel to bitcoin's coming adoption of bech32m.
 - The rate limited wallet was updated and re-factored.
-- All appropriate HDDcoinlisp smart transactions have been updated to use aggsig_me.
+- All appropriate Chialisp smart transactions have been updated to use aggsig_me.
 - Full node should be more aggressive about finding other peers.
 - Peer disconnect messages are now set to log level INFO down from WARNING.
-- hddcoinvdf now allows passing in input to a VDF for new consensus.
-- sha256tree has been removed from HDDcoinlisp.
+- chiavdf now allows passing in input to a VDF for new consensus.
+- sha256tree has been removed from Chialisp.
 - `hddcoin show -s` has been refactored to support the new consensus.
 - `hddcoin netspace` has been refactored for new consensus.
 - aiohttp, clvm-tools, colorlog, concurrent-log-handler, keyring, cryptography, and sortedcontainers have been upgraded to their current versions.
 - Tests now place a cache of blocks and plots in the ~/.hddcoin/ directory to speed up total testing time.
-- Changes were made to hddcoinpos to correctly support the new bitfiled backpropogation on FreeBSD and OpenBSD. With the exception of needing to work around python cryptography as outlined on the wiki, FreeBSD and OpenBSD should be able to compile and run hddcoin-blockchain.
+- Changes were made to chiapos to correctly support the new bitfiled backpropogation on FreeBSD and OpenBSD. With the exception of needing to work around python cryptography as outlined on the wiki, FreeBSD and OpenBSD should be able to compile and run hddcoin-blockchain.
 - With the change to new consensus many components of the chain and local database are not yet stored optimally. Startup and sync times may be slower than usual so please be patient. This will improve next release.
 - Errata: Coinbase amount is missing from the GUI Block view.
 - Eratta: wallet Backup, and Fly-sync on the wallet are currently not working.
@@ -1004,8 +1067,8 @@ all fields that referred to sub blocks are changed to blocks.
 ### Added
 
 - F1 generation in the plotter is now fully parallel for a small speedup.
-- We have bitfield optimized phase 2 of plotting. There is only about a 1% increase in speed from this change but there is a 12% decrease in writes with a penalty of 3% more reads. More details in [PR 120](https://github.com/HDDcoin-Network/hddcoinpos/pull/120). Note that some sorts in phase 2 and phase 3 will now appear "out of order" and that is now expected behavior.
-- Partial support for Python 3.9. That includes new versions of HDDcoin dependencies like hddcoinbip158.
+- We have bitfield optimized phase 2 of plotting. There is only about a 1% increase in speed from this change but there is a 12% decrease in writes with a penalty of 3% more reads. More details in [PR 120](https://github.com/HDDcoin-Network/chiapos/pull/120). Note that some sorts in phase 2 and phase 3 will now appear "out of order" and that is now expected behavior.
+- Partial support for Python 3.9. That includes new versions of HDDcoin dependencies like chiabip158.
 
 ### Changed
 
@@ -1046,7 +1109,7 @@ all fields that referred to sub blocks are changed to blocks.
 ### Changed
 
 - The entire GUI has been refactored for code quality and performance.
-- Updated to hddcoinpos 0.12.32. This update significantly speeds up the F1/first table plot generation. It also now can log disk usage while plotting and generate graphs. More details in the [hddcoinpos release notes](https://github.com/HDDcoin-Network/hddcoinpos/releases/tag/0.12.32).
+- Updated to chiapos 0.12.32. This update significantly speeds up the F1/first table plot generation. It also now can log disk usage while plotting and generate graphs. More details in the [chiapos release notes](https://github.com/HDDcoin-Network/chiapos/releases/tag/0.12.32).
 - Node losing or not connecting to another peer node (which is entirely normal behaviour) is now logged at INFO and not WARNING. Your logs will be quieter.
 - Both the GUI and CLI now default to putting the second temporary directory files into the specified temporary directory.
 - SSL Certificate handling was refactored along with Consensus constants, service launching, and internal configuration management.
@@ -1058,7 +1121,7 @@ all fields that referred to sub blocks are changed to blocks.
 
 - A bug in bls-singatures/blspy could cause a stack overflow if too many signatures were verified at once. This caused the block of death at 11997 of the Beta 15 chain. Updated to 0.2.4 to address the issue.
 - GUI Wallet now correctly updates around reorgs.
-- hddcoinpos 0.12.32 fixed a an out of bounds read that could crash the plotter. It also contains a fix to better handle the case of drive letters on Windows.
+- chiapos 0.12.32 fixed a an out of bounds read that could crash the plotter. It also contains a fix to better handle the case of drive letters on Windows.
 - Node would fail to start on Windows Server 2016 with lots of cores. This [python issue explains]( https://bugs.python.org/issue26903) the problem.
 
 ### Known Issues
@@ -1091,11 +1154,11 @@ all fields that referred to sub blocks are changed to blocks.
 - The rate limited wallet library now supports coin aggregation for adding additional funds after the time of creation.
 - Fees are now used in all applicable rate limited wallet calls
 - New parameters for plotting: -r (number of threads) -s (stripe size) -u (number of buckets) in cli and GUI
-- hddcoinvdf now has full IFMA optimizations for processors that support it.
+- chiavdf now has full IFMA optimizations for processors that support it.
 
 ### Changed
 
-- Multithreading support in hddcoinpos, as well as a new algorithm which is faster and does 70% less IO. This is a significant improvement in speed, much lower total writing, and configurability for different hardware environments.
+- Multithreading support in chiapos, as well as a new algorithm which is faster and does 70% less IO. This is a significant improvement in speed, much lower total writing, and configurability for different hardware environments.
 - Default -b changed to 3072 to improve performance
 - The correct amount of memory is used for plotting
 - `sh install.sh` was upgraded so that on Ubuntu it will install any needed OS dependencies.
@@ -1109,9 +1172,9 @@ all fields that referred to sub blocks are changed to blocks.
 
 - Temporary space required for each k size was updated with more accurate estimates.
 - Tables in the README.MD were not rendering correctly on Pypi. Thanks again @altendky.
-- HDDcoinpos issue where memory was spiking and increasing
+- Chiapos issue where memory was spiking and increasing
 - Fixed working space estimates so they are exact
-- Log all errors in hddcoinpos
+- Log all errors in chiapos
 - Fixed a bug that was causing Bluebox vdfs to fail.
 
 ## [1.0beta13] aka Beta 1.13 - 2020-09-15
@@ -1191,7 +1254,7 @@ all fields that referred to sub blocks are changed to blocks.
 
 - Wallet addresses and other key related elements are now expressed in Chech32 which is the HDDcoin implementation of [Bech32](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki). All of your old wallet addresses will be replaced with the new Chech32 addresses. The only thing you can't do is send test hddcoin between 1.8/1.9 and 1.10 software. Anyone who upgrades to 1.10 will keep their transactions and balances of test hddcoin from the earlier two releases however.
 - We added a first few enhancements to plotting speed. For a k=30 on a ramdisk with `-b 64 GiB` it results in an 11% speedup in overall plotting speed and a 23% improvement in phase 1 speed. Many more significant increases in plotting speed are in the works.
-- The proof of space document in hddcoinpos has been updated to the new format and edited for clarity. Additionally GitHub actions now has the on demand ability to create the PDF version.
+- The proof of space document in chiapos has been updated to the new format and edited for clarity. Additionally GitHub actions now has the on demand ability to create the PDF version.
 - Relic has upstreamed our changes required for the IETF BLS standard. We now build directly from the Relic repository for all but Windows and will be migrating Windows in the next release.
 - Minor improvements to the Coloured Coin wallet were integrated in advance of an upcoming re-factor.
 - Smart wallet backup was upgraded to encrypt and sign the contents of the backup.
@@ -1201,7 +1264,7 @@ all fields that referred to sub blocks are changed to blocks.
 - Proof of space plotting now correctly calculates the total working space used in the `-t` directory.
 - `hddcoin show -w` now displays a message when balances cannot be displayed instead of throwing an error. Thanks to @freddiecoleman for this fix!
 - Fix issue with shutting down full node (full node processes remained open, and caused a spinner when launching HDDcoin)
-- Various code review alerts for comparing to a wider type in hddcoinpos were fixed. Additionally, unused code was removed from hddcoinpos
+- Various code review alerts for comparing to a wider type in chiapos were fixed. Additionally, unused code was removed from chiapos
 - Benchmarking has been re-enabled in bls-signatures.
 - Various node security vulnerabilities were addressed.
 - Updated keyring, various GitHub actions, colorlog, cbor2, and clvm_tools.
@@ -1276,7 +1339,7 @@ specify so you'll have to add any subfolders you want to also contain plots.
 - The UI now asks for confirmation before closing and shows shutdown progress.
 - UI now tries to shut down servers gracefully before exiting, and also closes
 the daemon before starting.
-- The various sub repositories (hddcoinpos, hddcoinvdf, etc.) now build ARM64 binary
+- The various sub repositories (chiapos, chiavdf, etc.) now build ARM64 binary
 wheels for Linux with Python 3.8. This makes installing on Ubuntu 20.04 lts on
 a Raspberry Pi 3 or 4 easy.
 - Ci's check to see if they have secret access and attempt to fail cleanly so
@@ -1321,7 +1384,7 @@ farmer and full node protocols.
 other chains.
 - Keys are now derived with the EIP 2334 (m/12381/8444/a/b).
 - Removed the ability to pass in sk_seed to plotting, to increase security.
-- Linux builds of hddcoinvdf and blspy now use a fresh build of gmp 6.2.1.
+- Linux builds of chiavdf and blspy now use a fresh build of gmp 6.2.1.
 
 ### Fixed
 
@@ -1398,7 +1461,7 @@ relic. We will make a patch available for these systems shortly.
 - We added total network storage space estimation to the node RPC at the `/get_network_space` endpoint instead of only being available in the cli. The RPC endpoint takes two block header hashes and estimates space between those header hashes.
 - Logs now autorotate. Once the debug.log reaches 20MB it is compressed and archived keeping 7 historical 20MB logs.
 - We now have a CHANGELOG.md that adheres closely to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) standard. We merged in the version history and updated some previous release notes to capture items important to the change log. We are modifying our release process to accumulate changes at the top of the change log and then copy those to the release notes at the time of the release.
-- We added [lgtm](https://lgtm.com/) source analysis on pull request to the hddcoin-blockchain, hddcoinpos, hddcoinvdf, hddcoinbip158, and bls-library repositories to add some automated security analysis to our ci.
+- We added [lgtm](https://lgtm.com/) source analysis on pull request to the hddcoin-blockchain, chiapos, chiavdf, chiabip158, and bls-library repositories to add some automated security analysis to our ci.
 
 ### Changed
 
@@ -1411,7 +1474,7 @@ relic. We will make a patch available for these systems shortly.
   current LCA. Optionally you can use the `-b` flag to start the calculation from a different block
   height. Use `-d` to specify the delta number of blocks back into history to estimate over from either LCA or your `-b` block height.
 - The Full node RPC response formats have been changed. All API calls now return a dict with success, and an additional value, for example {"success": True, "block": block}.
-- hddcoinpos is now easier to compile with MSVC.
+- chiapos is now easier to compile with MSVC.
 - create plots now takes in an optional sk_seed, it is no longer read in from keys.yaml. If not passed in, it is randomly generated. The -i argument can now only be used when you provide an sk_seed.
 - Moved to PyYAML 5.3.1 which prevents arbitrary code execution during python/object/new constructor.
 - Moved to Python cryptography 2.9.2 which deprecates OpenSSL 1.0.1 and now relies upon OpenSSL 1.1.1g.
@@ -1446,11 +1509,11 @@ relic. We will make a patch available for these systems shortly.
 - Coloured coins now have a prefix to help identify them. When sending transactions, the new prefix is incompatible with older clients.
 - The user interface now refers to hddcoin coins with their correct currency code of HDD.
 - The next release will now be in the dev branch instead of the e.g. beta-1.5. Additionally we are enforcing linear merge into dev and prefer rebase merges or partial squash merges of particularly chatty commit histories.
-- Building the sub reposities (hddcoinpos, hddcoinvdf, blslibrary) now requires CMake 3.14+.
+- Building the sub reposities (chiapos, chiavdf, blslibrary) now requires CMake 3.14+.
 
 ### Fixed
 
-- There was a regression in HDDcoin Proof of Space ([hddcoinpos](https://github.com/HDDcoin-Network/hddcoinpos)) that came from our efforts to speed up plotting on Windows native. Now k>=32 plots work correctly. We made additional bug fixes and corrected limiting small k size generation.
+- There was a regression in HDDcoin Proof of Space ([chiapos](https://github.com/HDDcoin-Network/chiapos)) that came from our efforts to speed up plotting on Windows native. Now k>=32 plots work correctly. We made additional bug fixes and corrected limiting small k size generation.
 - There was a bug in Timelord handling that could stop all VDF progress.
 
 ### Deprecated
@@ -1466,7 +1529,7 @@ relic. We will make a patch available for these systems shortly.
 
 ### Added
 
-- This release adds Coloured coin support with offers. Yes that is the correct spelling. Coloured coins allow you to issue a coin, token, or asset with nearly unlimited issuance plans and functionality. They support inner smart transactions so they can inherit any of the other functionality you can implement in HDDcoinlisp. Offers are especially cool as they create a truly decentralized ehddange capability. Read much more about them in Bram's [blog post on Coloured coins](https://hddcoin.org/2020/04/29/coloured-coins-launch.en.html).
+- This release adds Coloured coin support with offers. Yes that is the correct spelling. Coloured coins allow you to issue a coin, token, or asset with nearly unlimited issuance plans and functionality. They support inner smart transactions so they can inherit any of the other functionality you can implement in Chialisp. Offers are especially cool as they create a truly decentralized ehddange capability. Read much more about them in Bram's [blog post on Coloured coins](https://hddcoin.org/2020/04/29/coloured-coins-launch.en.html).
 - This release adds support for native Windows via a (mostly) automated installer and MacOS Mojave. Windows still requires some PowerShell command line use. You should expect ongoing improvements in ease of install and replication of the command line tools in the GUI. Again huge thanks to @dkackman for continued Windows installer development. Native Windows is currently slightly slower than the same version running in WSL 2 on the same machine for both block verification and plotting.
 - We made some speed improvements that positively affected all platforms while trying to increase plotting speed in Windows.
 - The graphical Full Node display now shows the expected finish times of each of the prospective chain tips.
@@ -1556,13 +1619,13 @@ relic. We will make a patch available for these systems shortly.
 - We have revamped the hddcoin management command line. To start a farmer all you have to do is start the venv with `. ./activate` and then type `hddcoin-start-farmer &`. The [README.md](https://github.com/HDDcoin-Network/hddcoin-blockchain/blob/main/README.md) has been updated to reflect the new commands.
 - We have moved all node to node communication to TLS 1.3 by default. For now, all TLS is unauthenticated but certain types of over the wire node to node communications will have the ability to authenticate both by certificate and by inter protocol signature. Encrypting over the wire by default stops casual snooping of transaction origination, light wallet to trusted node communication, and harvester-farmer-node communication for example. This leaves only the mempool and the chain itself open to casual observation by the public and the various entities around the world.
 - Configuration directories have been moved to a default location of HomeDirectory/.hddcoin/release/config, plots/ db/, wallet/ etc. This can be overridden by `export HDDCOIN_ROOT=~/.hddcoin` for example which would then put the plots directory in `HomeDirectory/.hddcoin/plots`.
-- The libraries hddcoin-pos, hddcoin-fast-vdf, and hddcoin-bip-158 have been moved to their own repositories: [hddcoinpos](https://github.com/HDDcoin-Network/hddcoinpos), [hddcoinvdf](https://github.com/HDDcoin-Network/hddcoinvdf), and [chaibip158](https://github.com/HDDcoin-Network/hddcoinbip158). They are brought in by hddcoin-blockchain at install time. Our BLS signature library remains at [bls-signatures](https://github.com/HDDcoin-Network/bls-signatures).
-- The install process now brings in hddcoinpos, hddcoinvdf, etc from Pypi where they are auto published via GitHub Actions ci using cibuildwheel. Check out `.github/workflows/build.yml` for build methods in each of the sub repositories.
+- The libraries hddcoin-pos, hddcoin-fast-vdf, and hddcoin-bip-158 have been moved to their own repositories: [chiapos](https://github.com/HDDcoin-Network/chiapos), [chiavdf](https://github.com/HDDcoin-Network/chiavdf), and [chaibip158](https://github.com/HDDcoin-Network/chiabip158). They are brought in by hddcoin-blockchain at install time. Our BLS signature library remains at [bls-signatures](https://github.com/HDDcoin-Network/bls-signatures).
+- The install process now brings in chiapos, chiavdf, etc from Pypi where they are auto published via GitHub Actions ci using cibuildwheel. Check out `.github/workflows/build.yml` for build methods in each of the sub repositories.
 - `hddcoin-regenerate-keys` has been renamed `hddcoin-generate-keys`.
 - setproctitle is now an optional install dependency that we will continue to install in the default install methods.
 - The project now defaults to `venv` without the proceeding . to better match best practices.
 - Developer requirements were separated from the actual requirements.
-- `install-timelord.sh` has been pulled out from `install.sh`. This script downloads the source python package for hddcoinvdf and compiles it locally for timelords. vdf_client can be included or excluded to make building normal user wheels easier.
+- `install-timelord.sh` has been pulled out from `install.sh`. This script downloads the source python package for chiavdf and compiles it locally for timelords. vdf_client can be included or excluded to make building normal user wheels easier.
 
 ### Removed
 
@@ -1589,7 +1652,7 @@ relic. We will make a patch available for these systems shortly.
 - There is a new restart_harvester.sh in scripts/ to easily restart a harvester when you want to add a newly completed plot to the farm without restarting farmer, fullnode, timelord, etc.
 - Harvesters now log errors if they encounter a malformed or corrupted plot file. Again thanks @xorinox.
 - New AJAX based full node UI. To access go to [http://127.0.0.1:8555/index.html](http://127.0.0.1:8555/index.html) with any modern web browser on the same machine as the full node.
-- If you want to benchmark your CPU as a VDF you can use vdf_bench square_asm 500000 for the assembly optimized test or just vdf_bench square 500000 for the plain C++ code path. This tool is found in lib/hddcoinvdf/fast_vdf/.
+- If you want to benchmark your CPU as a VDF you can use vdf_bench square_asm 500000 for the assembly optimized test or just vdf_bench square 500000 for the plain C++ code path. This tool is found in lib/chiavdf/fast_vdf/.
 - Improvements to shutting down services in all of the scripts in scripts/. Another @xorinox HT.
 
 ### Changed

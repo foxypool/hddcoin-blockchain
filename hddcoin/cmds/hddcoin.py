@@ -16,7 +16,7 @@ from hddcoin.cmds.wallet import wallet_cmd
 from hddcoin.cmds.plotnft import plotnft_cmd
 from hddcoin.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
 from hddcoin.util.keychain import set_keys_root_path, supports_keyring_passphrase
-from hddcoin.util.ssl import check_ssl                                   
+from hddcoin.util.ssl import check_ssl
 from typing import Optional
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -47,7 +47,7 @@ def monkey_patch_click() -> None:
 @click.option(
     "--keys-root-path", default=DEFAULT_KEYS_ROOT_PATH, help="Keyring file root", type=click.Path(), show_default=True
 )
-@click.option("--passphrase-file", type=click.File("r"), help="File or descriptor to read the keyring passphase from")
+@click.option("--passphrase-file", type=click.File("r"), help="File or descriptor to read the keyring passphrase from")
 @click.pass_context
 def cli(
     ctx: click.Context,
@@ -74,6 +74,7 @@ def cli(
             print(f"Failed to read passphrase: {e}")
 
     check_ssl(Path(root_path))
+
 
 if not supports_keyring_passphrase():
     from hddcoin.cmds.passphrase_funcs import remove_passphrase_options_from_cmd

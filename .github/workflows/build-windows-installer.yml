@@ -1,5 +1,4 @@
 name: Windows Installer on Windows 10 and Python 3.9
-#HDDcoin Blockchain
 
 on:
   push:
@@ -119,7 +118,6 @@ jobs:
         path: ${{ github.workspace }}\hddcoin-blockchain-gui\release-builds\
 
     - name: Create Checksums
-      if: startsWith(github.ref, 'refs/tags/')
       env:
         HDDCOIN_INSTALLER_VERSION: ${{ steps.version_number.outputs.HDDCOIN_INSTALLER_VERSION }}
       run: |
