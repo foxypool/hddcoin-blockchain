@@ -43,10 +43,10 @@ You can install HDDcoin by building from source, or by using the latest binaries
 
 (A.) To **install from available binaries**, download executables from the correct **Releases page**:
 
-   - for pool farming with FoxyPool (OG), get them here ->
-   https://github.com/felixbrucker/hddcoin-blockchain/releases
    - for solo farming, get them here ->
    https://github.com/HDDcoin-Network/hddcoin-blockchain/releases
+   - for pool farming with FoxyPool (OG), get them here ->
+   https://github.com/felixbrucker/hddcoin-blockchain/releases
 
 
 (B.) To **build from source**, do the following:
@@ -61,14 +61,15 @@ You can install HDDcoin by building from source, or by using the latest binaries
 
    sudo apt install git -y
 
-# Checkout the correct source (either for pool or solo farming)
+# Checkout the correct source (either for solo or pool farming)
+
+   ## for solo farming, use this source ## ->
+   git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
 
    ## for pool farming with FoxyPool (OG), use this source ## ->
    git clone https://github.com/felixbrucker/hddcoin-blockchain.git
 
-   ## for solo farming, use this source ## ->
-   git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
-   
+  
 # Install the Blockchain
 
    cd hddcoin-blockchain
@@ -99,7 +100,8 @@ If the client does not find any connections automatically, you can add any of th
 - node-10.hddcoin.org / Port: 28444 / United States
 - node-11.hddcoin.org / Port: 28444 / United States
 - node-12.hddcoin.org / Port: 28444 / United States
-
+- node-13.hddcoin.org / Port: 28444 / United States
+- node-14.hddcoin.org / Port: 28444 / United States
 
 ***********************************************
 # UPDATE/UPGRADE INSTRUCTIONS:
