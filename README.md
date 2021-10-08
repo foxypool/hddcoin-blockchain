@@ -99,9 +99,6 @@ If the client does not find any connections automatically, you can add any of th
 - node-9.hddcoin.org / Port: 28444 / United States
 - node-10.hddcoin.org / Port: 28444 / United States
 - node-11.hddcoin.org / Port: 28444 / United States
-- node-12.hddcoin.org / Port: 28444 / United States
-- node-13.hddcoin.org / Port: 28444 / United States
-- node-14.hddcoin.org / Port: 28444 / United States
 
 ***********************************************
 # UPDATE/UPGRADE INSTRUCTIONS:
