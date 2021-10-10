@@ -1,8 +1,8 @@
 # hddcoin-blockchain 
 
-![Alt text](https://hddcoin.org/images/hdd_coin_logo_website_75_animated.png)
+![Alt text](https://hddcoin.org/images/hdd_coin_logo_website_75.png)
 
-HDDcoin is an eco-friendly decentralization blockchain based on the Proof of Space and Time (PoST) consensus pioneered by HDDcoin™. It maintains network robustness, in line with Satoshi Nakamoto's principles.
+HDDcoin is an eco-friendly decentralization blockchain based on the Proof of Space and Time (PoST) consensus pioneered by Chia™. It maintains network robustness, in line with Satoshi Nakamoto's principles.
 
 HDDcoin uses the powerful and secure Chialisp language for Smart Contracts, and supports digital money, global payments and applications. HDDcoin is not affiliated with HDDcoin Network, Inc., but uses their open-sourced software as its foundation.
 
