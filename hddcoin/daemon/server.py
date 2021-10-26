@@ -1276,7 +1276,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
         with open(os.path.join(root_path, 'config\ssl\ca\hddcoin_ca.crt'), 'r') as cert_raw_handle:
             cert_raw = cert_raw_handle.readlines()
     old_ssl_check = all([
-                         '5C8A71239328650EB9FEF85CEC32BF779CA6A0C5' not in str(cert_raw),
+                         'MIIDKTCCAhGgAwIBAgIUXIpxI5MoZQ65' not in str(cert_raw),
                          ])
 
     json_msg = dict_to_json_str(
