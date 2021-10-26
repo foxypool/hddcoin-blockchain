@@ -18,6 +18,9 @@ export default function AppRouter() {
   const loggedInReceived = useSelector(
     (state: RootState) => state.wallet_state.logged_in_received,
   );
+  const daemonConnected = useSelector(
+    (state: RootState) => state.daemon_state.daemon_connected,
+  );
   const walletConnected = useSelector(
     (state: RootState) => state.daemon_state.wallet_connected,
   );
@@ -55,10 +58,17 @@ export default function AppRouter() {
       </LayoutLoading>
     );
   }
+  if (!daemonConnected) {
+    return (
+      <LayoutLoading>
+        <Trans>Welcome to HDDcoin! Performing start-up checks ...</Trans>
+      </LayoutLoading>
+    );
+  }
   if (!walletConnected) {
     return (
       <LayoutLoading>
-        <Trans>Connecting to wallet</Trans>
+        <Trans>Welcome to HDDcoin! Connecting to wallet</Trans>
       </LayoutLoading>
     );
   }

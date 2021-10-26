@@ -1270,6 +1270,15 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     ca_crt_path = root_path / config["private_ssl_ca"]["crt"]
     ca_key_path = root_path / config["private_ssl_ca"]["key"]
     sys.stdout.flush()
+
+    cert_raw = ['']
+    if os.path.isfile(os.path.join(root_path, 'config\ssl\ca\hddcoin_ca.crt')):
+        with open(os.path.join(root_path, 'config\ssl\ca\hddcoin_ca.crt'), 'r') as cert_raw_handle:
+            cert_raw = cert_raw_handle.readlines()
+    old_ssl_check = all([
+                         '5C8A71239328650EB9FEF85CEC32BF779CA6A0C5' not in str(cert_raw),
+                         ])
+
     json_msg = dict_to_json_str(
         {
             "message": "cert_path",
@@ -1277,10 +1286,15 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
             "cert": f"{crt_path}",
             "key": f"{key_path}",
             "ca_crt": f"{ca_crt_path}",
+            "old_ssl_check": old_ssl_check
         }
     )
     sys.stdout.write("\n" + json_msg + "\n")
     sys.stdout.flush()
+
+    if not old_ssl_check:
+        sys.exit('SSL check failed. Please see https://hddcoin.org/sslupdate/ for more info.')
+
     if lockfile is None:
         print("daemon: already launching")
         return 2

@@ -108,6 +108,19 @@ const startHDDcoinDaemon = () => {
               let json = JSON.parse(str);
               global.cert_path = json['cert'];
               global.key_path = json['key'];
+
+              // listen for the ssl_check
+              if (json['old_ssl_check'] == false){
+                const { dialog } = require('electron')
+                const options = {
+                  type: 'question',
+                  buttons: ['I understand'],
+                  title: 'Invalid SSL detected',
+                  message: 'An older SSL was detected. This will seriously affect your farming performance. Please fix the issue and restart the client.',
+                  detail: 'See https://hddcoin.org/sslupdate/ for more info'
+                };
+                dialog.showMessageBox(options)}
+
               if (cert_path && key_path) {
                 have_cert = true;
                 process.stdout.write('Have cert\n');
