@@ -18,6 +18,12 @@ export default function AppRouter() {
   const loggedInReceived = useSelector(
     (state: RootState) => state.wallet_state.logged_in_received,
   );
+  const sslCheck = useSelector(
+    (state: RootState) => state.daemon_state.ssl_check,
+  );
+  const daemonConnected = useSelector(
+    (state: RootState) => state.daemon_state.daemon_connected,
+  );
   const walletConnected = useSelector(
     (state: RootState) => state.daemon_state.wallet_connected,
   );
@@ -52,6 +58,20 @@ export default function AppRouter() {
     return (
       <LayoutLoading>
         <AppPassPrompt reason={PassphrasePromptReason.KEYRING_LOCKED} />
+      </LayoutLoading>
+    );
+  }
+  if (!daemonConnected) {
+    return (
+      <LayoutLoading>
+        <Trans>Performing start-up checks ...</Trans>
+      </LayoutLoading>
+    );
+  }
+  if (!sslCheck) {
+    return (
+      <LayoutLoading>
+        <Trans>SSL check failed ! ...</Trans>
       </LayoutLoading>
     );
   }
