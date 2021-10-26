@@ -1293,7 +1293,8 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     sys.stdout.flush()
 
     if not old_ssl_check:
-        sys.exit('SSL check failed. Please see https://hddcoin.org/sslupdate/ for more info.')
+        sys.exit('Old version of HDDcoin Blockchain SSL has been detected. To continue using this application, please update your SSL and restart the Client.'
+                 ' Please see https://hddcoin.org/sslupdate/ for more info.')
 
     if lockfile is None:
         print("daemon: already launching")

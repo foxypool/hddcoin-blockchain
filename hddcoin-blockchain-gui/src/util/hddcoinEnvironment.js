@@ -116,7 +116,7 @@ const startHDDcoinDaemon = () => {
                   type: 'question',
                   buttons: ['I understand', 'Visit hddcoin.org/sslupdate'],
                   title: 'Invalid SSL detected',
-                  message: 'An older SSL was detected. This will seriously affect your farming performance. Please fix the issue and restart the client.',
+                  message: 'Old version of HDDcoin Blockchain SSL has been detected. To continue using this application, please update your SSL and restart the Client.',
                   detail: 'See https://hddcoin.org/sslupdate/ for more info'
                 };
                 dialog.showMessageBox(null, options).then( (data) => {
