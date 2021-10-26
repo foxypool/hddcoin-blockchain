@@ -78,7 +78,7 @@ export default function AppRouter() {
   if (!walletConnected) {
     return (
       <LayoutLoading>
-        <Trans>Connecting to wallet</Trans>
+        <Trans>Welcome to HDDcoin! Connecting to wallet</Trans>
       </LayoutLoading>
     );
   }
