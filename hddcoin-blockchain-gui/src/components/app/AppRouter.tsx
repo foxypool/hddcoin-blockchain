@@ -64,7 +64,7 @@ export default function AppRouter() {
   if (!daemonConnected) {
     return (
       <LayoutLoading>
-        <Trans>Performing start-up checks ...</Trans>
+        <Trans>Welcome to HDDcoin! Now performing start-up checks. Please wait...</Trans>
       </LayoutLoading>
     );
   }
