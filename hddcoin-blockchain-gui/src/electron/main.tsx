@@ -474,45 +474,6 @@ if (!handleSquirrelEvent()) {
         ],
       },
     ];
-		
-	if (process.platform === 'darwin') {
-      // Chia Blockchain menu (Mac)
-      template.unshift({
-        label: i18n._(/* i18n */ { id: 'Chia' }),
-        submenu: [
-          {
-            label: i18n._(/* i18n */ { id: 'About Chia Blockchain' }),
-            click: () => {
-              openAbout();
-            },
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'services',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'hide',
-          },
-          {
-            role: 'hideothers',
-          },
-          {
-            role: 'unhide',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'quit',
-          },
-        ],
-      });
-	
       // File menu (MacOS)
       template.splice(1, 1, {
         label: i18n._(/* i18n */ { id: 'File' }),
