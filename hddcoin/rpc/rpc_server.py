@@ -263,14 +263,6 @@ class RpcServer:
 
         await ws.close()
 
-    async def ssl_check(self,
-                        ws):
-        data = {"service": self.service_name}
-        payload = create_payload("ssl_check_failed", data, self.service_name, "daemon")
-        await ws.send_str(payload)
-
-        raise Exception('SSL_CHECK_FAILED_SEE... for more info')
-
     async def connect_to_daemon(self, self_hostname: str, daemon_port: uint16):
         while True:
             try:
@@ -287,7 +279,6 @@ class RpcServer:
                     ) as ws:
                         self.websocket = ws
                         await self.connection(ws)
-                        await self.ssl_check(ws)
                     self.websocket = None
             except aiohttp.ClientConnectorError:
                 self.log.warning(f"Cannot connect to daemon at ws://{self_hostname}:{daemon_port}")

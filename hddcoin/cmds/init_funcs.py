@@ -25,7 +25,7 @@ from hddcoin.util.config import (
 from hddcoin.util.ints import uint32
 from hddcoin.util.keychain import Keychain
 from hddcoin.util.path import mkdir
-from hddcoin.util.ssl import (
+from hddcoin.util.ssl_check import (
     DEFAULT_PERMISSIONS_CERT_FILE,
     DEFAULT_PERMISSIONS_KEY_FILE,
     RESTRICT_MASK_CERT_FILE,
