@@ -21,7 +21,6 @@ type DeamonState = {
   harvester_connected: boolean;
   plotter_running: boolean;
   exiting: boolean;
-  ssl_check: boolean
 };
 
 const initialState: DeamonState = {
@@ -37,7 +36,6 @@ const initialState: DeamonState = {
   harvester_connected: false,
   plotter_running: false,
   exiting: false,
-  ssl_check: true
 };
 
 export default function daemonReducer(
@@ -55,9 +53,6 @@ export default function daemonReducer(
       const { message } = action;
       const { data } = message;
       const { command } = message;
-      if (command === 'ssl_check_failed') {
-        return { ...state, ssl_check: false };
-      }
       if (command === 'register_service') {
         return { ...state, daemon_running: true, daemon_connected: true };
       }

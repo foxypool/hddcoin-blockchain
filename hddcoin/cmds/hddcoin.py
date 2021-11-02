@@ -16,7 +16,7 @@ from hddcoin.cmds.wallet import wallet_cmd
 from hddcoin.cmds.plotnft import plotnft_cmd
 from hddcoin.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
 from hddcoin.util.keychain import set_keys_root_path, supports_keyring_passphrase
-from hddcoin.util.ssl import check_ssl
+from hddcoin.util.ssl_check import check_ssl
 from typing import Optional
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])

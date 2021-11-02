@@ -28,7 +28,7 @@ from hddcoin.types.peer_info import PeerInfo
 from hddcoin.util.errors import Err, ProtocolError
 from hddcoin.util.ints import uint16
 from hddcoin.util.network import is_localhost, is_in_network
-from hddcoin.util.ssl import verify_ssl_certs_and_keys
+from hddcoin.util.ssl_check import verify_ssl_certs_and_keys
 
 
 def ssl_context_for_server(

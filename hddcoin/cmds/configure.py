@@ -95,7 +95,7 @@ def configure(
             testnet_port = "38444"
             testnet_introducer = "testnet-introducer.hddcoin.org"
             testnet_dns_introducer = "dns-testnet-introducer.hddcoin.org"
-            testnet = "testnet1"
+            testnet = "testnet"
             config["full_node"]["port"] = int(testnet_port)
             config["full_node"]["introducer_peer"]["port"] = int(testnet_port)
             config["farmer"]["full_node_peer"]["port"] = int(testnet_port)

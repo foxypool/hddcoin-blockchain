@@ -169,7 +169,7 @@ echo "
        ##############################################         
     "
 
-echo "HDDcoin blockchain install.sh complete."
+echo "HDDcoin blockchain install.sh complete."															  
 echo ""
 echo "Visit our Website to learn more about HDDcoin:"
 echo "https://hddcoin.org"

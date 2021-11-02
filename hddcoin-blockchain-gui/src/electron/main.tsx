@@ -1,4 +1,5 @@
 import { app, dialog, shell, ipcMain, BrowserWindow, Menu, session } from 'electron';
+require('@electron/remote/main').initialize()
 import path from 'path';
 import React from 'react';
 import url from 'url';
@@ -49,13 +50,9 @@ function openAbout() {
   });
   aboutWindow.loadURL(`data:text/html;charset=utf-8,${about}`);
 
-  aboutWindow.webContents.on('will-navigate', (e, url) => {
-    e.preventDefault();
-    shell.openExternal(url);
-  });
-  aboutWindow.webContents.on('new-window', (e, url) => {
-    e.preventDefault();
-    shell.openExternal(url);
+  aboutWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url);
+    return { action: 'deny' }
   });
 
   aboutWindow.once('closed', () => {
@@ -135,7 +132,8 @@ if (!handleSquirrelEvent()) {
         webPreferences: {
           preload: `${__dirname}/preload.js`,
           nodeIntegration: true,
-          enableRemoteModule: true,
+          contextIsolation: false,
+          nativeWindowOpen: true
         },
       });
 
@@ -163,6 +161,7 @@ if (!handleSquirrelEvent()) {
       console.log('startUrl', startUrl);
 
       mainWindow.loadURL(startUrl);
+      require("@electron/remote/main").enable(mainWindow.webContents)
 
       mainWindow.once('ready-to-show', () => {
         mainWindow.show();
@@ -214,7 +213,17 @@ if (!handleSquirrelEvent()) {
           });
         }
       });
+      mainWindow.on('showMessageBox' , async (e, a) => {
+        e.reply(await dialog.showMessageBox(mainWindow,a))
+      })
+
+      mainWindow.on('showSaveDialog' , async (e, a) => {
+        e.reply(await dialog.showSaveDialog(a))
+      })
+
     };
+
+
 
     const createMenu = () => Menu.buildFromTemplate(getMenuTemplate());
 
@@ -386,7 +395,7 @@ if (!handleSquirrelEvent()) {
               );
             },
           },
-          //{
+			//{
            // type: 'separator',
           //},
           {
@@ -465,14 +474,14 @@ if (!handleSquirrelEvent()) {
         ],
       },
     ];
-
-    if (process.platform === 'darwin') {
-      // HDDcoin Blockchain menu (Mac)
+		
+	if (process.platform === 'darwin') {
+      // Chia Blockchain menu (Mac)
       template.unshift({
-        label: i18n._(/* i18n */ { id: 'HDDcoin' }),
+        label: i18n._(/* i18n */ { id: 'Chia' }),
         submenu: [
           {
-            label: i18n._(/* i18n */ { id: 'About HDDcoin Blockchain' }),
+            label: i18n._(/* i18n */ { id: 'About Chia Blockchain' }),
             click: () => {
               openAbout();
             },
@@ -503,7 +512,7 @@ if (!handleSquirrelEvent()) {
           },
         ],
       });
-
+	
       // File menu (MacOS)
       template.splice(1, 1, {
         label: i18n._(/* i18n */ { id: 'File' }),

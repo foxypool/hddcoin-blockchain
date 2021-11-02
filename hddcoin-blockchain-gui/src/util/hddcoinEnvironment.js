@@ -108,25 +108,6 @@ const startHDDcoinDaemon = () => {
               let json = JSON.parse(str);
               global.cert_path = json['cert'];
               global.key_path = json['key'];
-
-              // listen for the ssl_check
-              if (json['old_ssl_check'] == false){
-                const { dialog } = require('electron')
-                const options = {
-                  type: 'question',
-                  buttons: ['I understand', 'Visit hddcoin.org/sslupdate'],
-                  title: 'Invalid SSL detected',
-                  message: 'Old version of HDDcoin Blockchain SSL has been detected. To continue using this application, please update your SSL and restart the Client.',
-                  detail: 'See https://hddcoin.org/sslupdate/ for more info'
-                };
-                dialog.showMessageBox(null, options).then( (data) => {
-                  console.log(data.response);
-                  console.log(data.checkboxChecked);
-                  if (data.response == 1){
-                  const { shell } = require('electron')
-                  shell.openExternal("https://hddcoin.org/sslupdate/")}
-                });
-                }
               if (cert_path && key_path) {
                 have_cert = true;
                 process.stdout.write('Have cert\n');
