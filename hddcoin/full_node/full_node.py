@@ -70,6 +70,11 @@ from hddcoin.util.profiler import profile_task
 from datetime import datetime
 from hddcoin.util.db_synchronous import db_synchronous_on
 
+try:
+    import hddcoin.cmds.wingdbstub  # for local debug
+except ImportError:
+    pass
+
 
 class FullNode:
     block_store: BlockStore

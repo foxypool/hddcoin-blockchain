@@ -81,6 +81,7 @@ Write-Output "   ---"
 Write-Output "Use pyinstaller to create hddcoin .exe's"
 Write-Output "   ---"
 $SPEC_FILE = (python -c 'import hddcoin; print(hddcoin.PYINSTALLER_SPEC_PATH)') -join "`n"
+
 pyinstaller --log-level INFO $SPEC_FILE
 
 Write-Output "   ---"

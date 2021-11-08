@@ -138,9 +138,28 @@ async def print_balances(args: dict, wallet_client: WalletRpcClient, fingerprint
     config = load_config(DEFAULT_ROOT_PATH, "config.yaml")
     address_prefix = config["network_overrides"]["config"][config["selected_network"]]["address_prefix"]
 
+    # lazy load HODL stuff here for cleaner diff
+    import hddcoin.hodl.exc
+    from hddcoin.hodl.hodlrpc import HodlRpcClient
+    hodlRpcClient = HodlRpcClient(fingerprint)
+    try:
+        rpcRet  = await hodlRpcClient.get("getTotalHodlForWallet")
+        hodl_balance_bytes = rpcRet["committed_bytes"]
+        hodl_balance_hdd = Decimal(hodl_balance_bytes) / int(1e12)
+        # emulating upstream repr for now
+        hodl_balance_str = f"{hodl_balance_hdd} hdd ({hodl_balance_bytes} byte)"
+    except hddcoin.hodl.exc.HodlConnectionError:
+        hodl_balance_str = "< UNABLE TO CONNECT TO HODL SERVER >"
+    except Exception as e:
+        hodl_balance_str = f"ERROR: {e!r}"
+    finally:
+        hodlRpcClient.close()
+        await hodlRpcClient.await_closed()
+
     print(f"Wallet height: {await wallet_client.get_height_info()}")
     print(f"Sync status: {'Synced' if (await wallet_client.get_synced()) else 'Not synced'}")
     print(f"Balances, fingerprint: {fingerprint}")
+    print(f"HODL deposits: {hodl_balance_str}")
     for summary in summaries_response:
         wallet_id = summary["id"]
         balances = await wallet_client.get_wallet_balance(wallet_id)
@@ -227,7 +246,8 @@ async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) ->
 
 
 async def execute_with_wallet(
-    wallet_rpc_port: Optional[int], fingerprint: int, extra_params: Dict, function: Callable
+    wallet_rpc_port: Optional[int], fingerprint: int, extra_params: Dict, function: Callable,
+    eat_exceptions: bool = True,
 ) -> None:
     try:
         config = load_config(DEFAULT_ROOT_PATH, "config.yaml")
@@ -245,6 +265,10 @@ async def execute_with_wallet(
     except KeyboardInterrupt:
         pass
     except Exception as e:
+        if not eat_exceptions:
+            wallet_client.close()
+            await wallet_client.await_closed()
+            raise e
         if isinstance(e, aiohttp.ClientConnectorError):
             print(
                 f"Connection error. Check if the wallet is running at {wallet_rpc_port}. "

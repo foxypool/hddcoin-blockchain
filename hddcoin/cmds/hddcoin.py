@@ -1,9 +1,13 @@
 from io import TextIOWrapper
+import asyncio
+import platform
+
 import click
 
 from hddcoin import __version__
 from hddcoin.cmds.configure import configure_cmd
 from hddcoin.cmds.farm import farm_cmd
+from hddcoin.cmds.hodl import hodl_cmd
 from hddcoin.cmds.init import init_cmd
 from hddcoin.cmds.keys import keys_cmd
 from hddcoin.cmds.netspace import netspace_cmd
@@ -136,12 +140,16 @@ cli.add_command(stop_cmd)
 cli.add_command(netspace_cmd)
 cli.add_command(farm_cmd)
 cli.add_command(plotters_cmd)
+cli.add_command(hodl_cmd)
 
 if supports_keyring_passphrase():
     cli.add_command(passphrase_cmd)
 
 
 def main() -> None:
+    if platform.system() == "Windows":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  #type:ignore
+
     monkey_patch_click()
     cli()  # pylint: disable=no-value-for-parameter
 

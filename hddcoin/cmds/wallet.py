@@ -3,6 +3,11 @@ from typing import Optional
 
 import click
 
+try:
+    from . import wingdbstub  # for local debugging
+except ImportError:
+    pass
+
 
 @click.group("wallet", short_help="Manage your wallet")
 def wallet_cmd() -> None:

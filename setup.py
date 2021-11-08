@@ -28,6 +28,8 @@ dependencies = [
     "click==7.1.2",  # For the CLI
     "dnspythonchia==2.2.0",  # Query DNS seeds
     "watchdog==2.1.6",  # Filesystem event watching - watches keyring.yaml
+    "click-params==0.1.2",  # For the CLI
+    "validators==0.18.2",   # For the CLI (a click-params dep)
 ]
 
 upnp_dependencies = [
@@ -43,6 +45,7 @@ dev_dependencies = [
     "aiohttp_cors",  # For blackd
     "ipython",  # For asyncio debugging
     "types-setuptools",
+    "git-crecord",  # hg forever! ;)
 ]
 
 kwargs = dict(
@@ -69,6 +72,8 @@ kwargs = dict(
         "hddcoin.consensus",
         "hddcoin.daemon",
         "hddcoin.full_node",
+        "hddcoin.hodl",
+        "hddcoin.hodl.cli",
         "hddcoin.timelord",
         "hddcoin.farmer",
         "hddcoin.harvester",
