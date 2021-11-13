@@ -616,6 +616,7 @@ export default [
   { word: 'error', value: 614 },
   { word: 'erupt', value: 615 },
   { word: 'escape', value: 616 },
+  { word: 'escape', value: 616 },
   { word: 'essay', value: 617 },
   { word: 'essence', value: 618 },
   { word: 'estate', value: 619 },

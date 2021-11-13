@@ -5,6 +5,7 @@ import { AlertDialog } from '@hddcoin/core';
 import useOpenDialog from './useOpenDialog';
 
 type Options = {
+  defaultPath?: string;
   buttonLabel?: string;
 };
 
