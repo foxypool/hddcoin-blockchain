@@ -32,10 +32,10 @@ The goal of HDDcoin is to reshape the global financial system through the power 
 **COMMUNITIES AND SOCIAL CHANNELS:**
 - Discord: https://discord.gg/AZdGSFnqAR
 - Twitter: https://twitter.com/hddcoin
-- YouTube: https://www.youtube.com/channel/UChJY3YEOTDBvFJ0vLFEc1Sw
 - Facebook: https://www.facebook.com/HDDcoinNetwork
-- Telegram: https://t.me/HDDcoin_Network
 - Reddit: https://www.reddit.com/r/HDDcoinNetwork
+- YouTube: https://www.youtube.com/channel/UChJY3YEOTDBvFJ0vLFEc1Sw
+- Telegram: https://t.me/HDDcoin_Network
 
 
 ***********************************************
