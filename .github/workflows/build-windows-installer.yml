@@ -96,7 +96,7 @@ jobs:
         echo "::set-output name=HDDCOIN_INSTALLER_VERSION::$env:HDDCOIN_INSTALLER_VERSION"
         deactivate
 
-      # Get the most recent release from hddcoin-plotter-madmax
+      # Get the most recent release from chia-plotter-madmax
     - uses: actions/github-script@v4
       id: 'latest-madmax'
       with:
@@ -104,16 +104,16 @@ jobs:
         result-encoding: string
         script: |
           const releases = await github.repos.listReleases({
-            owner: 'HDDcoin-Network',
-            repo: 'hddcoin-plotter-madmax',
+            owner: 'Chia-Network',
+            repo: 'chia-plotter-madmax',
           });
           return releases.data[0].tag_name;
 
     - name: Get latest madmax plotter
       run: |
         mkdir "$env:GITHUB_WORKSPACE\madmax"
-        Invoke-WebRequest https://github.com/HDDcoin-Network/hddcoin-plotter-madmax/releases/download/${{ steps.latest-madmax.outputs.result }}/hddcoin_plot-${{ steps.latest-madmax.outputs.result }}.exe -OutFile "$env:GITHUB_WORKSPACE\madmax\hddcoin_plot.exe"
-        Invoke-WebRequest https://github.com/HDDcoin-Network/hddcoin-plotter-madmax/releases/download/${{ steps.latest-madmax.outputs.result }}/hddcoin_plot_k34-${{ steps.latest-madmax.outputs.result }}.exe -OutFile "$env:GITHUB_WORKSPACE\madmax\hddcoin_plot_k34.exe"
+        Invoke-WebRequest https://github.com/Chia-Network/chia-plotter-madmax/releases/download/${{ steps.latest-madmax.outputs.result }}/chia_plot-${{ steps.latest-madmax.outputs.result }}.exe -OutFile "$env:GITHUB_WORKSPACE\madmax\hddcoin_plot.exe"
+        Invoke-WebRequest https://github.com/Chia-Network/chia-plotter-madmax/releases/download/${{ steps.latest-madmax.outputs.result }}/chia_plot_k34-${{ steps.latest-madmax.outputs.result }}.exe -OutFile "$env:GITHUB_WORKSPACE\madmax\hddcoin_plot_k34.exe"
 
       # Get the most recent release from bladebit
     - uses: actions/github-script@v4
