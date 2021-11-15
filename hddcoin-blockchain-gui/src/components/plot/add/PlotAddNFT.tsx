@@ -56,7 +56,9 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
   }
 
   return (
-    <CardStep
+
+    {/*
+	<CardStep
       step={step}
       title={
         <Flex gap={1} alignItems="baseline">
@@ -69,6 +71,8 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
         </Flex>
       }
     >
+	*/}
+
       {loading && <Loading center />}
 
       {!loading && hasNFTs && (
@@ -141,11 +145,14 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
             </Trans>
           </Typography>
 
+		  {/*
           <Box>
             <Button onClick={handleJoinPool} variant="contained">
               <Trans>Join a Pool</Trans>
             </Button>
           </Box>
+		  */}
+
         </>
       )}
     </CardStep>
