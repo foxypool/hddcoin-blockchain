@@ -60,13 +60,9 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
       step={step}
       title={
         <Flex gap={1} alignItems="baseline">
-		
-		  {/* 
           <Box>
             <Trans>Join a Pool</Trans>
           </Box>
-		  */}
-		  
           <Typography variant="body1" color="textSecondary">
             <Trans>(Optional)</Trans>
           </Typography>
@@ -144,15 +140,12 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
               plot NFT and assign your new plots to a group.
             </Trans>
           </Typography>
-		  
-		  {/* 
+
           <Box>
             <Button onClick={handleJoinPool} variant="contained">
               <Trans>Join a Pool</Trans>
             </Button>
           </Box>
-		  */}
-		  
         </>
       )}
     </CardStep>
