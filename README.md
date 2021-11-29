@@ -22,7 +22,7 @@ The goal of HDDcoin is to reshape the global financial system through the power 
 - Halving period for block rewards: 3 years
 
 **BLOCKCHAIN RESOURCES:**
-- Website: https://hddcoin.org/
+- Website: https://hddcoin.org
 - Online Store: https://store.hddcoin.org
 - Explorer: https://alltheblocks.net/hddcoin
 - White Paper: https://hddcoin.org/white-paper
