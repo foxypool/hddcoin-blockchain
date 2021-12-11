@@ -110,9 +110,9 @@ class HodlRpcClient:
                     err_msg = f"HTTP STATUS {resp.status} → {status_text}"
                     self.vlog(1, f"Server is unhappy: {err_msg}")
                     raise exc.HodlConnectionError(err_msg)
-        except aiohttp.ClientConnectionError as _e:
+        except aiohttp.ClientConnectionError as e:
+            self.vlog(1, f"ERROR CONNECTING TO HODL SERVER: {e!r}")
             err_msg = f"HODL Server not responding. Please check your network, or try again later!"
-            self.vlog(1, err_msg)
             raise exc.HodlConnectionError(err_msg)
         except asyncio.TimeoutError:
             self.vlog(1, f"Timed out connecting to {api_endpoint}")
