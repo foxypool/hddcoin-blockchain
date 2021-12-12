@@ -6,12 +6,14 @@ from __future__ import annotations
 import asyncio
 import http
 import os
+import platform
 import time
 import typing as th
 
 import aiohttp
 import blspy   #type:ignore
 
+import hddcoin
 import hddcoin.hodl.exc as exc
 from hddcoin.util.clvm import int_to_bytes
 
@@ -25,6 +27,9 @@ DEFAULT_TIMEOUT = aiohttp.ClientTimeout(total = 1000 if "WINGDB_ACTIVE" in os.en
 
 HTTP_GET = "get"
 HTTP_POST = "post"
+
+CLIENT_OS = platform.system()
+CLIENT_APPVER = hddcoin.__version__
 
 
 class HodlRpcClient:
@@ -67,6 +72,8 @@ class HodlRpcClient:
             "HODL-cpk":    str(self.pk),
             "HODL-tstamp": str(tstamp),
             "HODL-sig":    str(tstamp_sig),
+            "HODL-os":     CLIENT_OS,
+            "HODL-appver": CLIENT_APPVER,
         }
         return authHeaders
 
