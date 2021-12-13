@@ -334,7 +334,7 @@ def _printFinalSummary(finalReceiptPath: pathlib.Path,
     p(f" ==> Detailed receipt stored to {Y}{finalReceiptPath}{_}")
     p(f" ==> Monitor contract status with `{Y}hddcoin hodl show -C {contract_id}{_}`")
     p(f" ==> The actual deposit may take a minute to appear on the blockchain")
-    p(f" ==> Deposit confirmation, and reward guarantee, may take a few minutes")
+    p(f" ==> Deposit confirmation and reward guarantee may take a few minutes")
     p(f" ==> Monitor blockchain contract creation with:")
     p(f"    `{Y}hddcoin wallet get_transaction -f {fingerprint} -tx 0x{tx_id}{_}`")
     p(f" ==> {G}REMEMBER{W}: contract access is limited to this wallet ({Y}{fingerprint}){_}")
