@@ -49,7 +49,7 @@ class HodlRpcClient:
         self._vlog_ = hddcoin.hodl.util.vlog
 
         if fingerprint is None:
-            self.vlog(1, "HODL RPC operations will use the first available key/fingerprint")
+            self.vlog(1, "HODL RPC operations will auto-select the fingerprint (if only one)")
 
         fp, self.pk, self.sk = hddcoin.hodl.util.getPkSkFromFingerprint(fingerprint)
         self._fingerprint = fp

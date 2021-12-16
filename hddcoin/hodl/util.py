@@ -281,6 +281,10 @@ def getPkSkFromFingerprint(fingerprint: th.Optional[int],
     else:
         vlog(1, f"Automatically loading sole keypair info (no fingerprint given)")
     allPrivateKeyInfo = hddcoin.util.keychain.Keychain().get_all_private_keys()
+
+    if (len(allPrivateKeyInfo) > 1) and (fingerprint is None):
+        raise exc.FingerprintNeeded("With more than one key, the fingerprint must be specified.")
+
     for sk, _seed in allPrivateKeyInfo:
         pk = sk.get_g1()
         fp = pk.get_fingerprint()
@@ -329,6 +333,11 @@ async def callCliCmdHandler(handler: th.Callable,
         hodlRpcClient = HodlRpcClient(fingerprint)
     except exc.KeyNotFound:
         print(f"{R}ERROR: {Y}Unknown fingerprint. Please check `{W}hddcoin keys show{Y}`{_}")
+        return
+    except exc.FingerprintNeeded:
+        print(f"{R}ERROR: {Y}Fingerprint must be specified when you have > 1 key/wallet{_}")
+        print(f"{_}  ==> to see your available keys, use `{Y}hddcoin keys show{_}`")
+        print(f"{_}  ==> to see a wallet balance, use `{Y}hddcoin wallet show -f <fingerprint>{_}`")
         return
     except Exception as e:
         print(f"{R}ERROR: {Y}Unable to create HODL RPC client: {e!r}{_}")
