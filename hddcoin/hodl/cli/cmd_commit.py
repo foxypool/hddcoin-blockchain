@@ -57,6 +57,8 @@ async def cmd_commit(hodlRpcClient: hddcoin.hodl.hodlrpc.HodlRpcClient,
         raise exc.HodlError(f"The minimum HODL contract amount is 1 HDD.")
     elif int(commit_hdd) != commit_hdd:
         raise exc.HodlError("The HODL deposit must be a whole number of HDD.")
+    elif commit_hdd > 2**31:
+        raise exc.HodlError("You wish you had that much HDD to deposit! :)")
     elif fee_hdd >= 1 and (override == False):
         raise exc.HodlError(f"fee of {fee_hdd} HDD seems too large (use --override to force)")
     elif fee_hdd and (fee_bytes < 1):
