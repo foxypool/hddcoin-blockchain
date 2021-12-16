@@ -132,38 +132,58 @@ def validateContract(# Given to server...
     """
     # The overall trust model here is: TRUST NO ONE. THESE ARE MY PRECIOUS HDDs!!
     #
-    # Although the HDDcoin team are certainly a trustable bunch and can be expected to provide the
-    # correct/expected contract terms for us (on the client-side here) to follow, if we're concerned
-    # about our overall security and precious HDD funds (which we obviously are!), we should
-    # ABSOLUTELY ASSUME THAT THEY ARE NOT. Or, more specifically, we should assume that whoever
-    # provided us the contract terms to follow could definitely be EVIL HACKERS AFTER OUR PRECIOUS
-    # HDD. Nasty scenarios we should be concerned about include: the HODL API server could be
-    # hacked, or somehow man-in-the-middled; the contract terms provided could be falsified; the
-    # on-chain contract (smart coin via puzzlehash/reveal) could be bogus; sneaky hacker farmers can
-    # mess with how coins/puzzles are processed on-chain; etc; etc
+    # In the comments below, there are two parties:
     #
-    # With these concerns in mind, this function is about making 100% certain that what we're
-    # committing to our coins is absolutely what we expect.
+    #    1. The "client" --> This hddcoin application (i.e. this code) or the person running it
+    #    2. The "server" --> The HODL server that has been contacted to provide contract terms,
+    #                         which include a specific contract/puzzle to send an amount to.
+    #
+    # Although the HDDcoin team are certainly a trustable bunch and can be expected to provide the
+    # correct/expected contract terms to the client to follow, if the client is concerned about
+    # overall security and precious HDD funds (which the client obviously should be!!), the client
+    # should ABSOLUTELY ASSUME THAT THE SERVER IS NOT TRUSTABLE, UNTIL VERIFIED. More specifically,
+    # the client should assume that whoever/whatever provided the client the contract terms to
+    # follow could definitely have been compromised by EVIL HACKERS AFTER THE CLIENT'S PRECIOUS HDD.
+    #
+    # Nasty scenarios we should be concerned about include (with overlapping concerns):
+    #
+    #   1. the HODL API server could have been hacked
+    #   2. there could be a man-in-the-middle attack happening, making data untrustworthy
+    #   3. the contract terms provided could have been falsified in some/any way
+    #   4. the on-chain contract (smart coin via puzzlehash/reveal) could be bogus
+    #   5. sneaky hacker farmers could mess with how pushed coins/puzzles are processed on-chain
+    #   6. and more!
+    #
+    # With these concerns in mind, the client needs to be sure that everything is secure before
+    # committing funds on-chain. The smart contract itself provides excellent on-chain security to
+    # make sure that no adverse shenanigans can happen once funds are on chain. The purpose in this
+    # `validateContract` function is to make sure that there are no other surprises in store (as
+    # listed above).
+    #
+    # As stated in the docstring: This function makes sure that sure that the provided contract is
+    # what the client expects.
     #
     # What the HODL contract is all about is providing a secure conditional lockbox where:
     #
-    #    A) we (the client) can stash a deposit into it that only WE CAN EVER ACCESS
-    #    B) a secure way is provided for the HDDcoin team to add a guaranteed reward to the lockbox
-    #         - without being able to access the deposit in any way whatsoever
-    #         - the HDDcoin team gets these funds from a HODL reserve in the pre-farm funds
-    #    C) if we (the client) meet the terms of the contract (i.e. hodl the deposit in the box for
-    #        for the length of the term), both the deposit and the reward pay out to our wallet
-    #    D) if we (the client) decide to cancel the contract, the deposit comes back to us, and any
-    #        guaranteed reward that was added goes back to the HDDcoin HODL reserve
-    #         - ONLY WE (the client) CAN CANCEL THE CONTRACT
-    #         - once the reward is added, it is GUARANTEED to be ours (unless canceled). Sweet!!
+    #    A) the client can stash a deposit into the box that ONLY THE CLIENT CAN EVER ACCESS
+    #    B) a secure way is provided for the server (i.e. the HDDcoin team) to add the guaranteed
+    #        reward to the lockbox for later payout (at end of contract)
+    #         - IMPORTANT NOTE: the server can never access the deposit in any way whatsoever
+    #         - the HDDcoin team gets reward funds from a HODL reserve in the pre-farm funds
+    #    C) if the client meets the contract terms (i.e. the HODL deposit sits in the box for the
+    #        length of the term), both the deposit and the reward pay out to the client's wallet
+    #    D) if the client decides to cancel the contract, the deposit is returned to the client, and
+    #        the guaranteed reward is returned to the HDDcoin HODL reserve
+    #         - ONLY THE CLIENT CAN EVER CANCEL THE CONTRACT. NOBODY ELSE.
+    #         - once the reward is added, it is GUARANTEED for the client (unless canceled). Sweet!
     #    E) there are other various bits involved... but they mostly revolve around ensuring that
     #        the mechanics of the contract are secure against nefarious hackers... I see you there
     #        reading this... SHOO!! Go away!! ¬_¬
     #
     # All of those listed things are *if all is as expected*. Again, this is what this validation
     # function is about. Even if the server is compromised (which it should not be, but... TRUST
-    # NOBODY!), we need our HDD to never be at risk!
+    # NOBODY!), the client's HDD must NEVER be placed at risk here. This is fundamental to the HODL
+    # program, and is supported through all supporting client code, server code, and on-chain code.
 
     vlog(1, "Extracting receipt fields for validation")
     try:
