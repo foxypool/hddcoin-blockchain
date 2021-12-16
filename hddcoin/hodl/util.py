@@ -319,7 +319,7 @@ async def callCliCmdHandler(handler: th.Callable,
         if injectConfig:
             cmdKwargs["config"] = config
 
-    # Create a HoldRpcClient...
+    # Create a HodlRpcClient...
     #  - every `hddcoin hodl` operation requires a call to the HODL server
     #  - WORTH NOTING: Once a HODL contract is launched (i.e. the smart coin is on-chain) this is
     #     not strictly necessary (since full reveal and solutions to copmpletely manage the coin are
