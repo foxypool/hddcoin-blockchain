@@ -153,6 +153,8 @@ async def _cli_checkWallet(walletClient: hddcoin.rpc.wallet_rpc_client.WalletRpc
         print(f"{R}CONNECTION FAILURE\n{R}Unable to connect to wallet. {W}Is your wallet running?{_}")
     except exc.InsufficientFunds:
         print(f"{R}FAILED\n{R}Insufficient funds in wallet for requested HODL contract amount.{_}")
+        print(f"  ==> This my be a temporary situation (some of your wallet coins may be in use)")
+        print(f"  ==> Check your spendable wallet balance with `{Y}hddcoin wallet show{_}`")
     except exc.WalletIdNotFound:
         print(f"{R}WALLET ID NOT FOUND\n{R}No wallet exists with id {wallet_id}.{_}")
     except exc.WalletNotSynced:
