@@ -7,11 +7,13 @@ import asyncio
 import http
 import os
 import platform
+import ssl
 import time
 import typing as th
 
 import aiohttp
 import blspy   #type:ignore
+import certifi
 
 import hddcoin
 import hddcoin.hodl.exc as exc
@@ -38,6 +40,7 @@ class HodlRpcClient:
     sk: blspy.PrivateKey
     _session: aiohttp.ClientSession
     _closing_task: th.Optional[asyncio.Task]  # emulating hddcoin.rpc.rpc_client.RpcClient
+    _sslcontext: ssl.SSLContext
 
     def __init__(self,
                  fingerprint: th.Optional[int],
@@ -51,6 +54,7 @@ class HodlRpcClient:
         fp, self.pk, self.sk = hddcoin.hodl.util.getPkSkFromFingerprint(fingerprint)
         self._fingerprint = fp
 
+        self._sslcontext = ssl.create_default_context(cafile = certifi.where())
         self._session = aiohttp.ClientSession(timeout = DEFAULT_TIMEOUT)
         self._closing_task = None
 
@@ -87,18 +91,21 @@ class HodlRpcClient:
         Connection errors are reported up as HodlConnectionError.
 
         """
+        verbKwargs: th.Dict[str, th.Any]
+
         api_endpoint = f"{HODL_API_URL}/{endpoint}"
         self.vlog(2, f"Connecting to HDDcoin HODL Server at {api_endpoint}")
 
         if params is None:
             params = {}
 
+        verbKwargs = dict(ssl = self._sslcontext)
         if verb == HTTP_GET:
             verbFn = self._session.get
-            verbKwargs = dict(params = params)
+            verbKwargs["params"] = params
         elif verb == HTTP_POST:
             verbFn = self._session.post
-            verbKwargs = dict(json = params)
+            verbKwargs["json"] = params
         else:
             raise ValueError(f"Unsupported verb: {verb}")
 
@@ -107,7 +114,10 @@ class HodlRpcClient:
 
         # Make the call and process the response!
         try:
-            async with verbFn(api_endpoint, headers = hodlAuthHeaders, **verbKwargs) as resp:
+            async with verbFn(api_endpoint,
+                              headers = hodlAuthHeaders,
+                              **verbKwargs,
+                              ) as resp:
                 if resp.status == 200:
                     self.vlog(2, "HODL Server responded cleanly")
                     rpcRet = await resp.json()
