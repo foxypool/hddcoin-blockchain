@@ -124,8 +124,21 @@ async def cmd_commit(hodlRpcClient: hddcoin.hodl.hodlrpc.HodlRpcClient,
     tx_id, pushTxComplete = \
         await _createContractCoin(walletRpcClient, fingerprint, wallet_id, deposit_bytes,
                                   fee_bytes, contract_address, contract_id)
-    finalReceiptPath = _storeFinalReceipt(precommitReceiptPath)
+
+    receiptStorageFailure = ""
+    try:
+        finalReceiptPath = _storeFinalReceipt(precommitReceiptPath)
+    except Exception as e:
+        receiptStorageFailure = repr(e)
+        finalReceiptPath = receiptStorageFailure
+
     _printFinalSummary(finalReceiptPath, contract_id, fingerprint, tx_id, pushTxComplete)
+
+    if receiptStorageFailure:
+        # This is very odd, but we will let the user know the info is in the precommit path
+        print(f"{R}ERROR: {Y}Unable to store final receipt: {receiptStorageFailure}{_}")
+        print(f"  ==> The contract has been pushed, as per details above")
+        print(f"  ==> For your receipt, please see: {Y}{precommitReceiptPath}{_}")
 
 
 async def _cli_checkWallet(walletClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,
