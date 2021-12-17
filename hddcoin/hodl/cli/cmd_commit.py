@@ -86,7 +86,7 @@ async def cmd_commit(hodlRpcClient: hddcoin.hodl.hodlrpc.HodlRpcClient,
                                                                   payout_address = payout_address))
     receipt = requestRet["receipt"]
     contract_id = receipt["receipt_info"]["contract_id"]
-    vlog(1, "Received contract id {contract_id}")
+    vlog(1, f"Received contract id {contract_id}")
 
     ## VALIDATE WHAT WE GOT!!
     ##  - i.e. don't blindly trust a contract we just got from the internet with our HDDs
