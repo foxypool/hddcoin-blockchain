@@ -109,7 +109,10 @@ async def getWalletRpcClient(config: th.Dict[str, th.Any],
                                           config)
     vlog(2, "Logging in to wallet")
     if (await client.log_in(fingerprint))["success"] is False:
-        raise exc.KeyNotFound()
+        vlog(1, "Unable to log in to standard wallet. Checking key count...")
+        keyCount = len(hddcoin.util.keychain.Keychain().get_all_private_keys())
+        vlog(1, f"Found {keyCount} available keys")
+        raise exc.KeyNotFound(str(keyCount))
     vlog(2, "Wallet login complete")
     return client
 
@@ -297,7 +300,7 @@ def getPkSkFromFingerprint(fingerprint: th.Optional[int],
             vlog(1, "No keys found! Check `hddcoin keys show`")
         else:
             vlog(1, f"No key exists with fingerprint of {fingerprint}")
-        raise exc.KeyNotFound()
+        raise exc.KeyNotFound(str(len(allPrivateKeyInfo)))
 
     return (fp, pk, sk)
 
@@ -331,8 +334,12 @@ async def callCliCmdHandler(handler: th.Callable,
     #     since there is no need to have the receipts at hand to work with the contracts.
     try:
         hodlRpcClient = HodlRpcClient(fingerprint)
-    except exc.KeyNotFound:
-        print(f"{R}ERROR: {Y}Unknown fingerprint. Please check `{W}hddcoin keys show{Y}`{_}")
+    except exc.KeyNotFound as knf:
+        keyCount = int(knf.args[0])
+        if keyCount:
+            print(f"{R}ERROR: {Y}Unknown fingerprint. Please check `{W}hddcoin keys show{Y}`{_}")
+        else:
+            print(f"{R}ERROR: {Y}No keys found! HODL'ing requires a fully synced wallet.{_}")
         return
     except exc.FingerprintNeeded:
         print(f"{R}ERROR: {Y}Fingerprint must be specified when you have > 1 key/wallet{_}")
