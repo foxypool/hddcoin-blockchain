@@ -39,6 +39,14 @@ if ([version]$pythonVersion -lt [version]"3.7.0")
     Write-Output "Installation requires Python 3.7 or later"
     Exit 1
 }
+
+if ([version]$pythonVersion -ge [version]"3.10")
+{
+    Write-Output "Found Python version:" $pythonVersion
+    Write-Output "Python 3.10 is not supported yet. Please use python 3.8 or 3.9."
+    Exit 1
+}
+
 Write-Output "Python version is:" $pythonVersion
 
 py -m venv venv
