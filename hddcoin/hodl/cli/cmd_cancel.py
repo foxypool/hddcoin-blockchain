@@ -44,7 +44,8 @@ async def cmd_cancel(hodlRpcClient: HodlRpcClient,
         # it's not cool if the user thinks they cancelled but it didn't actually work.
         rwd_hdd = decimal.Decimal(contractDetails.reward_bytes) / int(1e12)
         print(f"{R}ERROR: {Y}Unable to cancel yet... please wait a few minutes!{_}")
-        print(f"{W}  ==> We are in the process of guaranteeing your HODL rewards!")
+        print(f"{W}  ==> This is TEMPORARY.  You will be able to cancel your contract shortly!")
+        print(f"{W}  ==> We are in the process of guaranteeing your HODL rewards")
         print(f"{W}  ==> This short time is just to avoid simultaneous guarantee/cancel confusion")
         print(f"{C}Please use this time to reconsider cancelling your {Y}{rwd_hdd} HDD{C} HODL "
               f"reward {Y}:D{_}")
