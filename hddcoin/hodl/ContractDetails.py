@@ -26,7 +26,8 @@ keyReprDict = dict(
     contract_address = "Contract address:",
     puzzle_reveal    = "Puzzle reveal:",
     status           = "Status:",
-    wait_time_days   = "Time until payout:",  # not in the dict (it's derived), but.. formatting!
+    wait_time_days   = "Time until payout:",  # not in the dict (it's derived)
+    payout_date      = "Payout date:",        # not in the dict (it's derived)
 )
 
 @dataclasses.dataclass
@@ -88,22 +89,26 @@ class ContractDetails:
             flavor = f"{H}  ← WOOHOO!!{_}"
         daysRemaining = max(0, (self.timestamp_payout - time.time())) / 86400
         wait_time_days = f"{daysRemaining:.2f}"
+        payout_date = datetime.datetime.fromtimestamp(self.timestamp_payout,
+                                                      tz = datetime.timezone.utc)
+        payout_date_str = payout_date.isoformat(timespec = "seconds")
 
         kw = max(len(v) for v in krd.values())
         print(f"{t}{K}{krd['contract_id']:<{kw}}{_} {V}{self.contract_id}{_}")
         print(f"{t}{K}{krd['status']:<{kw}}{_} {sc}{self.status}{flavor}{_}")
         print(f"{t}{K}{krd['client_pubkey']:<{kw}}{_} {V}{self.client_pubkey}{_}")
-        print(f"{t}{K}{krd['register_date']:<{kw}}{_} {V}{self.register_date}{_}")
         print(f"{t}{K}{krd['program_name']:<{kw}}{_} {V}{self.program_name}{_}")
         print(f"{t}{K}{krd['term_months']:<{kw}}{_} {V}{self.term_months} {K}months{_}")
         print(f"{t}{K}{krd['reward_percent']:<{kw}}{_} {V}{self.reward_percent} {K}%{_}")
         print(f"{t}{K}{krd['deposit_bytes']:<{kw}}{_} {V}{self.deposit_bytes/bph} {K}HDD{_}")
         print(f"{t}{K}{krd['reward_bytes']:<{kw}}{_} {V}{self.reward_bytes/bph} {K}HDD{_}")
+        print(f"{t}{K}{krd['register_date']:<{kw}}{_} {V}{self.register_date}{_}")
+        print(f"{t}{K}{krd['payout_date']:<{kw}}{_} {V}{payout_date_str}{_}")
+        print(f"{t}{K}{krd['wait_time_days']:<{kw}}{_} {V}{wait_time_days} {K}days{_}")
         print(f"{t}{K}{krd['payout_address']:<{kw}}{_} {V}{self.payout_address}{_}")
         print(f"{t}{K}{krd['contract_address']:<{kw}}{_} {V}{self.contract_address}{_}")
         print(f"{t}{K}{krd['timestamp_start']:<{kw}}{_} {V}{self.timestamp_start}{_}")
         print(f"{t}{K}{krd['timestamp_payout']:<{kw}}{_} {V}{self.timestamp_payout}{_}")
-        print(f"{t}{K}{krd['wait_time_days']:<{kw}}{_} {V}{wait_time_days} {K}days{_}")
 
     @classmethod
     def printShortSummaryHeader(cls) -> None:
