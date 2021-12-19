@@ -411,6 +411,10 @@ async def callCliCmdHandler(handler: th.Callable,
             print(f"{R}Connection error: {Y}The HODL server is not available right now.\n"
                   f"{W}The server is likely under maintenance. Please try again later!\n"
                   f"If this problem persists, please contact the HDDcoin team!{_}")
+        elif "HTTP STATUS 401" in e.msg:
+            print(f"{R}Connection error: {Y}Unable to authenticate with the HODL server.\n"
+                  f" ==> {W}HODL requires accurate time. Please make sure your clock is synced.\n"
+                  f" ==> If this problem persists, please contact the HDDcoin team!{_}")
         else:
             print(f"{R}Connection error: {Y}{e.msg}{_}")
     except exc.HodlError as e:
