@@ -13,10 +13,10 @@ import typing as th
 
 import aiohttp
 import blspy   #type:ignore
-import certifi
 
 import hddcoin
 import hddcoin.hodl.exc as exc
+from hddcoin.ssl.create_ssl import get_mozilla_ca_crt
 from hddcoin.util.clvm import int_to_bytes
 
 
@@ -54,7 +54,7 @@ class HodlRpcClient:
         fp, self.pk, self.sk = hddcoin.hodl.util.getPkSkFromFingerprint(fingerprint)
         self._fingerprint = fp
 
-        self._sslcontext = ssl.create_default_context(cafile = certifi.where())
+        self._sslcontext = ssl.create_default_context(cafile = get_mozilla_ca_crt())
         self._session = aiohttp.ClientSession(timeout = DEFAULT_TIMEOUT)
         self._closing_task = None
 
