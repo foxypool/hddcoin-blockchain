@@ -28,17 +28,19 @@ def hodl_cmd() -> None:
 ## `hddcoin hodl programs`
 ###############################
 @hodl_cmd.command("programs", short_help="Display currently available HODL programs")
+@click.option("-f", "--fingerprint", type=int,
+              help="Set the fingerprint to specify which wallet to use")
 @click.option("--json", is_flag=True, default=False, help="Dump output in json format")
 @click.option("--verbose", "-v", count=True, type=int,
               help="log some details to console (for debugging)")
-def programs_cmd(json: bool, verbose: int) -> None:
+def programs_cmd(fingerprint: int, json: bool, verbose: int) -> None:
     from hddcoin.hodl.cli.cmd_programs import cmd_programs
     from hddcoin.hodl.util import callCliCmdHandler
     asyncio.run(
         callCliCmdHandler(
             cmd_programs,
             verbose,
-            fingerprint = None,  # just use the first key for this call
+            fingerprint,
             cmdKwargs = dict(dumpJson = json),
         ),
     )

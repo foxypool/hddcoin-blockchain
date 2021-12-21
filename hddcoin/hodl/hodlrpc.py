@@ -48,11 +48,8 @@ class HodlRpcClient:
         import hddcoin.hodl.util  # lazy circref avoidance
         self._vlog_ = hddcoin.hodl.util.vlog
 
-        if fingerprint is None:
-            self.vlog(1, "HODL RPC operations will auto-select the fingerprint (if only one)")
-
-        fp, self.pk, self.sk = hddcoin.hodl.util.getPkSkFromFingerprint(fingerprint)
-        self._fingerprint = fp
+        self.pk, self.sk = hddcoin.hodl.util.getPkSkFromFingerprint(fingerprint)
+        self._fingerprint = fingerprint
 
         self._sslcontext = ssl.create_default_context(cafile = get_mozilla_ca_crt())
         self._session = aiohttp.ClientSession(timeout = DEFAULT_TIMEOUT)
