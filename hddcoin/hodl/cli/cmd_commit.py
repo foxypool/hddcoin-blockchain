@@ -71,11 +71,19 @@ async def cmd_commit(hodlRpcClient: hddcoin.hodl.hodlrpc.HodlRpcClient,
         raise exc.HodlError(msg)
 
     vlog(1, f"Checking for sufficient funds")
-    if not await _cli_checkWallet(walletRpcClient, wallet_id, commit_hdd + fee_hdd):
+
+    if not await _cli_checkWallet(config,
+                                  hodlRpcClient,
+                                  walletRpcClient,
+                                  wallet_id,
+                                  commit_hdd + fee_hdd,
+                                  ):
         # Error happened while checking the wallet (and was handled)
         return
 
+
     if not payout_address:
+        vlog(1, f"Calculating default/first wallet address to use as payout_address")
         payout_address = hddcoin.hodl.util.getFirstWalletAddr(config, hodlRpcClient.sk)
         vlog(1, f"payout_address automatically set to {payout_address}")
 
@@ -143,20 +151,44 @@ async def cmd_commit(hodlRpcClient: hddcoin.hodl.hodlrpc.HodlRpcClient,
         print(f"  ==> For your receipt, please see: {Y}{precommitReceiptPath}{_}")
 
 
-async def _cli_checkWallet(walletClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,
+async def _cli_checkWallet(config: th.Dict[str, th.Any],
+                           hodlRpcClient: HodlRpcClient,
+                           walletRpcClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,
                            wallet_id: int,
                            requiredFunds_hdd: decimal.Decimal,
                            ) -> bool:
     print("Checking for sufficient funds... ", end = "")
     sys.stdout.flush()
     try:
-        await hddcoin.hodl.util.verifyWalletFunds(walletClient, wallet_id, requiredFunds_hdd)
+        await hddcoin.hodl.util.verifyWalletFunds(walletRpcClient, wallet_id, requiredFunds_hdd)
     except aiohttp.ClientConnectionError:
         print(f"{R}CONNECTION FAILURE\n{R}Unable to connect to wallet. {W}Is your wallet running?{_}")
     except exc.InsufficientFunds:
         print(f"{R}FAILED\n{R}Insufficient funds in wallet for requested HODL contract amount.{_}")
         print(f"  ==> This my be a temporary situation (some of your wallet coins may be in use)")
         print(f"  ==> Check your spendable wallet balance with `{Y}hddcoin wallet show{_}`")
+    except exc.WalletTooFragmented as e:
+        maxSend_bytes = int(e.args[0])
+        maxSend_hdd = decimal.Decimal(maxSend_bytes) / hddcoin.hodl.BYTES_PER_HDD
+
+        vlog(2, "Getting first wallet address to use for defrag suggestion")
+        addr = hddcoin.hodl.util.getFirstWalletAddr(config, hodlRpcClient.sk)
+        fp = hodlRpcClient._fingerprint
+        defragCmd = f"hddcoin wallet send -f {fp} -a {maxSend_hdd} -t {addr}"
+
+        print(f"{R}FAILED")
+        print(f"{Y}Your wallet is too fragmented to send {W}{requiredFunds_hdd}{Y} HDD{_}")
+        print(f" ==> rest assured that your wallet DOES have sufficient funds for the deposit!")
+        print(f" ==> the maximum your wallet can currently send is {Y}{maxSend_hdd} {_}HDD")
+        print(f" ==> this 'max_send' limit is driven by two things:")
+        print(f"       1) the number (and size) of coins you have in your wallet")
+        print(f"       2) the maximum number of coins you can reasonably spend at one time")
+        print(f" ==> you have a LOT of small coins (e.g. farmer rewards) and this is what limits you")
+        print(f"{G}NOTE: You can HODL a larger amount by first defragging your wallet a bit with:")
+        print(f"{Y}  {defragCmd}{_}")
+        print(f"The above command will (after a blockchain delay) result in a larger spend limit!")
+        print(f" ==> it does this by merging a lot of wallet coins into a single coin")
+        print(f" ==> the command just sends funds to yourself, and is a simple defragging trick")
     except exc.WalletIdNotFound:
         print(f"{R}WALLET ID NOT FOUND\n{R}No wallet exists with id {wallet_id}.{_}")
     except exc.WalletNotSynced:
@@ -309,8 +341,14 @@ async def _createContractCoin(walletClient: hddcoin.rpc.wallet_rpc_client.Wallet
     print(f"{W}Submitting transaction to purchase HODL contract for "
           f"{Y}{deposit_hdd} {W}HDD ... {_}", end = "")
 
-    tx = await walletClient.send_transaction(str(wallet_id), deposit_bytes, contract_address,
-                                             fee_bytes)
+    try:
+        tx = await walletClient.send_transaction(str(wallet_id), deposit_bytes, contract_address,
+                                                 fee_bytes)
+    except ValueError as e:
+        # This is odd since we *should* have pre-validated everything, but maybe something changed?
+        vlog(1, f"Error trying to submit the HODL deposit transaction: {e!r}")
+        raise exc.HodlError(f"Unexpected error submitting the HODL deposit transaction: {e}")
+
     tx_id = tx.name
     vlog(2, "Waiting for transmission confirmation from nodes")
     pushTxComplete = False

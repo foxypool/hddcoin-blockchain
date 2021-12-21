@@ -120,7 +120,6 @@ async def getWalletRpcClient(config: th.Dict[str, th.Any],
 def getFirstWalletAddr(config: th.Dict[str, th.Any],
                        sk: blspy.PrivateKey,
                        ) -> str:
-    vlog(1, f"Calculating default/first wallet address to use as payout_address")
     selected = config["selected_network"]
     prefix = config["network_overrides"]["config"][selected]["address_prefix"]
 
@@ -141,20 +140,25 @@ async def _walletIdExists(walletRpcClient: hddcoin.rpc.wallet_rpc_client.WalletR
     return False
 
 
-async def verifyWalletFunds(walletClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,
+async def verifyWalletFunds(walletRpcClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,
                             wallet_id: int,
                             requiredFunds_hdd: decimal.Decimal,
                             ) -> None:
     """Checks the specified wallet for requiredFunds_hdd, raising various exceptions on failure."""
-    if not (await walletClient.get_synced()):
-        raise exc.WalletNotSynced()
-
-    if not await _walletIdExists(walletClient, wallet_id):
+    if not await _walletIdExists(walletRpcClient, wallet_id):
         raise exc.WalletIdNotFound()
 
-    balances = await walletClient.get_wallet_balance(str(wallet_id))
-    if balances["spendable_balance"] < (requiredFunds_hdd * hddcoin.hodl.BYTES_PER_HDD):
-        raise exc.InsufficientFunds()
+    balances = await walletRpcClient.get_wallet_balance(str(wallet_id))
+    spendable_bytes = balances["spendable_balance"]
+    max_send_bytes = balances["max_send_amount"]
+    spendable_hdd = decimal.Decimal(spendable_bytes) / hddcoin.hodl.BYTES_PER_HDD
+    max_send_hdd = decimal.Decimal(max_send_bytes) / hddcoin.hodl.BYTES_PER_HDD
+
+    if spendable_hdd < requiredFunds_hdd:
+        raise exc.InsufficientFunds(str(spendable_bytes))
+
+    if max_send_hdd < requiredFunds_hdd:
+        raise exc.WalletTooFragmented(str(max_send_bytes))
 
 
 def _querySqliteDB(dbPath: str,
