@@ -37,7 +37,6 @@ async def cmd_show(hodlRpcClient: HodlRpcClient,
 
 
 def _printMultiContractSummary(apiDicts: th.List[th.Dict[str, th.Any]]) -> None:
-    print(f"All contracts:")
     ContractDetails.printShortSummaryHeader()
     for apiDict in apiDicts:
         cd = ContractDetails.fromApiDict(apiDict)
