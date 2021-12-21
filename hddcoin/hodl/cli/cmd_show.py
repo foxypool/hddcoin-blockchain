@@ -33,7 +33,10 @@ async def cmd_show(hodlRpcClient: HodlRpcClient,
         if dumpJson:
             print(json.dumps(apiDicts, indent = 4))
         else:
-            _printMultiContractSummary(apiDicts)
+            if len(apiDicts) == 0:
+                print(f"{Y}Fingerprint {hodlRpcClient._fingerprint} has no HODL contracts. :({_}")
+            else:
+                _printMultiContractSummary(apiDicts)
 
 
 def _printMultiContractSummary(apiDicts: th.List[th.Dict[str, th.Any]]) -> None:
