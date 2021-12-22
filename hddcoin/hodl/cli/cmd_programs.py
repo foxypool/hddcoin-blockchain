@@ -2,10 +2,12 @@
 # NOTES:
 #  - this file contains the CLI implementation for `hddcoin hodl programs`
 from __future__ import annotations
+import decimal
 import json
 import textwrap
 
 from hddcoin.hodl.hodlrpc import HodlRpcClient
+from hddcoin.hodl import BYTES_PER_HDD
 
 from .colours import *
 from .colours import _
@@ -35,16 +37,18 @@ async def cmd_programs(hodlRpcClient: HodlRpcClient,
         print("Sorry! There are currently no HODL programs available. Check back soon!")
     else:
         print(f"{C}The following HDDcoin HODL programs are currently available:{_}")
-        print(f"{W}{'-' * 80}{_}")
-        print(f"{W}{'Name':<12} {'Term':>5} {'Reward':>6}  Description{_}")
-        print(f"{W}{'-' * 80}{_}")
+        print(f"{W}{'-' * 83}{_}")
+        print(f"{W}{'Name':<12} {'Term':>5} {'Rwd':>4}  {'Minimum':>8}  Description{_}")
+        print(f"{W}{'-' * 83}{_}")
         for p in programs:
             name = p["name"]
+            minimum_commit_hdd = decimal.Decimal(p["min_commit_bytes"]) / BYTES_PER_HDD
             term = f"{p['term_in_months']:.2f}".rstrip("0").strip(".") + "M"
             perc = f"{p['reward_percent']:.2f}".rstrip("0").strip(".") + "%"
+            mch  = f"{minimum_commit_hdd:.1f}".rstrip("0").strip(".") + " HDD"
             desc = p["description"]
-            print(f"{Y}{name:<12}{_} {term:>5} {perc:>6}  {desc}{_}")
-        print(f"{W}{'-' * 80}{_}")
+            print(f"{Y}{name:<12}{_} {term:>5} {perc:>4}  {mch:>8}  {desc}{_}")
+        print(f"{W}{'-' * 83}{_}")
         print(f"{C}To commit funds to one of these programs, please use `{Y}hddcoin hodl commit{C}`.{_}")
         print(f"{G}HAPPY HODL'ING!!{_}")
         print()
