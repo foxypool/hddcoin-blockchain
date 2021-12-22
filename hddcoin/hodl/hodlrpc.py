@@ -16,7 +16,7 @@ import blspy   #type:ignore
 
 import hddcoin
 import hddcoin.hodl.exc as exc
-from hddcoin.ssl.create_ssl import get_mozilla_ca_crt
+from hddcoin.ssl.create_ssl import get_mozilla_ca_crt  #type:ignore
 from hddcoin.util.clvm import int_to_bytes
 
 
