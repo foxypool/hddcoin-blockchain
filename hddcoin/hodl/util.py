@@ -344,7 +344,8 @@ async def callCliCmdHandler(handler: th.Callable,
             print("Enter a number, or pick q to quit [q]: ", end = "")
             response = input("")
             if not response or response[0].lower() == "q":
-                print(f"Aborted. To see balances for each key, use `{Y}hddcoin wallet show{_}`")
+                print(f"Aborted.")
+                print(f"To see wallet balances for these keys, use `{Y}hddcoin wallet show{_}`.")
                 return
             try:
                 fingerprint = fingerprints[int(response) - 1]
