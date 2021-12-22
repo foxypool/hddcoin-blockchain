@@ -107,12 +107,33 @@ async def getWalletRpcClient(config: th.Dict[str, th.Any],
                                           rpc_port,
                                           hddcoin.util.default_root.DEFAULT_ROOT_PATH,
                                           config)
+    async def _closeClientConnection():
+        vlog(2, "Closing walletRPC connection")
+        client.close()
+        await client.await_closed()
+        vlog(2, "walletRPC connection closed")
+
     vlog(2, "Logging in to wallet")
-    if (await client.log_in(fingerprint))["success"] is False:
-        vlog(1, "Unable to log in to standard wallet. Checking key count...")
+    try:
+        loginRet = (await client.log_in(fingerprint))
+    except aiohttp.ClientConnectionError as cce:
+        vlog(2, "Trapped ClientConnectionError (but will re-raise)")
+        await _closeClientConnection()
+        raise cce
+    except Exception as e:
+        vlog(2, "Trapped Exception (but will re-raise): {e!r}")
+        await _closeClientConnection()
+        raise e
+
+
+    if not loginRet["success"]:
+        vlog(1, "Unable to log in to standard wallet.")
+        await _closeClientConnection()
+        vlog(2, "Checking available key count")
         keyCount = len(hddcoin.util.keychain.Keychain().get_all_private_keys())
-        vlog(1, f"Found {keyCount} available keys")
+        vlog(2, f"Found {keyCount} available keys")
         raise exc.KeyNotFound(str(keyCount))
+
     vlog(2, "Wallet login complete")
     return client
 
@@ -147,6 +168,9 @@ async def verifyWalletFunds(walletRpcClient: hddcoin.rpc.wallet_rpc_client.Walle
     """Checks the specified wallet for requiredFunds_hdd, raising various exceptions on failure."""
     if not await _walletIdExists(walletRpcClient, wallet_id):
         raise exc.WalletIdNotFound()
+
+    if not await walletRpcClient.get_synced():
+        raise exc.WalletNotSynced()
 
     balances = await walletRpcClient.get_wallet_balance(str(wallet_id))
     spendable_bytes = balances["spendable_balance"]
