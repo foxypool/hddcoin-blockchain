@@ -109,6 +109,15 @@ jobs:
         BUILD_VDF_CLIENT: "N"
       run: |
         sh install.sh
+        
+    - name: Setup Node 16.x
+      uses: actions/setup-node@v2.5.0
+      with:
+        node-version: '16.x'
+
+    - name: Install essentials
+      run: |
+        yum install -y gcc gcc-c++
 
     - name: Build .rpm package
       run: |

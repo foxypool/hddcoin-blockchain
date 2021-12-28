@@ -1,7 +1,6 @@
 name: Linux .deb installer on Python 3.8
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -142,14 +141,18 @@ jobs:
       run: |
         sh install.sh
 
-    - name: Setup Node 12.x
+    - name: Setup Node 16.x
       uses: actions/setup-node@v2.5.0
       with:
-        node-version: '12.x'
+        node-version: '16.x'
 
     - name: Add jq
       run: |
         sudo apt-get install -y jq
+        
+    - name: Install essentials
+      run: |
+        sudo apt-get install -y build-essential
 
     - name: Build .deb package
       run: |

@@ -113,6 +113,9 @@ if (!handleSquirrelEvent()) {
     const exitPyProc = (e) => {};
 
     app.on('will-quit', exitPyProc);
+	
+	// this needs to be set to use node-pty
+    app.allowRendererProcessReuse = false;
 
     /** ***********************************************************
      * window management
@@ -133,7 +136,12 @@ if (!handleSquirrelEvent()) {
           preload: `${__dirname}/preload.js`,
           nodeIntegration: true,
           contextIsolation: false,
-          nativeWindowOpen: true
+          nativeWindowOpen: true,
+		  // enableRemoteModule - test
+		  enableRemoteModule: true,
+		  //enable node integration for node-pty
+          nodeIntegrationInWorker: true,
+          webviewTag: true,
         },
       });
 

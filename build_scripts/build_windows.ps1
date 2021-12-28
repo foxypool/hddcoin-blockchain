@@ -41,7 +41,7 @@ $env:HDDCOIN_INSTALLER_VERSION = python .\build_scripts\installer-version.py -wi
 if (-not (Test-Path env:HDDCOIN_INSTALLER_VERSION)) {
   $env:HDDCOIN_INSTALLER_VERSION = '0.0.0'
   Write-Output "WARNING: No environment variable HDDCOIN_INSTALLER_VERSION set. Using 0.0.0"
-  }
+}
 Write-Output "HDDcoin Version is: $env:HDDCOIN_INSTALLER_VERSION"
 Write-Output "   ---"
 
@@ -81,6 +81,7 @@ Write-Output "   ---"
 Write-Output "Use pyinstaller to create hddcoin .exe's"
 Write-Output "   ---"
 $SPEC_FILE = (python -c 'import hddcoin; print(hddcoin.PYINSTALLER_SPEC_PATH)') -join "`n"
+Write-Output "$SPEC_FILE"
 
 pyinstaller --log-level INFO $SPEC_FILE
 
@@ -99,13 +100,14 @@ $Env:NODE_OPTIONS = "--max-old-space-size=3000"
 npm install --save-dev electron-winstaller
 npm install -g electron-packager
 npm install
-npm audit fix
+#npm audit fix
 
 git status
 
 Write-Output "   ---"
 Write-Output "Electron package Windows Installer"
 Write-Output "   ---"
+./node_modules/.bin/electron-rebuild -f -w node-pty
 npm run build
 If ($LastExitCode -gt 0){
     Throw "npm run build failed!"
@@ -133,7 +135,7 @@ Write-Output "   ---"
 
 Write-Output "   ---"
 Write-Output "electron-packager"
-electron-packager . HDDcoin --asar.unpack="**\daemon\**" --overwrite --icon=.\src\assets\img\hddcoin.ico --app-version=$packageVersion
+electron-packager . HDDcoin --asar.unpack="{**\daemon\**,**\node_modules\node-pty\build\Release\*}" --overwrite --icon=.\src\assets\img\hddcoin.ico --app-version=$packageVersion
 Write-Output "   ---"
 
 Write-Output "   ---"

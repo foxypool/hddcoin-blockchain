@@ -44,7 +44,8 @@ cd hddcoin-blockchain-gui || exit
 
 echo "npm build"
 npm install
-npm audit fix
+# npm audit fix
+./node_modules/.bin/electron-rebuild -f -w node-pty
 npm run build
 LAST_EXIT_CODE=$?
 if [ "$LAST_EXIT_CODE" -ne 0 ]; then
@@ -57,7 +58,7 @@ brew install jq
 cp package.json package.json.orig
 jq --arg VER "$HDDCOIN_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
-electron-packager . HDDcoin --asar.unpack="**/daemon/**" --platform=darwin \
+electron-packager . HDDcoin --asar.unpack="{**\daemon\**,**\node_modules\node-pty\build\Release\*}" --platform=darwin \
 --icon=src/assets/img/HDDcoin.icns --overwrite --app-bundle-id=net.hddcoin.blockchain \
 --appVersion=$HDDCOIN_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
