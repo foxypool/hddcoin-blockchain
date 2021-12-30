@@ -165,16 +165,14 @@ async def _cli_checkWallet(config: th.Dict[str, th.Any],
         print(f"{R}CONNECTION FAILURE\n{R}Unable to connect to wallet. {W}Is your wallet running?{_}")
     except exc.InsufficientFunds:
         print(f"{R}FAILED\n{R}Insufficient funds in wallet for requested HODL contract amount.{_}")
-        print(f"  ==> This my be a temporary situation (some of your wallet coins may be in use)")
+        print(f"  ==> This may be a temporary situation (some of your wallet coins may be in use)")
         print(f"  ==> Check your spendable wallet balance with `{Y}hddcoin wallet show{_}`")
     except exc.WalletTooFragmented as e:
         maxSend_bytes = int(e.args[0])
         maxSend_hdd = decimal.Decimal(maxSend_bytes) / hddcoin.hodl.BYTES_PER_HDD
 
-        vlog(2, "Getting first wallet address to use for defrag suggestion")
-        addr = hddcoin.hodl.util.getFirstWalletAddr(config, hodlRpcClient.sk)
         fp = hodlRpcClient._fingerprint
-        defragCmd = f"hddcoin wallet send -f {fp} -a {maxSend_hdd} -t {addr}"
+        defragCmd = f"hddcoin wallet defrag -f {fp}"
 
         print(f"{R}FAILED")
         print(f"{Y}Your wallet is too fragmented to send {W}{requiredFunds_hdd}{Y} HDD{_}")
