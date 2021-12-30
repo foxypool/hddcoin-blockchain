@@ -205,17 +205,21 @@ def delete_unconfirmed_transactions_cmd(wallet_rpc_port: Optional[int], id, fing
               help="Submits transaction without checking for unusual values",
               is_flag=True,
               default=False)
+@click.option("--no-confirm", is_flag=True, default=False,
+              help="do not ask to confirm defrag")
 def defrag(wallet_rpc_port: Optional[int],
            fingerprint: int,
            id: int,
            fee: decimal.Decimal,
            address: str,
            override: bool,
+           no_confirm: bool,
            ) -> None:
     extra_params = dict(id = id,
                         fee = fee,
                         address = address,
                         override = override,
+                        no_confirm = no_confirm,
                         )
     import asyncio
     from .wallet_funcs import execute_with_wallet, defrag

@@ -264,6 +264,7 @@ async def defrag(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -
     fee_bytes = uint64(int(fee_hdd * units["hddcoin"]))
     target_address = args["address"]
     override = args["override"]
+    no_confirm = args["no_confirm"]
 
     if fee_hdd >= 1 and (override == False):
         print(f"fee of {fee_hdd} HDD seems too large (use --override to force)")
@@ -283,16 +284,38 @@ async def defrag(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -
             if target_address == getNthWalletAddr(config, sk, i):
                 break  # address is confirmed as one of ours
         else:
-            print(f"Given address is not one of the first {check_count} wallet addresses.")
+            print("WARNING!!!\nWARNING!!!\nWARNING!!!  ", end = "")
+            print(f"The given address is not one of the first {check_count} wallet addresses!")
+            print("WARNING!!!\nWARNING!!!")
             inp = input(f"Is {target_address} where you want to defrag to? [y/N] ")
             if not inp or inp[0].lower() == "n":
                 print("Aborting defrag!")
                 return
 
-    # Now do one round of defrag!
+    # Figure out the maximum value the wallet can send at the moment
     balances = await wallet_client.get_wallet_balance(wallet_id)
     max_send_bytes = balances["max_send_amount"]
-    res = await wallet_client.send_transaction(wallet_id, max_send_bytes, target_address, fee_bytes)
+    spendable_bytes = balances["spendable_balance"]
+    max_send_hdd = Decimal(max_send_bytes) / units["hddcoin"]
+    spendable_hdd = Decimal(spendable_bytes) / units["hddcoin"]
+    print(f"Total of spendable coins in wallet (right now):    {spendable_hdd} HDD")
+    print(f"Maximum value you can send right now (pre-defrag): {max_send_hdd} HDD")
+
+    if not no_confirm:
+        if max_send_bytes == spendable_bytes:
+            inp = input("Your wallet is not currently limited by fragmentation! Continue? [y/N] ")
+        else:
+            inp = input("Do you wish to defrag and consolidate some coins? [y/N] ")
+        if not inp or inp[0].lower() == "n":
+            print("Aborting defrag!")
+            return
+
+    # Now do one round of defrag!
+    defrag_coin_size_bytes = max_send_bytes - fee_bytes
+    res = await wallet_client.send_transaction(wallet_id,
+                                               defrag_coin_size_bytes,
+                                               target_address,
+                                               fee_bytes)
 
     tx_id = res.name
     start = time.time()
