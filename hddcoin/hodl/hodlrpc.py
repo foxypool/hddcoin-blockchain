@@ -43,7 +43,7 @@ class HodlRpcClient:
     _sslcontext: ssl.SSLContext
 
     def __init__(self,
-                 fingerprint: th.Optional[int],
+                 fingerprint: int,
                  ) -> None:
         import hddcoin.hodl.util  # lazy circref avoidance
         self._vlog_ = hddcoin.hodl.util.vlog

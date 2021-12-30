@@ -89,8 +89,8 @@ def commit_cmd(program: str,
             verbose,
             fingerprint,
             injectConfig = True,
-            fullNodeRpcInfo = None, # no full_node RPC connection needed
-            walletRpcInfo = (wallet_rpc_port, fingerprint),
+            fullNodeRpcPort = None, # no full_node RPC connection needed
+            walletRpcPort = wallet_rpc_port or 0,  # walletRpcClient needed (0 is automatic port)
             cmdKwargs = dict(program_name = program,
                              wallet_id = id,
                              wallet_rpc_port = wallet_rpc_port,
@@ -133,8 +133,8 @@ def cancel_cmd(contract: str,
             verbose,
             fingerprint = fingerprint,
             injectConfig = False,
-            fullNodeRpcInfo = rpc_port or 0,  # FullNodeRpcClient needed (0 is automatic port)
-            walletRpcInfo = None,             # Wallet not currently needed
+            fullNodeRpcPort = rpc_port or 0,  # FullNodeRpcClient needed (0 is automatic port)
+            walletRpcPort = None,             # Wallet not currently needed
             cmdKwargs = dict(contract_id = contract,
                              no_confirm = no_confirm,
                              )
@@ -163,8 +163,8 @@ def limits_cmd(fingerprint: int,
             verbose,
             fingerprint,
             injectConfig = False,
-            fullNodeRpcInfo = None,  # not needed
-            walletRpcInfo = None,    # not needed
+            fullNodeRpcPort = None,  # not needed
+            walletRpcPort = None,    # not needed
             cmdKwargs = dict(dumpJson = json),
         )
     )
@@ -194,8 +194,8 @@ def show_cmd(contract: str,
             verbose,
             fingerprint,
             injectConfig = False,
-            fullNodeRpcInfo = None,  # not needed
-            walletRpcInfo = None,    # not needed
+            fullNodeRpcPort = None,  # not needed
+            walletRpcPort = None,    # not needed
             cmdKwargs = dict(contract_id = contract,
                              dumpJson = json),
         )
@@ -223,8 +223,8 @@ def profits_cmd(fingerprint: int,
             verbose,
             fingerprint,
             injectConfig = False,
-            fullNodeRpcInfo = None,  # not needed
-            walletRpcInfo = None,    # not needed
+            fullNodeRpcPort = None,  # not needed
+            walletRpcPort = None,    # not needed
             cmdKwargs = dict(dumpJson = json),
         )
     )
