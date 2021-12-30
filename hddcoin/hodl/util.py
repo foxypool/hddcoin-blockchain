@@ -224,7 +224,8 @@ def queryBlockchainDB(sql: str,
                       config: th.Optional[th.Dict] = None,
                       ) -> th.List[th.Tuple[th.Any, ...]]:
     dbPath = getBlockchainDbPath(config)
-    return _querySqliteDB(dbPath, sql, params)
+    roPath = f"file:{dbPath}?mode=ro"
+    return _querySqliteDB(roPath, sql, params)
 
 
 sql_hodlContractSpendInfo = """\
