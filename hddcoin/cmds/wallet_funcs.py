@@ -171,6 +171,7 @@ async def print_balances(args: dict, wallet_client: WalletRpcClient, fingerprint
             f"   -Pending Total Balance: {print_balance(balances['unconfirmed_wallet_balance'], scale, address_prefix)}"
         )
         print(f"   -Spendable: {print_balance(balances['spendable_balance'], scale, address_prefix)}")
+        print(f"   -Max Send Amount: {print_balance(balances['max_send_amount'], scale, address_prefix)}")
 
 
 async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) -> Optional[Tuple[WalletRpcClient, int]]:
