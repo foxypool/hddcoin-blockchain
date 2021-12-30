@@ -138,17 +138,28 @@ async def getWalletRpcClient(config: th.Dict[str, th.Any],
     return client
 
 
-def getFirstWalletAddr(config: th.Dict[str, th.Any],
-                       sk: blspy.PrivateKey,
-                       ) -> str:
+def getNthWalletAddr(config: th.Dict[str, th.Any],
+                     sk: blspy.PrivateKey,
+                     n: int,
+                     ) -> str:
+    # Note that this does NOT check if the address has been issued yet.
+    if n < 0:
+        raise ValueError("n must be >= 0")
+
     selected = config["selected_network"]
     prefix = config["network_overrides"]["config"][selected]["address_prefix"]
 
     addr = bech32m.encode_puzzle_hash(
-        create_puzzlehash_for_pk(master_sk_to_wallet_sk(sk, uint32(0)).get_g1()),
+        create_puzzlehash_for_pk(master_sk_to_wallet_sk(sk, uint32(n)).get_g1()),
         prefix,
     )
     return addr
+
+
+def getFirstWalletAddr(config: th.Dict[str, th.Any],
+                       sk: blspy.PrivateKey,
+                       ) -> str:
+    return getNthWalletAddr(config, sk, 0)
 
 
 async def _walletIdExists(walletRpcClient: hddcoin.rpc.wallet_rpc_client.WalletRpcClient,

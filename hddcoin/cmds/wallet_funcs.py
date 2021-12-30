@@ -245,6 +245,68 @@ async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) ->
     return wallet_client, fingerprint
 
 
+async def defrag(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> None:
+    """Defragment the wallet, reducing the number of coins in it.
+
+    This increases the maximum amount that can be sent in a single transaction.
+
+    """
+    # This is currently an extremely simple algorithm. We just send the maximum possible amount to
+    # ourselves, using the built in wallet restrictions (which are based on "reasonable" cost limits
+    # per block).
+    #
+    # Successive calls to this will always result in a single coin in the wallet.
+    from hddcoin.hodl.util import getNthWalletAddr, getPkSkFromFingerprint, loadConfig
+
+    wallet_id = args["id"]
+    fee_hdd = Decimal(args["fee"])
+    fee_bytes = uint64(int(fee_hdd * units["hddcoin"]))
+    target_address = args["address"]
+    override = args["override"]
+
+    if fee_hdd >= 1 and (override == False):
+        print(f"fee of {fee_hdd} HDD seems too large (use --override to force)")
+        return
+    elif target_address and len(target_address) != 62:
+        print("Address is invalid")
+        return
+
+    config = loadConfig()
+    sk = getPkSkFromFingerprint(fingerprint)[1]
+
+    if not target_address:
+        target_address = getNthWalletAddr(config, sk, 0)
+    else:
+        check_count = 100
+        for i in range(check_count):
+            if target_address == getNthWalletAddr(config, sk, i):
+                break  # address is confirmed as one of ours
+        else:
+            print(f"Given address is not one of the first {check_count} wallet addresses.")
+            inp = input(f"Is {target_address} where you want to defrag to? [y/N] ")
+            if not inp or inp[0].lower() == "n":
+                print("Aborting defrag!")
+                return
+
+    # Now do one round of defrag!
+    balances = await wallet_client.get_wallet_balance(wallet_id)
+    max_send_bytes = balances["max_send_amount"]
+    res = await wallet_client.send_transaction(wallet_id, max_send_bytes, target_address, fee_bytes)
+
+    tx_id = res.name
+    start = time.time()
+    while time.time() - start < 10:
+        await asyncio.sleep(0.1)
+        tx = await wallet_client.get_transaction(wallet_id, tx_id)
+        if len(tx.sent_to) > 0:
+            print(f"Defrag transaction submitted to nodes: {tx.sent_to}")
+            print(f"Do hddcoin wallet get_transaction -f {fingerprint} -tx 0x{tx_id} to get status")
+            return
+
+    print("Defrag transaction not yet submitted to nodes")
+    print(f"Do 'hddcoin wallet get_transaction -f {fingerprint} -tx 0x{tx_id}' to get status")
+
+
 async def execute_with_wallet(
     wallet_rpc_port: Optional[int], fingerprint: int, extra_params: Dict, function: Callable,
     eat_exceptions: bool = True,
@@ -278,3 +340,4 @@ async def execute_with_wallet(
             print(f"Exception from 'wallet' {e}")
     wallet_client.close()
     await wallet_client.await_closed()
+
