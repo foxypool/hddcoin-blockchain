@@ -130,7 +130,7 @@
         "copy-webpack-plugin": "^9.0.1",
         "cross-env": "^7.0.3",
         "css-loader": "^6.3.0",
-        "electron": "^13.6.2",
+        "electron": "^13.6.3",
         "electron-osx-sign": "^0.6.0",
         "electron-winstaller": "^5.0.0",
         "eslint": "^7.32.0",

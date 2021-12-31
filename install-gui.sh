@@ -104,6 +104,7 @@ if [ ! "$CI" ]; then
 
 	npm install
 	npm audit fix || true
+	./node_modules/.bin/electron-rebuild -f -w node-pty
 	npm run build
 	python ../installhelper.py
 else
