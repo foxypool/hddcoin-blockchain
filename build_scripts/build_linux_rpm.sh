@@ -61,7 +61,7 @@ fi
 cp package.json package.json.orig
 jq --arg VER "$HDDCOIN_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
-electron-packager . hddcoin-blockchain --asar.unpack="{**\daemon\**,**\node_modules\node-pty\build\Release\*}" --platform=linux \
+electron-packager . hddcoin-blockchain --asar.unpack="{**/daemon/**,**/node_modules/node-pty/build/Release/*}" --platform=linux \
 --icon=src/assets/img/HDDcoin.icns --overwrite --app-bundle-id=net.hddcoin.blockchain \
 --appVersion=$HDDCOIN_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
