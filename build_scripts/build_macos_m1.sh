@@ -58,7 +58,11 @@ brew install jq
 cp package.json package.json.orig
 jq --arg VER "$HDDCOIN_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
+<<<<<<< Updated upstream
 electron-packager . HDDcoin --asar.unpack="{**\daemon\**,**\node_modules\node-pty\build\Release\*}" --platform=darwin \
+=======
+electron-packager . HDDcoin --asar.unpack="{**/daemon/**,**/node_modules/node-pty/build/Release/*}" --platform=darwin \
+>>>>>>> Stashed changes
 --icon=src/assets/img/HDDcoin.icns --overwrite --app-bundle-id=net.hddcoin.blockchain \
 --appVersion=$HDDCOIN_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
