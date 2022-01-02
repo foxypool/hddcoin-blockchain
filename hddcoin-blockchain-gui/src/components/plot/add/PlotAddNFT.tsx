@@ -64,7 +64,7 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
             <Trans>Join a Pool</Trans>
           </Box>
           <Typography variant="body1" color="textSecondary">
-            <Trans>(Optional)</Trans>
+            <Trans>(NFT Pooling not supported)</Trans>
           </Typography>
         </Flex>
       }
@@ -135,17 +135,21 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
       {!loading && !hasNFTs && (
         <>
           <Typography variant="subtitle1">
-            <Trans>
-              Join a pool and get more consistent HDD farming rewards. Create a
-              plot NFT and assign your new plots to a group.
+            <Trans> 
+			  HDDcoin supports pooling for OG plots. Pooling with NFT plots, 
+			  which were not created with the HDDcoin Client is not yet supported. 
+			  Please visit https://hddcoin/pooling/ to learn more, 
+			  to check out currently supported OG pools, and to find out when support for 
+			  NFT pooling with plots not created with the HDDcoin Client will become available.			  
             </Trans>
           </Typography>
-
+          {/*  // Hide Join Pool Button
           <Box>
             <Button onClick={handleJoinPool} variant="contained">
               <Trans>Join a Pool</Trans>
             </Button>
           </Box>
+		  */} 
         </>
       )}
     </CardStep>

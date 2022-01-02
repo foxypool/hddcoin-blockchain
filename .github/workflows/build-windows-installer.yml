@@ -68,6 +68,11 @@ jobs:
       with:
         python-version: "3.9"
 
+    - name: Setup Node 16.x
+      uses: actions/setup-node@v2.5.0
+      with:
+        node-version: '16.x'
+
     # Create our own venv outside of the git directory JUST for getting the ACTUAL version so that install can't break it
     - name: Get version number
       id: version_number

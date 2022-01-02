@@ -1,0 +1,37 @@
+HODL REGISTRATION INSTRUCTIONS
+>> More information available at https://hddcoin.org/hodl
+_________________________________________________________
+
+
+# STEP-1: Check out what HODL programs are currently available.
+
+  hddcoin hodl programs
+
+# STEP-2: List your wallet balances and fingerprints. 
+(This will let you know what funds you have available to commit to the on-chain HODL contract, and will also show you “fingerprint” of the wallet you want to use)
+
+  hddcoin wallet show
+
+# STEP-3 (Optional): Access the help text on how to commit funds to an on-chain HODL contract.
+
+  hddcoin hodl commit -h
+
+# STEP-4: Execute your HODL Contract.
+(Substitute in your appropriate values for the variables — example given at end of instructions.)
+
+  hddcoin hodl commit -P program_name -f wallet_fingerprint -a amount_to_commit
+
+# STEP-5: Validate your HODL contract balance, using the standard wallet view command.
+(NOTE: Please be patient. This can take up to a minute before your balances are reflected on the blockchain and shown in your wallet overview.)
+
+  hddcoin wallet show
+
+# STEP-6: Get more detail on all your HODL contracts.
+
+  hddcoin hodl show
+
+_________________________________________________________
+
+## EXAMPLE Command to execute HODL Contract ##
+
+  hddcoin hodl commit -P PROMO-12M24 -f 1234567890 -a 250

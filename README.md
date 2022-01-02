@@ -40,6 +40,10 @@ The goal of HDDcoin is to reshape the global financial system through the power 
 
 
 ***********************************************
+# CO-FARMING WITH COMPATIBLE PLOTS?
+Please note that if you wish to co-farm with compatible plots made using the Client of another blockchain (like Chia™), or any other plotting tool like MadMax, because public keys are encoded in the plots, in order to utilize these plots for HDDcoin, you'll need to set the same mnemonic phrase (24 words) that you used for creating the plots. Learn more on our FAQ page -- https://hddcoin.org/faq.
+ 
+***********************************************
 # INSTALL INSTRUCTIONS:
 
 You can install HDDcoin by building from source, or by using the latest binaries for your operating system.
