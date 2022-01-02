@@ -13,6 +13,7 @@ import typing as th
 
 import aiohttp
 import blspy   #type:ignore
+import distro
 
 import hddcoin
 import hddcoin.hodl.exc as exc
@@ -31,6 +32,7 @@ HTTP_GET = "get"
 HTTP_POST = "post"
 
 CLIENT_OS = platform.system()
+CLIENT_DISTRO = distro.id()
 CLIENT_APPVER = hddcoin.__version__
 
 
@@ -74,6 +76,7 @@ class HodlRpcClient:
             "HODL-tstamp": str(tstamp),
             "HODL-sig":    str(tstamp_sig),
             "HODL-os":     CLIENT_OS,
+            "HODL-distro": CLIENT_DISTRO,
             "HODL-appver": CLIENT_APPVER,
         }
         return authHeaders
