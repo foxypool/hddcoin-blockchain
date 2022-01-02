@@ -30,6 +30,7 @@ dependencies = [
     "watchdog==2.1.6",  # Filesystem event watching - watches keyring.yaml
     "click-params==0.1.2",  # For the CLI
     "validators==0.18.2",   # For the CLI (a click-params dep)
+    "requests",  # for HODL help file download
 ]
 
 upnp_dependencies = [

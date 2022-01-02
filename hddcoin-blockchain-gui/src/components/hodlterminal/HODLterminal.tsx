@@ -14,7 +14,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 							
 const PY_MAC_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const PY_WIN_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
-const HODL_HELP_PATH = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'] + '/.hddcoin/mainnet/log/hodlhelp.txt';
+const HODL_HELP_PATH = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'] + '/.hddcoin/mainnet/hodl/hodlhelp.txt';
 const fullPath = (existsSync((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER))) ? ((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER)) : path.join(__dirname, '../../../venv/bin');
 const ENV_HDDCOIN = ((process.platform === 'win32') ? '$env:Path += ";' : 'export PATH="$PATH:') + fullPath + '"';
 const SHELL = (process.platform === 'win32') ? 'powershell.exe' : 'bash';
