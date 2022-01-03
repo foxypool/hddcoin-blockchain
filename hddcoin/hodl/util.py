@@ -288,7 +288,9 @@ async def cancelContract(hodlRpcClient: HodlRpcClient,
                                 f"{contract_id}. PLEASE NOTIFY THE HDDCOIN TEAM!")
 
     cr = await fullNodeRpcClient.get_coin_record_by_name(bytes32.fromhex(recentCoinName))
-    assert cr is not None
+    if cr is None:
+        raise exc.HodlError(f"Unable to get info on coin {recentCoinName}. "
+                            f"Is full node running?")
     ph_b32 = addr2puzhash(contract_address, asString = False)
     reveal = SerializedProgram.fromhex(vcd.puzzle_reveal)
     solution = SerializedProgram.fromhex(str(Program.to([1, cr.coin.amount, ph_b32])))
@@ -414,18 +416,27 @@ async def callCliCmdHandler(handler: th.Callable,
     # Create a full_node RPC client if needed by the command
     if fullNodeRpcPort is not None:
         vlog(2, "Creating RPC client connection with local full_node")
+        fullNodeRpcClient = await hddcoin.hodl.util.getFullNodeRpcClient(config,
+                                                                         fullNodeRpcPort)
+        cmdKwargs["fullNodeRpcClient"] = fullNodeRpcClient
+        toClose.append(fullNodeRpcClient)
+
+        # Also make sure the blockchain is synced up
         try:
-            fullNodeRpcClient = await hddcoin.hodl.util.getFullNodeRpcClient(config,
-                                                                             fullNodeRpcPort)
+            blockchainState = await fullNodeRpcClient.get_blockchain_state()  #type:ignore
         except Exception as e:
             print(f"{R}ERROR: {Y}Unable to connect to full_node RPC. {W}(Is it running?){_}")
             if not isinstance(e, aiohttp.ClientConnectionError):
                 print(f" ==> Error was: {e!r}")
             await _closeMultipleRpcClients(toClose)
             return
-        cmdKwargs["fullNodeRpcClient"] = fullNodeRpcClient
-        toClose.append(fullNodeRpcClient)
 
+        if not blockchainState.get("sync", {}).get("synced", False):
+            print(f"{R}ERROR: {Y}Blockchain not synced! A synced full node is required.{_}")
+            await _closeMultipleRpcClients(toClose)
+            return
+
+    # Create a wallet RPC client if needed by the command
     if walletRpcPort is not None:
         vlog(2, "Creating RPC client connection with local wallet")
         connStart_s = time.monotonic()
