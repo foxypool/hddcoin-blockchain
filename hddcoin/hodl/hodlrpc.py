@@ -124,7 +124,7 @@ class HodlRpcClient:
                     return _parseHodlRpcReturn(rpcRet)
                 else:
                     status_text = http.client.responses.get(resp.status, "UNKNOWN CODE!")
-                    err_msg = f"HTTP STATUS {resp.status} → {status_text}"
+                    err_msg = f"HTTP STATUS {resp.status} ({status_text})"
                     self.vlog(1, f"Server is unhappy: {err_msg}")
                     raise exc.HodlConnectionError(err_msg)
         except aiohttp.ClientConnectionError as e:
