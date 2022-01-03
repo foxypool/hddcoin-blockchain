@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <g transform="translate(-87.062,-130.43)">
-  <path d="m93.505 142.32v-2.3498c3.268 1.2247 6.5359 2.4495 9.8039 3.6742-4e-3 0.826-8e-3 1.652-0.0113 2.478-3.2363 1.2675-6.4726 2.5349-9.7089 3.8024l-0.04185-2.478c2.2459-0.8687 4.4917-1.7374 6.7376-2.6061-2.2598-0.84023-4.5196-1.6805-6.7794-2.5207z" fill="#fff"/>
-  <rect x="103.48" y="150.66" width="9.3146" height="2.1292" fill="#fff"/>
-  <ellipse cx="103.04" cy="146.39" rx="15.061" ry="14.998" fill="none" stroke="#fff" stroke-width="1.88"/>
+<svg width="39" height="39" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <rect stroke-width="3" rx="4" id="svg_1" height="15" width="15" y="1.71969" x="1.74337" stroke="#2aa22a" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_2" height="15" width="15" y="1.65954" x="22.12985" stroke="#006600" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_3" height="15" width="15" y="22.25905" x="1.68024" stroke="#006600" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_4" height="15" width="15" y="22.25905" x="22.23936" stroke="#2aa22a" fill="none"/>
  </g>
 </svg>
