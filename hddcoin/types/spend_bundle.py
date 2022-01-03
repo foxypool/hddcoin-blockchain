@@ -93,7 +93,16 @@ class SpendBundle(Streamable):
                 json_dict = dict(
                     aggregated_signature=json_dict["aggregated_signature"], coin_spends=json_dict["coin_solutions"]
                 )
-                warnings.warn("`coin_solutions` is now `coin_spends` in `SpendBundle.from_json_dict`")
+                # Disabling this warning since it is the default condition!
+                #  - to_json_dict() defaults to `exclude_modern_keys=True` and no python code
+                #     overrides this, which means that the old `coin_solutions` key will *always*
+                #     be the only key (especially for a full_node push_tx)
+                #  - upstream code commit 30cb11a also partially reverts this key change, which
+                #     implies there was a problem with this code
+                #  - the blockchain network has a wide assortment of hddcoin versions, and the old
+                #     key currently works (and is still default), so suppressing the warning is the
+                #     safest option here
+                #warnings.warn("`coin_solutions` is now `coin_spends` in `SpendBundle.from_json_dict`")
             else:
                 raise ValueError("JSON contains both `coin_solutions` and `coin_spends`, just use `coin_spends`")
         return dataclass_from_dict(cls, json_dict)
