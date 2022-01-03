@@ -355,7 +355,7 @@ async def callCliCmdHandler(handler: th.Callable,
     if cmdKwargs is None:
         cmdKwargs = {}
 
-    if injectConfig or fullNodeRpcPort or walletRpcPort:
+    if injectConfig or (fullNodeRpcPort is not None) or (walletRpcPort is not None):
         config = hddcoin.hodl.util.loadConfig()
         if injectConfig:
             cmdKwargs["config"] = config
