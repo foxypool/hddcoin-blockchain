@@ -420,7 +420,7 @@ async def callCliCmdHandler(handler: th.Callable,
         except Exception as e:
             print(f"{R}ERROR: {Y}Unable to connect to full_node RPC. {W}(Is it running?){_}")
             if not isinstance(e, aiohttp.ClientConnectionError):
-                print(f"  → Error was: {e!r}")
+                print(f" ==> Error was: {e!r}")
             await _closeMultipleRpcClients(toClose)
             return
         cmdKwargs["fullNodeRpcClient"] = fullNodeRpcClient
@@ -439,7 +439,7 @@ async def callCliCmdHandler(handler: th.Callable,
             print(f"{R}ERROR{_}")
             print(f"{R}ERROR: {Y}Unable to connect to wallet RPC. {W}(Is it running?){_}")
             if not isinstance(e, aiohttp.ClientConnectionError):
-                print(f"  → Error was: {e!r}")
+                print(f" ==> Error was: {e!r}")
             await _closeMultipleRpcClients(toClose)
             return
         print(f"{G}OK{_}  [took {time.monotonic() - connStart_s:.2f} s]")
