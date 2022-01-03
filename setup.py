@@ -19,7 +19,7 @@ dependencies = [
     "distro==1.6.0",  # os distro identification library
     "fasteners==0.16.3",  # For interprocess file locking
     "keyring==23.5.0",  # Store keys in MacOS Keychain, Windows Credential Locker
-    "keyrings.cryptfile==1.3.4",  # Secure storage for keys on Linux (Will be replaced)
+    "keyrings.cryptfile==1.3.8",  # Secure storage for keys on Linux (Will be replaced)
     #  "keyrings.cryptfile==1.3.8",  # Secure storage for keys on Linux (Will be replaced)
     #  See https://github.com/frispete/keyrings.cryptfile/issues/15
     "PyYAML==6.0",  # Used for config file format
