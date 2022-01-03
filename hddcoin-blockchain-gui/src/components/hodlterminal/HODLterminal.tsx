@@ -24,7 +24,7 @@ const pty = require('node-pty');
 const StyledPaper = styled(Paper)`
   color: #37c3fe;
   min-width: 84%;
-  height: 40vh;
+  height: 35vh;
   bottom: 0;
   font-size: 14px;
   background-color: #2b2a2a;
@@ -136,7 +136,7 @@ export default class HODLterminal extends React.Component {
             <Trans>HDDcoin HODL and Apps Terminal</Trans>
         </DashboardTitle>
 		
-		<div id="xterm" style={{ height: "56vh", width: "100%"}} />
+		<div id="xterm" style={{ height: "55vh", width: "100%"}} />
 		
 		<StyledPaper>
 			<StyledScrollToBottom>
