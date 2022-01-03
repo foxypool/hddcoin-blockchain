@@ -26,7 +26,7 @@ dependencies = [
     "setproctitle==1.2.2",  # Gives the hddcoin processes readable names
     "sortedcontainers==2.4.0",  # For maintaining sorted mempools
     "websockets==10.1",  # For use in wallet RPC and electron UI
-    "click==7.1.2",  # For the CLI
+    "click==8.0.3",  # For the CLI
     "dnspythonchia==2.2.0",  # Query DNS seeds
     "watchdog==2.1.6",  # Filesystem event watching - watches keyring.yaml
     "click-params==0.1.2",  # For the CLI
