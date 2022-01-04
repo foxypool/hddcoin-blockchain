@@ -73,6 +73,8 @@ term.onKey(key => {
     ptyProcess.write('\r');
   } else if (char === "Backspace") {
     ptyProcess.write('\b');
+  }  else if (char === "Tab") {
+    ptyProcess.write('\t');
   } else if (char === "ArrowUp") {
     ptyProcess.write('\x1b[A')
   } else if (char === "ArrowDown") {
@@ -81,8 +83,12 @@ term.onKey(key => {
     ptyProcess.write('\x1b[C')
   } else if (char === "ArrowLeft") {
     ptyProcess.write('\x1b[D')
-  } else if (term.hasSelection() && key.key === "�") {
+  } else if (char === "Delete" || char === "Insert" || char === "Home" || char === "End" || char === "PageUp" || char === "PageDown" || char === "Escape" || char === "F1" || char === "F2" || char === "F3" || char === "F4" || char === "F5" || char === "F6" || char === "F7" || char === "F8" || char === "F9" || char === "F10" || char === "F11" || char === "F12") {
+    ptyProcess.write('')
+  } else if (term.hasSelection() && key.domEvent.ctrlKey && key.domEvent.key === "KeyC") {
     document.execCommand('copy') 
+  } else if (key.domEvent.ctrlKey && key.domEvent.key === "KeyV") {
+    ptyProcess.write( clipboard.readText() )
   } else {
     ptyProcess.write(char);
   }
