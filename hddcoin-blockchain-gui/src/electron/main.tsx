@@ -120,17 +120,17 @@ if (!handleSquirrelEvent()) {
     //////
     // Fetch the HODL instructions
     //  - FIXME: this is an absolutely massive hack 
-    ////
+     ////
     const https = require('https');
     const fs = require('fs');
     const path = require('path');
     function downloadHodlInstructions() {
       const srcURL = "https://raw.githubusercontent.com/HDDcoin-Network/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt";
       const hodlInstructionDir = path.join(os.homedir(), '.hddcoin', 'mainnet', 'hodl');
+	  if (!fs.existsSync(hodlInstructionDir)) {
+			fs.mkdirSync(hodlInstructionDir);
+		  }
       const hodlInstructionPath = path.join(hodlInstructionDir, 'hodlhelp.txt');
-      if (!fs.existsSync(hodlInstructionDir)) {
-        fs.mkdirSync(dir);
-      }
       const fp = fs.createWriteStream(hodlInstructionPath);
       const request = https
         .get(srcURL, (res) => {
