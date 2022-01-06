@@ -27,8 +27,7 @@ MAX_TOTAL_PEERS_RECEIVED = 3000
 MAX_CONCURRENT_OUTBOUND_CONNECTIONS = 70
 NETWORK_ID_DEFAULT_PORTS = {
     "mainnet": 28444,
-    "testnet1": 38444,
-    "testnet2": 48445,
+    "testnet": 38444,
 }
 
 
@@ -227,6 +226,12 @@ class FullNodeDiscovery:
         except Exception as e:
             self.log.warn(f"querying DNS introducer failed: {e}")
 
+    async def on_connect_callback(self, peer: ws.WSHDDcoinConnection):
+        if self.server.on_connect is not None:
+            await self.server.on_connect(peer)
+        else:
+            await self.on_connect(peer)
+
     async def start_client_async(self, addr: PeerInfo, is_feeler: bool) -> None:
         try:
             if self.address_manager is None:
@@ -234,7 +239,7 @@ class FullNodeDiscovery:
             self.pending_outbound_connections.add(addr.host)
             client_connected = await self.server.start_client(
                 addr,
-                on_connect=self.server.on_connect,
+                on_connect=self.on_connect_callback,
                 is_feeler=is_feeler,
             )
             if self.server.is_duplicate_or_self_connection(addr):

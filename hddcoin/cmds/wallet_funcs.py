@@ -138,9 +138,28 @@ async def print_balances(args: dict, wallet_client: WalletRpcClient, fingerprint
     config = load_config(DEFAULT_ROOT_PATH, "config.yaml")
     address_prefix = config["network_overrides"]["config"][config["selected_network"]]["address_prefix"]
 
+    # lazy load HODL stuff here for cleaner diff
+    import hddcoin.hodl.exc
+    from hddcoin.hodl.hodlrpc import HodlRpcClient
+    hodlRpcClient = HodlRpcClient(fingerprint)
+    try:
+        rpcRet  = await hodlRpcClient.get("getTotalHodlForWallet")
+        hodl_balance_bytes = rpcRet["committed_bytes"]
+        hodl_balance_hdd = Decimal(hodl_balance_bytes) / int(1e12)
+        # emulating upstream repr for now
+        hodl_balance_str = f"{hodl_balance_hdd} hdd ({hodl_balance_bytes} byte)"
+    except hddcoin.hodl.exc.HodlConnectionError:
+        hodl_balance_str = "< UNABLE TO CONNECT TO HODL SERVER >"
+    except Exception as e:
+        hodl_balance_str = f"ERROR: {e!r}"
+    finally:
+        hodlRpcClient.close()
+        await hodlRpcClient.await_closed()
+
     print(f"Wallet height: {await wallet_client.get_height_info()}")
     print(f"Sync status: {'Synced' if (await wallet_client.get_synced()) else 'Not synced'}")
     print(f"Balances, fingerprint: {fingerprint}")
+    print(f"HODL deposits: {hodl_balance_str}")
     for summary in summaries_response:
         wallet_id = summary["id"]
         balances = await wallet_client.get_wallet_balance(wallet_id)
@@ -152,6 +171,7 @@ async def print_balances(args: dict, wallet_client: WalletRpcClient, fingerprint
             f"   -Pending Total Balance: {print_balance(balances['unconfirmed_wallet_balance'], scale, address_prefix)}"
         )
         print(f"   -Spendable: {print_balance(balances['spendable_balance'], scale, address_prefix)}")
+        print(f"   -Max Send Amount: {print_balance(balances['max_send_amount'], scale, address_prefix)}")
 
 
 async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) -> Optional[Tuple[WalletRpcClient, int]]:
@@ -226,8 +246,94 @@ async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) ->
     return wallet_client, fingerprint
 
 
+async def defrag(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> None:
+    """Defragment the wallet, reducing the number of coins in it.
+
+    This increases the maximum amount that can be sent in a single transaction.
+
+    """
+    # This is currently an extremely simple algorithm. We just send the maximum possible amount to
+    # ourselves, using the built in wallet restrictions (which are based on "reasonable" cost limits
+    # per block).
+    #
+    # Successive calls to this will always result in a single coin in the wallet.
+    from hddcoin.hodl.util import getNthWalletAddr, getPkSkFromFingerprint, loadConfig
+
+    wallet_id = args["id"]
+    fee_hdd = Decimal(args["fee"])
+    fee_bytes = uint64(int(fee_hdd * units["hddcoin"]))
+    target_address = args["address"]
+    override = args["override"]
+    no_confirm = args["no_confirm"]
+
+    if fee_hdd >= 1 and (override == False):
+        print(f"fee of {fee_hdd} HDD seems too large (use --override to force)")
+        return
+    elif target_address and len(target_address) != 62:
+        print("Address is invalid")
+        return
+
+    config = loadConfig()
+    sk = getPkSkFromFingerprint(fingerprint)[1]
+
+    if not target_address:
+        target_address = getNthWalletAddr(config, sk, 0)
+    else:
+        check_count = 100
+        for i in range(check_count):
+            if target_address == getNthWalletAddr(config, sk, i):
+                break  # address is confirmed as one of ours
+        else:
+            print("WARNING!!!\nWARNING!!!\nWARNING!!!  ", end = "")
+            print(f"The given address is not one of the first {check_count} wallet addresses!")
+            print("WARNING!!!\nWARNING!!!")
+            inp = input(f"Is {target_address} where you want to defrag to? [y/N] ")
+            if not inp or inp[0].lower() == "n":
+                print("Aborting defrag!")
+                return
+
+    # Figure out the maximum value the wallet can send at the moment
+    balances = await wallet_client.get_wallet_balance(wallet_id)
+    max_send_bytes = balances["max_send_amount"]
+    spendable_bytes = balances["spendable_balance"]
+    max_send_hdd = Decimal(max_send_bytes) / units["hddcoin"]
+    spendable_hdd = Decimal(spendable_bytes) / units["hddcoin"]
+    print(f"Total of spendable coins in wallet (right now):    {spendable_hdd} HDD")
+    print(f"Maximum value you can send right now (pre-defrag): {max_send_hdd} HDD")
+
+    if not no_confirm:
+        if max_send_bytes == spendable_bytes:
+            inp = input("Your wallet is not currently limited by fragmentation! Continue? [y/N] ")
+        else:
+            inp = input("Do you wish to defrag and consolidate some coins? [y/N] ")
+        if not inp or inp[0].lower() == "n":
+            print("Aborting defrag!")
+            return
+
+    # Now do one round of defrag!
+    defrag_coin_size_bytes = max_send_bytes - fee_bytes
+    res = await wallet_client.send_transaction(wallet_id,
+                                               defrag_coin_size_bytes,
+                                               target_address,
+                                               fee_bytes)
+
+    tx_id = res.name
+    start = time.time()
+    while time.time() - start < 10:
+        await asyncio.sleep(0.1)
+        tx = await wallet_client.get_transaction(wallet_id, tx_id)
+        if len(tx.sent_to) > 0:
+            print(f"Defrag transaction submitted to nodes: {tx.sent_to}")
+            print(f"Do hddcoin wallet get_transaction -f {fingerprint} -tx 0x{tx_id} to get status")
+            return
+
+    print("Defrag transaction not yet submitted to nodes")
+    print(f"Do 'hddcoin wallet get_transaction -f {fingerprint} -tx 0x{tx_id}' to get status")
+
+
 async def execute_with_wallet(
-    wallet_rpc_port: Optional[int], fingerprint: int, extra_params: Dict, function: Callable
+    wallet_rpc_port: Optional[int], fingerprint: int, extra_params: Dict, function: Callable,
+    eat_exceptions: bool = True,
 ) -> None:
     try:
         config = load_config(DEFAULT_ROOT_PATH, "config.yaml")
@@ -245,6 +351,10 @@ async def execute_with_wallet(
     except KeyboardInterrupt:
         pass
     except Exception as e:
+        if not eat_exceptions:
+            wallet_client.close()
+            await wallet_client.await_closed()
+            raise e
         if isinstance(e, aiohttp.ClientConnectorError):
             print(
                 f"Connection error. Check if the wallet is running at {wallet_rpc_port}. "
@@ -254,3 +364,4 @@ async def execute_with_wallet(
             print(f"Exception from 'wallet' {e}")
     wallet_client.close()
     await wallet_client.await_closed()
+

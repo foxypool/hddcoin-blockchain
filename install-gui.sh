@@ -24,7 +24,7 @@ if [ "$(uname)" = "Linux" ]; then
 	if type apt-get; then
 		# Debian/Ubuntu
 		UBUNTU=true
-		
+
 		# Check if we are running a Raspberry PI 4
 		if [ "$(uname -m)" = "aarch64" ] \
 		&& [ "$(uname -n)" = "raspberrypi" ]; then
@@ -104,6 +104,7 @@ if [ ! "$CI" ]; then
 
 	npm install
 	npm audit fix || true
+	./node_modules/.bin/electron-rebuild -f -w node-pty
 	npm run build
 	python ../installhelper.py
 else

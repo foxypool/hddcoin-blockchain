@@ -16,8 +16,11 @@ echo "HDDcoin Installer Version is: $HDDCOIN_INSTALLER_VERSION"
 
 echo "Installing npm and electron packagers"
 npm install electron-installer-dmg -g
-npm install electron-packager -g
-npm install electron/electron-osx-sign -g
+# Pinning electron-packager and electron-osx-sign to known working versions
+# Current packager uses an old version of osx-sign, so if we install the newer sign package
+# things break
+npm install electron-packager@15.4.0 -g
+npm install electron-osx-sign@v0.5.0 -g
 npm install notarize-cli -g
 
 echo "Create dist/"
@@ -39,7 +42,8 @@ cd hddcoin-blockchain-gui || exit
 
 echo "npm build"
 npm install
-npm audit fix
+# npm audit fix
+./node_modules/.bin/electron-rebuild -f -w node-pty
 npm run build
 LAST_EXIT_CODE=$?
 if [ "$LAST_EXIT_CODE" -ne 0 ]; then
@@ -52,7 +56,7 @@ brew install jq
 cp package.json package.json.orig
 jq --arg VER "$HDDCOIN_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
-electron-packager . HDDcoin --asar.unpack="**/daemon/**" --platform=darwin \
+electron-packager . HDDcoin --asar.unpack="{**/daemon/**,**/node_modules/node-pty/build/Release/*}" --platform=darwin \
 --icon=src/assets/img/HDDcoin.icns --overwrite --app-bundle-id=net.hddcoin.blockchain \
 --appVersion=$HDDCOIN_INSTALLER_VERSION
 LAST_EXIT_CODE=$?
@@ -65,7 +69,7 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-if [ "$NOTARIZE" ]; then
+if [ "$NOTARIZE" == true ]; then
   electron-osx-sign HDDcoin-darwin-x64/HDDcoin.app --platform=darwin \
   --hardened-runtime=true --provisioning-profile=hddcoinblockchain.provisionprofile \
   --entitlements=entitlements.mac.plist --entitlements-inherit=entitlements.mac.plist \
@@ -91,7 +95,7 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-if [ "$NOTARIZE" ]; then
+if [ "$NOTARIZE" == true ]; then
 	echo "Notarize $DMG_NAME on ci"
 	cd final_installer || exit
   notarize-cli --file=$DMG_NAME --bundle-id net.hddcoin.blockchain \

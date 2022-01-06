@@ -13,10 +13,15 @@ import { useFormContext } from 'react-hook-form';
 import usePlotNFTs from '../../../hooks/usePlotNFTs';
 import PlotNFTName from '../../plotNFT/PlotNFTName';
 import PlotNFTSelectPool from '../../plotNFT/select/PlotNFTSelectPool';
+import Plotter from '../../../types/Plotter';
 
-type Props = {};
+type Props = {
+  step: number;
+  plotter: Plotter;
+};
 
 const PlotAddNFT = forwardRef((props: Props, ref) => {
+  const { step } = props;
   const { nfts, external, loading } = usePlotNFTs();
   const [showCreatePlotNFT, setShowCreatePlotNFT] = useState<boolean>(false);
   const { setValue } = useFormContext();
@@ -36,7 +41,7 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
   if (showCreatePlotNFT) {
     return (
       <PlotNFTSelectPool
-        step={5}
+        step={step}
         onCancel={handleCancelPlotNFT}
         ref={ref}
         title={<Trans>Create a Plot NFT</Trans>}
@@ -52,14 +57,14 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
 
   return (
     <CardStep
-      step="5"
+      step={step}
       title={
         <Flex gap={1} alignItems="baseline">
           <Box>
             <Trans>Join a Pool</Trans>
           </Box>
           <Typography variant="body1" color="textSecondary">
-            <Trans>(Optional)</Trans>
+            <Trans>(NFT Pooling not supported)</Trans>
           </Typography>
         </Flex>
       }
@@ -130,17 +135,21 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
       {!loading && !hasNFTs && (
         <>
           <Typography variant="subtitle1">
-            <Trans>
-              Join a pool and get more consistent HDD farming rewards. Create a
-              plot NFT and assign your new plots to a group.
+            <Trans> 
+			  HDDcoin supports pooling for OG plots. Pooling with NFT plots, 
+			  which were not created with the HDDcoin Client is not yet supported. 
+			  Please visit https://hddcoin/pooling/ to learn more, 
+			  to check out currently supported OG pools, and to find out when support for 
+			  NFT pooling with plots not created with the HDDcoin Client will become available.			  
             </Trans>
           </Typography>
-
+          {/*  // Hide Join Pool Button
           <Box>
             <Button onClick={handleJoinPool} variant="contained">
               <Trans>Join a Pool</Trans>
             </Button>
           </Box>
+		  */} 
         </>
       )}
     </CardStep>

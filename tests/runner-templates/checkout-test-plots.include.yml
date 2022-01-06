@@ -5,3 +5,10 @@
         path: '.hddcoin'
         ref: '0.27.0'
         fetch-depth: 1
+
+    - name: Link home directory
+      run: |
+        cd $HOME
+        ln -s $GITHUB_WORKSPACE/.hddcoin
+        echo "$HOME/.hddcoin"
+        ls -al $HOME/.hddcoin

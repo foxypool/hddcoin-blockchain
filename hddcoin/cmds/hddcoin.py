@@ -1,9 +1,13 @@
 from io import TextIOWrapper
+import asyncio
+import platform
+
 import click
 
 from hddcoin import __version__
 from hddcoin.cmds.configure import configure_cmd
 from hddcoin.cmds.farm import farm_cmd
+from hddcoin.cmds.hodl import hodl_cmd
 from hddcoin.cmds.init import init_cmd
 from hddcoin.cmds.keys import keys_cmd
 from hddcoin.cmds.netspace import netspace_cmd
@@ -14,9 +18,15 @@ from hddcoin.cmds.start import start_cmd
 from hddcoin.cmds.stop import stop_cmd
 from hddcoin.cmds.wallet import wallet_cmd
 from hddcoin.cmds.plotnft import plotnft_cmd
+from hddcoin.cmds.plotters import plotters_cmd
 from hddcoin.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
-from hddcoin.util.keychain import set_keys_root_path, supports_keyring_passphrase
-from hddcoin.util.ssl import check_ssl
+from hddcoin.util.keychain import (
+    Keychain,
+    KeyringCurrentPassphraseIsInvalid,
+    set_keys_root_path,
+    supports_keyring_passphrase,
+)
+from hddcoin.util.ssl_check import check_ssl
 from typing import Optional
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -66,10 +76,21 @@ def cli(
         set_keys_root_path(Path(keys_root_path))
 
     if passphrase_file is not None:
-        from .passphrase_funcs import cache_passphrase, read_passphrase_from_file
+        from hddcoin.cmds.passphrase_funcs import cache_passphrase, read_passphrase_from_file
+        from sys import exit
 
         try:
-            cache_passphrase(read_passphrase_from_file(passphrase_file))
+            passphrase = read_passphrase_from_file(passphrase_file)
+            if Keychain.master_passphrase_is_valid(passphrase):
+                cache_passphrase(passphrase)
+            else:
+                raise KeyringCurrentPassphraseIsInvalid("Invalid passphrase")
+        except KeyringCurrentPassphraseIsInvalid:
+            if Path(passphrase_file.name).is_file():
+                print(f'Invalid passphrase found in "{passphrase_file.name}"')
+            else:
+                print("Invalid passphrase")
+            exit(1)
         except Exception as e:
             print(f"Failed to read passphrase: {e}")
 
@@ -118,12 +139,17 @@ cli.add_command(start_cmd)
 cli.add_command(stop_cmd)
 cli.add_command(netspace_cmd)
 cli.add_command(farm_cmd)
+cli.add_command(plotters_cmd)
+cli.add_command(hodl_cmd)
 
 if supports_keyring_passphrase():
     cli.add_command(passphrase_cmd)
 
 
 def main() -> None:
+    if platform.system() == "Windows":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  #type:ignore
+
     monkey_patch_click()
     cli()  # pylint: disable=no-value-for-parameter
 

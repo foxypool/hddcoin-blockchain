@@ -1,4 +1,5 @@
 import { app, dialog, shell, ipcMain, BrowserWindow, Menu, session } from 'electron';
+require('@electron/remote/main').initialize()
 import path from 'path';
 import React from 'react';
 import url from 'url';
@@ -49,13 +50,9 @@ function openAbout() {
   });
   aboutWindow.loadURL(`data:text/html;charset=utf-8,${about}`);
 
-  aboutWindow.webContents.on('will-navigate', (e, url) => {
-    e.preventDefault();
-    shell.openExternal(url);
-  });
-  aboutWindow.webContents.on('new-window', (e, url) => {
-    e.preventDefault();
-    shell.openExternal(url);
+  aboutWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url);
+    return { action: 'deny' }
   });
 
   aboutWindow.once('closed', () => {
@@ -116,6 +113,35 @@ if (!handleSquirrelEvent()) {
     const exitPyProc = (e) => {};
 
     app.on('will-quit', exitPyProc);
+	
+    // this needs to be set to use node-pty
+    app.allowRendererProcessReuse = false;
+
+    //////
+    // Fetch the HODL instructions
+    //  - FIXME: this is an absolutely massive hack 
+     ////
+    const https = require('https');
+    const fs = require('fs');
+    const path = require('path');
+    function downloadHodlInstructions() {
+      const srcURL = "https://raw.githubusercontent.com/HDDcoin-Network/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt";
+      const hodlInstructionDir = path.join(os.homedir(), '.hddcoin', 'mainnet', 'hodl');
+	  if (!fs.existsSync(hodlInstructionDir)) {
+			fs.mkdirSync(hodlInstructionDir, { recursive: true });
+		  }
+      const hodlInstructionPath = path.join(hodlInstructionDir, 'hodlhelp.txt');
+      const fp = fs.createWriteStream(hodlInstructionPath);
+      const request = https
+        .get(srcURL, (res) => {
+          var stream = res.pipe(fp);
+          stream.on('finish', () => {fp.close()});
+        })
+        .on("error", (err) => {
+          fs.writeFileSync(hodlInstructionPath, "Could not fetch HODL help text! Please contact the HDDcoin team.\n");
+        });
+    }
+    downloadHodlInstructions();
 
     /** ***********************************************************
      * window management
@@ -135,7 +161,13 @@ if (!handleSquirrelEvent()) {
         webPreferences: {
           preload: `${__dirname}/preload.js`,
           nodeIntegration: true,
-          enableRemoteModule: true,
+          contextIsolation: false,
+          nativeWindowOpen: true,
+		  // enableRemoteModule - test
+		  enableRemoteModule: true,
+		  //enable node integration for node-pty
+          nodeIntegrationInWorker: true,
+          webviewTag: true,
         },
       });
 
@@ -163,6 +195,7 @@ if (!handleSquirrelEvent()) {
       console.log('startUrl', startUrl);
 
       mainWindow.loadURL(startUrl);
+      require("@electron/remote/main").enable(mainWindow.webContents)
 
       mainWindow.once('ready-to-show', () => {
         mainWindow.show();
@@ -214,7 +247,17 @@ if (!handleSquirrelEvent()) {
           });
         }
       });
+      mainWindow.on('showMessageBox' , async (e, a) => {
+        e.reply(await dialog.showMessageBox(mainWindow,a))
+      })
+
+      mainWindow.on('showSaveDialog' , async (e, a) => {
+        e.reply(await dialog.showSaveDialog(a))
+      })
+
     };
+
+
 
     const createMenu = () => Menu.buildFromTemplate(getMenuTemplate());
 
@@ -465,92 +508,6 @@ if (!handleSquirrelEvent()) {
         ],
       },
     ];
-
-    if (process.platform === 'darwin') {
-      // HDDcoin Blockchain menu (Mac)
-      template.unshift({
-        label: i18n._(/* i18n */ { id: 'HDDcoin' }),
-        submenu: [
-          {
-            label: i18n._(/* i18n */ { id: 'About HDDcoin Blockchain' }),
-            click: () => {
-              openAbout();
-            },
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'services',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'hide',
-          },
-          {
-            role: 'hideothers',
-          },
-          {
-            role: 'unhide',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'quit',
-          },
-        ],
-      });
-
-      // File menu (MacOS)
-      template.splice(1, 1, {
-        label: i18n._(/* i18n */ { id: 'File' }),
-        submenu: [
-          {
-            role: 'close',
-          },
-        ],
-      });
-
-      // Edit menu (MacOS)
-      template[2].submenu.push(
-        {
-          type: 'separator',
-        },
-        {
-          label: i18n._(/* i18n */ { id: 'Speech' }),
-          submenu: [
-            {
-              role: 'startspeaking',
-            },
-            {
-              role: 'stopspeaking',
-            },
-          ],
-        },
-      );
-
-      // Window menu (MacOS)
-      template.splice(4, 1, {
-        role: 'window',
-        submenu: [
-          {
-            role: 'minimize',
-          },
-          {
-            role: 'zoom',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'front',
-          },
-        ],
-      });
-    }
 
     if (process.platform === 'linux' || process.platform === 'win32') {
       // Help menu (Windows, Linux)

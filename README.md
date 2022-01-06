@@ -1,10 +1,10 @@
 # hddcoin-blockchain 
 
-![Alt text](https://hddcoin.org/images/hdd_coin_logo_website_75.png)
+![Alt text](https://hddcoin.org/images/hddcoin_100.png)
 
-HDDcoin is an eco-friendly decentralization blockchain based on the Proof of Space and Time (PoST) consensus pioneered by HDDcoin™. It maintains network robustness, in line with Satoshi Nakamoto's principles.
+HDDcoin is an eco-friendly decentralization blockchain based on the Proof of Space and Time (PoST) consensus pioneered by Chia™. It maintains network robustness, in line with Satoshi Nakamoto's principles.
 
-HDDcoin uses the powerful and secure Chialisp language for Smart Contracts, and supports digital money, global payments and applications. HDDcoin is not affiliated with HDDcoin Network, Inc., but uses their open-sourced software as its foundation.
+HDDcoin uses the powerful and secure Chialisp language for Smart Contracts, and supports digital money, global payments and applications. HDDcoin is not affiliated with Chia Network, Inc., but uses their open-sourced software as its foundation.
 
 Farming HDDcoin does not consume significant amounts of electricity, and utilizes hard drive space, instead of specialized computing hardware that most Proof of Work (PoW) consensus blockchains have come to demand. Moreover, since electrical energy costs for running hard drives is very minimal, due to this low cost of entry, HDDcoin will remain more decentralized and fair, and thus more secure than any Proof of Stake cryptocurrency.
 
@@ -22,20 +22,27 @@ The goal of HDDcoin is to reshape the global financial system through the power 
 - Halving period for block rewards: 3 years
 
 **BLOCKCHAIN RESOURCES:**
-- Website: https://hddcoin.org/
+- Website: https://hddcoin.org
+- Online Store: https://store.hddcoin.org
 - Explorer: https://alltheblocks.net/hddcoin
-- Calculator: https://hddcoinforkscalculator.com/hddcoin
-- HDDcoin DB: https://hddcoin.org/downloads/blockchain_v1_mainnet.sqlite
+- White Paper: https://hddcoin.org/white-paper
+- Roadmap: https://hddcoin.org/roadmap
+- Calculator: https://chiaforkscalculator.com/hddcoin
+- HDDcoin DB: https://download.hddcoin.org/blockchain_v1_mainnet.sqlite
 
 **COMMUNITIES AND SOCIAL CHANNELS:**
 - Discord: https://discord.gg/AZdGSFnqAR
 - Twitter: https://twitter.com/hddcoin
-- YouTube: https://www.youtube.com/channel/UChJY3YEOTDBvFJ0vLFEc1Sw
 - Facebook: https://www.facebook.com/HDDcoinNetwork
-- Telegram: https://t.me/HDDcoin_Network
 - Reddit: https://www.reddit.com/r/HDDcoinNetwork
+- YouTube: https://www.youtube.com/channel/UChJY3YEOTDBvFJ0vLFEc1Sw
+- Telegram: https://t.me/HDDcoin_Network
 
 
+***********************************************
+# CO-FARMING WITH COMPATIBLE PLOTS?
+Please note that if you wish to co-farm with compatible plots made using the Client of another blockchain (like Chia™), or any other plotting tool like MadMax, because public keys are encoded in the plots, in order to utilize these plots for HDDcoin, you'll need to set the same mnemonic phrase (24 words) that you used for creating the plots. Learn more on our FAQ page -- https://hddcoin.org/faq.
+ 
 ***********************************************
 # INSTALL INSTRUCTIONS:
 
@@ -43,10 +50,10 @@ You can install HDDcoin by building from source, or by using the latest binaries
 
 (A.) To **install from available binaries**, download executables from the correct **Releases page**:
 
-   - for pool farming with FoxyPool (OG), get them here ->
-   https://github.com/felixbrucker/hddcoin-blockchain/releases
    - for solo farming, get them here ->
    https://github.com/HDDcoin-Network/hddcoin-blockchain/releases
+   - for pool farming with FoxyPool (OG), get them here ->
+   https://github.com/felixbrucker/hddcoin-blockchain/releases
 
 
 (B.) To **build from source**, do the following:
@@ -61,14 +68,15 @@ You can install HDDcoin by building from source, or by using the latest binaries
 
    sudo apt install git -y
 
-# Checkout the correct source (either for pool or solo farming)
+# Checkout the correct source (either for solo or pool farming)
+
+   ## for solo farming, use this source ## ->
+   git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
 
    ## for pool farming with FoxyPool (OG), use this source ## ->
    git clone https://github.com/felixbrucker/hddcoin-blockchain.git
 
-   ## for solo farming, use this source ## ->
-   git clone https://github.com/HDDcoin-Network/hddcoin-blockchain.git
-   
+  
 # Install the Blockchain
 
    cd hddcoin-blockchain
@@ -87,19 +95,6 @@ If the client does not find any connections automatically, you can add any of th
 
 - introducer.hddcoin.org / Port: 28444
 - dns-introducer.hddcoin.org / Port: 28444
-- node-1.hddcoin.org / Port: 28444 / United States
-- node-2.hddcoin.org / Port: 28444 / United States
-- node-3.hddcoin.org / Port: 28444 / Hong Kong, China
-- node-4.hddcoin.org / Port: 28444 / Munich, Germany
-- node-5.hddcoin.org / Port: 28444 / Singapore, Singapore
-- node-6.hddcoin.org / Port: 28444 / Bangalore, India
-- node-7.hddcoin.org / Port: 28444 / Amsterdam, Netherlands
-- node-8.hddcoin.org / Port: 28444 / United States
-- node-9.hddcoin.org / Port: 28444 / United States
-- node-10.hddcoin.org / Port: 28444 / United States
-- node-11.hddcoin.org / Port: 28444 / United States
-- node-12.hddcoin.org / Port: 28444 / United States
-
 
 ***********************************************
 # UPDATE/UPGRADE INSTRUCTIONS:

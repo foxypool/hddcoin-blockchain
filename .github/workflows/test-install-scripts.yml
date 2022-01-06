@@ -1,9 +1,11 @@
 name: Test Install Scripts
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main
+      #- main
+      - dev
     tags:
         - '**'
   pull_request:

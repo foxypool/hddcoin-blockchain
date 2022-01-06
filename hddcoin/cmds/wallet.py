@@ -1,7 +1,14 @@
+import decimal
 import sys
 from typing import Optional
 
 import click
+from click_params import DECIMAL  #type:ignore
+
+try:
+    from . import wingdbstub  # for local debugging
+except ImportError:
+    pass
 
 
 @click.group("wallet", short_help="Manage your wallet")
@@ -163,3 +170,58 @@ def delete_unconfirmed_transactions_cmd(wallet_rpc_port: Optional[int], id, fing
     from .wallet_funcs import execute_with_wallet, delete_unconfirmed_transactions
 
     asyncio.run(execute_with_wallet(wallet_rpc_port, fingerprint, extra_params, delete_unconfirmed_transactions))
+
+
+@wallet_cmd.command("defrag",
+                    short_help="Merge wallet coins so you can send larger amounts in a single transaction",
+                    help=("This command does a round of tidying on your wallet. Over time, wallets "
+                          "can become very fragmented and contain a lot of small value coins. "
+                          "Since a a single blockchain transaction is limited in the number of "
+                          "coins that can be spent at one time, this limits the size of a single "
+                          "wallet transaction (e.g. for `wallet send` or `hodl commit`). A defrag "
+                          "will merge many coins into one and increase the maximum transaction "
+                          "amount. Multiple runs always converges on a single wallet coin.\n\n"
+                          "NOTE: One drawback to a fully defragged/consolidated wallet is that "
+                          "you may be limited in the number of simultaneous transactions you can "
+                          "have 'in flight' and waiting for the blockchain result."))
+@click.option("-wp", "--wallet-rpc-port",
+              help=("Set the port where the Wallet is hosting the RPC interface. "
+                    "See the rpc_port under wallet in config.yaml"),
+              type=int,
+              default=None)
+@click.option("-f", "--fingerprint", type=int,
+              help="Set the fingerprint to specify which wallet to defrag")
+@click.option("-i", "--id", help="Id of the wallet to defrag",
+              type=int, default=1, show_default=True, required=True)
+@click.option("-m", "--fee", type=DECIMAL,
+              help="Set the fees for the transaction, in HDD",
+              default="0",
+              show_default=True,
+              required=False)
+@click.option("-t", "--address", type=str,
+              help="Address to send the defrag coin to. Default is the first wallet address.",
+              required=False)
+@click.option("-o", "--override",
+              help="Submits transaction without checking for unusual values",
+              is_flag=True,
+              default=False)
+@click.option("--no-confirm", is_flag=True, default=False,
+              help="do not ask to confirm defrag")
+def defrag(wallet_rpc_port: Optional[int],
+           fingerprint: int,
+           id: int,
+           fee: decimal.Decimal,
+           address: str,
+           override: bool,
+           no_confirm: bool,
+           ) -> None:
+    extra_params = dict(id = id,
+                        fee = fee,
+                        address = address,
+                        override = override,
+                        no_confirm = no_confirm,
+                        )
+    import asyncio
+    from .wallet_funcs import execute_with_wallet, defrag
+
+    asyncio.run(execute_with_wallet(wallet_rpc_port, fingerprint, extra_params, defrag))

@@ -10,6 +10,8 @@ import {
   Home as HomeIcon,
   Plot as PlotIcon,
   Pool as PoolIcon,
+  HODLterminal as HODLterminalIcon,
+  // HDDapps as HDDappsIcon,
   Settings as SettingsIcon,
 } from '@hddcoin/icons';
 import { Flex, SideBarItem } from '@hddcoin/core';
@@ -57,11 +59,25 @@ export default function DashboardSideBar() {
           icon={<FarmIcon fontSize="large" />}
           title={<Trans>Farm</Trans>}
         />
+		{/*
         <SideBarItem
           to="/dashboard/pool"
           icon={<PoolIcon fontSize="large" />}
           title={<Trans>Pool</Trans>}
         />
+		*/}
+        <SideBarItem
+          to="/dashboard/hodlterminal"
+          icon={<HODLterminalIcon fontSize="large" />}
+          title={<Trans>HODL</Trans>}
+        />
+		{/* 
+		<SideBarItem
+          to="/dashboard/hddapps"
+          icon={<HDDAppsIcon fontSize="large" />}
+          title={<Trans>HDD Apps</Trans>}
+        />
+		*/}				
         <SideBarItem
           to="/"
           icon={<KeysIcon fontSize="large" />}

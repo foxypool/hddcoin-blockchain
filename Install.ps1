@@ -6,7 +6,7 @@ if ([Environment]::Is64BitOperatingSystem -eq $false)
     Exit 1
 }
 
-if ((Get-Item "$env:windir\System32\msvcp140.dll").Exists -eq $false)
+if (-not (Get-Item -ErrorAction SilentlyContinue "$env:windir\System32\msvcp140.dll").Exists)
 {
     Write-Output "Unable to find Visual C++ Runtime DLLs"
     Write-Output ""
@@ -39,16 +39,21 @@ if ([version]$pythonVersion -lt [version]"3.7.0")
     Write-Output "Installation requires Python 3.7 or later"
     Exit 1
 }
+
+if ([version]$pythonVersion -ge [version]"3.10")
+{
+    Write-Output "Found Python version:" $pythonVersion
+    Write-Output "Python 3.10 is not supported yet. Please use python 3.8 or 3.9."
+    Exit 1
+}
+
 Write-Output "Python version is:" $pythonVersion
 
 py -m venv venv
-.\venv\Scripts\Activate.ps1
 
-py -m pip install pip --upgrade
-pip install --upgrade setuptools
-pip install --upgrade wheel
-pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
-pip install --editable . --extra-index-url https://pypi.chia.net/simple/
+venv\scripts\python -m pip install --upgrade pip setuptools wheel
+venv\scripts\pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
+venv\scripts\pip install --editable . --extra-index-url https://pypi.chia.net/simple/
 
 Write-Output ""
 Write-Output "HDDcoin blockchain .\Install.ps1 complete."
