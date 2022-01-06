@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project does not yet adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 for setuptools_scm/PEP 440 reasons.
 
-## 1.2.11 HDDcoin blockchain 2021-11-4
+## 1.2.11 HDDcoin blockchain 2022-01-06
+
+- Added HDDcoin HODL features. HDDcoin HODL offers coin holders the opportunity to earn rewards on HDD locked in a Contract for specific hold durations. Contracts are secured and managed 100% on-chain using a Smart Coin Contract coded in CLVM (the on-chain programming language used by HDDcoin).
+- Added Terminal features to the GUI to enable running HODL CLI commands directly through the GUI. Portions of this Terminal solution were incorporated from the SkyNet Project.
 
 Farmers rejoice: today's release integrates two plotters in broad use in the HDDcoin community: Bladebit, created by @harold-b, and Madmax, created by @madMAx43v3r. Both of these plotters bring significant improvements in plotting time. More plotting info [here](https://github.com/HDDcoin-Network/hddcoin-blockchain/wiki/Alternative--Plotters).
 This release also includes several important performance improvements as a result of last weekends "Dust Storm", with two goals in mind: make sure everyone can farm at all times, and improve how many transactions per second each node can accept, especially for low-end hardware. Please know that these optimizations are only the first wave in a series of many over the next few releases to help address this going forward. While the changes we have implemented in this update may not necessarily solve for _every_ possible congestion scenario, they should go a long way towards helping low-end systems perform closer to expectations if this happens again.
