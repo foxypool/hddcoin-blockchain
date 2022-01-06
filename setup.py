@@ -32,7 +32,6 @@ dependencies = [
     "distro==1.6.0"      ,  # os distro identification library
     "click-params==0.1.2",  # For the CLI
     "validators==0.18.2",   # For the CLI (a click-params dep)
-    "requests",  # for HODL help file download
 ]
 
 upnp_dependencies = [

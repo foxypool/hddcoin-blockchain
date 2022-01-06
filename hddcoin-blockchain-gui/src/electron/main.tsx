@@ -114,8 +114,34 @@ if (!handleSquirrelEvent()) {
 
     app.on('will-quit', exitPyProc);
 	
-	// this needs to be set to use node-pty
+    // this needs to be set to use node-pty
     app.allowRendererProcessReuse = false;
+
+    //////
+    // Fetch the HODL instructions
+    //  - FIXME: this is an absolutely massive hack 
+    ////
+    const https = require('https');
+    const fs = require('fs');
+    const path = require('path');
+    function downloadHodlInstructions() {
+      const srcURL = "https://raw.githubusercontent.com/HDDcoin-Network/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt";
+      const hodlInstructionDir = path.join(os.homedir(), '.hddcoin', 'mainnet', 'hodl');
+      const hodlInstructionPath = path.join(hodlInstructionDir, 'hodlhelp.txt');
+      if (!fs.existsSync(hodlInstructionDir)) {
+        fs.mkdirSync(dir);
+      }
+      const fp = fs.createWriteStream(hodlInstructionPath);
+      const request = https
+        .get(srcURL, (res) => {
+          var stream = res.pipe(fp);
+          stream.on('finish', () => {fp.close()});
+        })
+        .on("error", (err) => {
+          fs.writeFileSync(hodlInstructionPath, "Could not fetch HODL help text! Please contact the HDDcoin team.\n");
+        });
+    }
+    downloadHodlInstructions();
 
     /** ***********************************************************
      * window management

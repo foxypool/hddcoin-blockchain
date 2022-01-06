@@ -1404,30 +1404,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     ca_crt_path = root_path / config["private_ssl_ca"]["crt"]
     ca_key_path = root_path / config["private_ssl_ca"]["key"]
     sys.stdout.flush()
-    
-    
-    # ###########################################
-    # START download the hodlhelp.txt file into ~/.hddcoin/hodl
-    from os import path,\
-        mkdir
-    from requests import get
 
-    target_root = path.join(root_path, '../mainnet/hodl')
-
-    if not path.isdir(target_root):
-        mkdir(target_root)
-
-    try:
-        to_write = [line.strip()+'\n' for line in get('https://raw.githubusercontent.com/u4ma-hdd/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt').text.split('\n')]
-    except:
-        to_write = ['Could not connect to https://raw.githubusercontent.com/u4ma-hdd/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt. \n Please check your Internet connection.']
-
-    with open(path.join(target_root, 'hodlhelp.txt'), "w", encoding='utf-8') as f_out: f_out.\
-        writelines(to_write)
-    # END download the hodlhelp.txt file into ~/.hddcoin/hodl
-    # ###########################################
-    
-    
     json_msg = dict_to_json_str(
         {
             "message": "cert_path",
