@@ -128,7 +128,7 @@ if (!handleSquirrelEvent()) {
       const srcURL = "https://raw.githubusercontent.com/HDDcoin-Network/hddcoin-blockchain/main/hddcoin/hodl/hodlhelp.txt";
       const hodlInstructionDir = path.join(os.homedir(), '.hddcoin', 'mainnet', 'hodl');
 	  if (!fs.existsSync(hodlInstructionDir)) {
-			fs.mkdirSync(hodlInstructionDir);
+			fs.mkdirSync(hodlInstructionDir, { recursive: true });
 		  }
       const hodlInstructionPath = path.join(hodlInstructionDir, 'hodlhelp.txt');
       const fp = fs.createWriteStream(hodlInstructionPath);
