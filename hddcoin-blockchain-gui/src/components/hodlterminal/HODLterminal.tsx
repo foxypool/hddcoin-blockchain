@@ -61,6 +61,7 @@ const ptyProcess = pty.spawn(SHELL, [], {
 // Set path enviroment
 ptyProcess.write(ENV_HDDCOIN + '\r\n');
 ptyProcess.write('cd $home \r\n');
+ptyProcess.write('clear \r');
 ptyProcess.write('hddcoin hodl -h\r');
 
 // Write data from ptyProcess to terminal
