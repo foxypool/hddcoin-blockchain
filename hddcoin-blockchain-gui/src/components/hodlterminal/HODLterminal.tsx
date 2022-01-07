@@ -11,6 +11,8 @@ import path from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { Trans } from '@lingui/macro';
 import ScrollToBottom from 'react-scroll-to-bottom';
+const electron = require('electron');
+const clipboard = electron.clipboard;
 							
 const PY_MAC_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const PY_WIN_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
@@ -59,6 +61,7 @@ const ptyProcess = pty.spawn(SHELL, [], {
 // Set path enviroment
 ptyProcess.write(ENV_HDDCOIN + '\r\n');
 ptyProcess.write('cd $home \r\n');
+ptyProcess.write('clear \r');
 ptyProcess.write('hddcoin hodl -h\r');
 
 // Write data from ptyProcess to terminal
@@ -85,18 +88,15 @@ term.onKey(key => {
     ptyProcess.write('\x1b[D')
   } else if (char === "Delete" || char === "Insert" || char === "Home" || char === "End" || char === "PageUp" || char === "PageDown" || char === "Escape" || char === "F1" || char === "F2" || char === "F3" || char === "F4" || char === "F5" || char === "F6" || char === "F7" || char === "F8" || char === "F9" || char === "F10" || char === "F11" || char === "F12") {
     ptyProcess.write('')
-  } else if (term.hasSelection() && key.domEvent.ctrlKey && key.domEvent.key === "KeyC") {
-    document.execCommand('copy') 
-  } else if (key.domEvent.ctrlKey && key.domEvent.key === "KeyV") {
-    ptyProcess.write( clipboard.readText() )
+  } else if (term.hasSelection() && key.domEvent.ctrlKey && key.domEvent.key === "c") {
+    clipboard.writeText(term.getSelected())
+  } else if (key.domEvent.ctrlKey && key.domEvent.key === "v") {
+    term.focus();
+    ptyProcess.write(clipboard.readText())
   } else {
     ptyProcess.write(char);
   }
 });
-
-// Write text inside the terminal
-// term.write('Welcome to ' + c.green('HDDcoin') + ' HODL Terminal Console\r\n');
-// term.write('Daemon directory: ' + c.green(fullPath) + '\r\n');
 
 export default class HODLterminal extends React.Component {
   constructor(props) {
