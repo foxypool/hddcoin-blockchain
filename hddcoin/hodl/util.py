@@ -377,7 +377,7 @@ async def callCliCmdHandler(handler: th.Callable,
         else:
             vlog(1, "Prompting user for fingerprint (since none was specified)")
             print("Choose the wallet key/fingerprint you would like to use:")
-            for i, fp in enumerate(sorted(fingerprints), 1):
+            for i, fp in enumerate(fingerprints, 1):
                 print(f"  {i}: {fp}")
             print("Enter a number, or pick q to quit [q]: ", end = "")
             response = input("")
