@@ -5,23 +5,21 @@ import { useHistory } from 'react-router-dom';
 import { Flex } from '@hddcoin/core';
 import { Button, Grid, Typography, Link, Card, Divider } from '@material-ui/core';
 import { CardHero } from '@hddcoin/core';
-import { HDDappsHODLHero as HDDappsHODLHeroIcon } from '@hddcoin/icons';
+import { HDDappsUtilityHero as HDDappsUtilityHeroIcon } from '@hddcoin/icons';
 
-const StyledHDDappsIcon = styled(HDDappsHODLHeroIcon)`
+const StyledHDDappsIcon = styled(HDDappsUtilityHeroIcon)`
   font-size: 4rem;
 `;
 
-export default function HDDappsHODL() {
+export default function HDDappsUtility() {
   const history = useHistory();
 
-  function hddAppsLearnMore() {
-            window.open(
-              "https://hddcoin.org/hodl", "_blank");
-        }
+   function hddAppsOpenTerminal() {
+	history.push('/dashboard/hddapps/utilityterminal');
+  }
   
-   function hddAppsOpenHODLTerminal() {
-    history.push('/dashboard/hodlterminal/HODLterminal');
-    // history.push('/dashboard/hddapps/hodlterminal');
+   function hddAppsOpenLogs() {
+	history.push('/dashboard/hddapps/utilitylogs');
   }
   
   return (
@@ -34,7 +32,7 @@ export default function HDDappsHODL() {
 
           <Typography variant="h5">
             <Trans>
-              HDDcoin HODL Program
+              HDDcoin Utility Tools
             </Trans>
           </Typography>	
 
@@ -42,34 +40,28 @@ export default function HDDappsHODL() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-              HDDcoin HODL offers Coin Holders the opportunity to earn rewards on HDD locked in a Contract for specific durations. 
-              Contracts are secured and managed 100% on-chain using a Smart Coin Contract coded in CLVM (the on-chain programming language used by HDDcoin).  
-			  <Link
-                target="_blank"
-                href="https://hddcoin.org/hodl"
-              >
-                Learn more
-			  </Link>
+              Prefer to work in command line? Open a Terminal window with the HDDcoin executable conveniently loaded for your Opearting System. 
+			  Want to examine your HDDcoin Client log? Open a window within the Client with your recent logs loaded and updated in real time.  
 			</Trans>
 		  </Typography>
 		  
 		  <Flex gap={1}>
             <Button
-              onClick={hddAppsOpenHODLTerminal}
+              onClick={hddAppsOpenTerminal}
               variant="contained"
               color="primary"
               fullWidth
             >
-              <Trans>Open HODL Terminal</Trans>
+              <Trans>Open HDDcoin Terminal</Trans>
             </Button>
 			
             <Button
-              onClick={hddAppsLearnMore}
+              onClick={hddAppsOpenLogs}
               variant="outlined"
               color="primary"
               fullWidth
             >
-              <Trans>Learn about HODL</Trans>
+              <Trans>Open HDDcoin Logs</Trans>
             </Button>
           </Flex>
 		  
