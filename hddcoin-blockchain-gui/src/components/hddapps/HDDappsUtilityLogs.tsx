@@ -5,7 +5,8 @@ import { Paper, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import { existsSync, readFileSync } from 'fs';
 import { Trans } from '@lingui/macro';
-import ScrollToBottom from 'react-scroll-to-bottom';							
+import ScrollToBottom from 'react-scroll-to-bottom';
+						
 const HDDCOIN_LOG_PATH = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'] + '/.hddcoin/mainnet/log/debug.log';
 
 // HDDcoin Logs Stylying
@@ -30,6 +31,7 @@ const StyledScrollToBottom = styled(ScrollToBottom)`
   width: 100%;
   height: 100%;
 `;
+
 
 export default class HDDappsUtilityLogs extends React.Component {
  
@@ -76,7 +78,7 @@ export default class HDDappsUtilityLogs extends React.Component {
 			<DashboardTitle>
 				<Trans>HDDcoin Logs Utility</Trans>
 			</DashboardTitle>
-				
+			
 			<StyledPaper>
 				<StyledScrollToBottom debug={false}>
 					<pre>{this.state.hddcoinLog}</pre>

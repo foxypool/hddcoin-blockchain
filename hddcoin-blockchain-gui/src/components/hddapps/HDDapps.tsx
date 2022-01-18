@@ -4,16 +4,18 @@ import LayoutMain from '../layout/LayoutMain';
 import { Trans } from '@lingui/macro';
 import { Flex, Link } from '@hddcoin/core';
 import { Grid, Typography } from '@material-ui/core';
+
 import HDDappsHODL from './HDDappsHODL';
 import HDDappsOnlineStore from './HDDappsOnlineStore';
 import HDDappsNFTMarketPlace from './HDDappsNFTMarketPlace';
 import HDDappsExchangeTrading from './HDDappsExchangeTrading';
 import HDDappsUtility from './HDDappsUtility';
 import HDDappsApplications from './HDDappsApplications';
-
 import HDDappsHODLTerminal from './HDDappsHODLTerminal';
 import HDDappsUtilityTerminal from './HDDappsUtilityTerminal';
 import HDDappsUtilityLogs from './HDDappsUtilityLogs';
+import { HDDappsHeaderTarget } from './HDDappsHeader';
+import { HDDappsHeaderSource } from './HDDappsHeader';
 
 export default function HDDapps() {
 	
@@ -28,6 +30,7 @@ export default function HDDapps() {
           <Link to="/dashboard/hddapps" color="textPrimary">
             <Trans>HDDcoin Applications and Utilities</Trans>
           </Link>
+		  <HDDappsHeaderTarget />
         </>
       }
 	>	
@@ -43,27 +46,27 @@ export default function HDDapps() {
 				  <Grid container spacing={4} alignItems="stretch">
 				  
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsHODL />
+					  <HDDappsHODL headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsOnlineStore />
+					  <HDDappsOnlineStore headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsNFTMarketPlace />
+					  <HDDappsNFTMarketPlace headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsExchangeTrading />
+					  <HDDappsExchangeTrading headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsUtility />
+					  <HDDappsUtility headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 					<Grid item xs={12} sm={6} md={6}>
-					  <HDDappsApplications />
+					  <HDDappsApplications headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 				  </Grid>

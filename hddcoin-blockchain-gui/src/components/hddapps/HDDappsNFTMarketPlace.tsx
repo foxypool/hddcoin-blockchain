@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router-dom';
-import { Flex } from '@hddcoin/core';
-import { Button, Grid, Typography, Link, Divider } from '@material-ui/core';
-import { CardHero } from '@hddcoin/core';
+import { Flex, Link, CardHero } from '@hddcoin/core';
+import { Button, Grid, Typography, Divider } from '@material-ui/core';
+import useOpenExternal from '../../hooks/useOpenExternal';
 import { HDDappsNFTMarketPlaceHero as HDDappsNFTMarketPlaceHeroIcon } from '@hddcoin/icons';
 
 const StyledHDDappsIcon = styled(HDDappsNFTMarketPlaceHeroIcon)`
@@ -13,12 +13,12 @@ const StyledHDDappsIcon = styled(HDDappsNFTMarketPlaceHeroIcon)`
 
 export default function HDDappsNFTMarketPlace() {
   const history = useHistory();
+  const openExternal = useOpenExternal();
 
-  function hddAppsLearnMore() {
-            window.open(
-              "https://hddcoin.org/nft", "_blank");
+  function hddAppsURLbuttonClickNFT() {
+            openExternal('https://hddcoin.org/nft/');
         }
-
+  
   return (
     <Grid container>
       <Grid xs={12} md={12} lg={12} item>
@@ -36,12 +36,10 @@ export default function HDDappsNFTMarketPlace() {
 		  
           <Typography variant="body1">
             <Trans>
-              HDDcoin NFT Marketplace offers our community, artists and investors the opportunity to buy and sell unique 
-              digital assets from art, audio/music, videos and other digital files, to entire virtual worlds, 
-              while using the HDDcoin blockchain to record public proof of ownership.  
+			{'HDDcoin NFT Marketplace offers our community, artists and investors the opportunity to buy and sell unique digital assets from art, audio/music, videos and other digital files, to entire virtual worlds, while using the HDDcoin blockchain to record public proof of ownership. '} 
 			  <Link
                 target="_blank"
-                href="https://hddcoin.org/nft"
+                href="https://hddcoin.org/nft/"
               >
                 Learn more
 			 </Link>
@@ -50,7 +48,7 @@ export default function HDDappsNFTMarketPlace() {
 
 		  <Flex gap={1}>
             <Button
-              onClick={hddAppsLearnMore}
+              onClick={hddAppsURLbuttonClickNFT}
               variant="contained"
               color="primary"
               // fullWidth

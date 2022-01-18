@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router-dom';
-import { Flex } from '@hddcoin/core';
-import { Button, Grid, Typography, Link, Divider } from '@material-ui/core';
-import { CardHero } from '@hddcoin/core';
+import { Flex, Link, CardHero } from '@hddcoin/core';
+import { Button, Grid, Typography, Divider } from '@material-ui/core';
+import useOpenExternal from '../../hooks/useOpenExternal';
 import { HDDappsOnlineStoreHero as HDDappsOnlineStoreHeroIcon } from '@hddcoin/icons';
 
 const StyledHDDappsIcon = styled(HDDappsOnlineStoreHeroIcon)`
@@ -13,10 +13,10 @@ const StyledHDDappsIcon = styled(HDDappsOnlineStoreHeroIcon)`
 
 export default function HDDappsOnlineStore() {
   const history = useHistory();
-
-  function hddAppsLearnMore() {
-            window.open(
-              "https://store.hddcoin.org", "_blank");
+  const openExternal = useOpenExternal();  
+  
+  function hddAppsURLbuttonClickStore() {
+            openExternal('https://store.hddcoin.org/');
         }
 
   return (
@@ -36,12 +36,10 @@ export default function HDDappsOnlineStore() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-              All merch is currently ON SALE during our Grand Opening / Holiday promotion. 
-              Go grab your favorite items quickly while this offer lasts.
-              The default Store payment method is HDD. All the major Credit/Debit Cards and PayPal are also accepted.  
+			{'Many merch on the HDDcoin Online Store are currently ON SALE during our special promotion. Go grab your favorite items quickly while these offer lasts. The default Store payment method is HDD. All major Credit/Debit Cards and PayPal are also accepted. '}
 			  <Link
                 target="_blank"
-                href="https://store.hddcoin.org"
+                href="https://store.hddcoin.org/"
               >
                 Learn more
 			  </Link>
@@ -50,7 +48,7 @@ export default function HDDappsOnlineStore() {
 		  		  		  
 		  <Flex gap={1}>
             <Button
-              onClick={hddAppsLearnMore}
+              onClick={hddAppsURLbuttonClickStore}
               variant="contained"
               color="primary"
               //fullWidth

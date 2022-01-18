@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router-dom';
-import { Flex } from '@hddcoin/core';
-import { Button, Grid, Typography, Link, Card, Divider } from '@material-ui/core';
-import { CardHero } from '@hddcoin/core';
+import { Flex, CardHero } from '@hddcoin/core';
+import { Button, Grid, Typography, Divider } from '@material-ui/core';
 import { HDDappsUtilityHero as HDDappsUtilityHeroIcon } from '@hddcoin/icons';
 
 const StyledHDDappsIcon = styled(HDDappsUtilityHeroIcon)`
@@ -40,8 +39,7 @@ export default function HDDappsUtility() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-              Prefer to work in command line? Open a Terminal window with the HDDcoin executable conveniently loaded for your Opearting System. 
-			  Want to examine your HDDcoin Client log? Open a window within the Client with your recent logs loaded and updated in real time.  
+			{'Prefer to work in command line? Open a Terminal window with the HDDcoin executable conveniently loaded for your Opearting System. Want to examine your HDDcoin Client log? Open a window within the Client with your recent logs loaded and updated in real time. '}
 			</Trans>
 		  </Typography>
 		  

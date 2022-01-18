@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router-dom';
-import { Flex } from '@hddcoin/core';
-import { Button, Grid, Typography, Link, Divider } from '@material-ui/core';
-import { CardHero } from '@hddcoin/core';
+import { Flex, Link, CardHero } from '@hddcoin/core';
+import { Button, Grid, Typography, Divider } from '@material-ui/core';
+import useOpenExternal from '../../hooks/useOpenExternal';
 import { HDDappsApplicationsHero as HDDappsApplicationsHeroIcon } from '@hddcoin/icons';
 
 const StyledHDDappsIcon = styled(HDDappsApplicationsHeroIcon)`
@@ -13,17 +13,15 @@ const StyledHDDappsIcon = styled(HDDappsApplicationsHeroIcon)`
 
 export default function HDDappsApplications() {
   const history = useHistory();
+  const openExternal = useOpenExternal();
 
-  function hddAppsOpenExplorer() {
-            window.open(
-              "https://explorer.hddcoin.org", "_blank");
+  function hddAppsURLbuttonClickExplorer() {
+            openExternal('https://explorer.hddcoin.org/');
         }
 		
-  function hddAppsOpenRoadMap() {
-            window.open(
-              "https://hddcoin.org/roadmap", "_blank");
+  function hddAppsURLbuttonClickRoadmap() {
+            openExternal('https://hddcoin.org/roadmap/');
         }
-
 
   return (
     <Grid container>
@@ -42,11 +40,10 @@ export default function HDDappsApplications() {
 		  
           <Typography variant="body1">
             <Trans>              
-              Use the HDDcoin Blockchain Explorer to review activities on the blockchain. HDDcoin is working on other projects 
-			  including applications and games that will run on the HDDcoin blockchain. Check out our Road Map for more details.     
+			{'Use the HDDcoin Blockchain Explorer to review activities on the blockchain. HDDcoin is working on other projects including applications and games that will run on the HDDcoin blockchain. Check out our Road Map for more details. '}
 			  <Link
                 target="_blank"
-                href="https://hddcoin.org/roadmap"
+                href="https://hddcoin.org/roadmap/"
               >
                 Learn more
 			 </Link>
@@ -55,7 +52,7 @@ export default function HDDappsApplications() {
 		  	
 		  <Flex gap={1}>
             <Button
-              onClick={hddAppsOpenExplorer}
+              onClick={hddAppsURLbuttonClickExplorer}
               variant="contained"
               color="primary"
               fullWidth
@@ -64,7 +61,7 @@ export default function HDDappsApplications() {
             </Button>
 			
             <Button
-              onClick={hddAppsOpenRoadMap}
+              onClick={hddAppsURLbuttonClickRoadmap}
               variant="outlined"
               color="primary"
               fullWidth

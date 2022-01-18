@@ -11,16 +11,18 @@ import path from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { Trans } from '@lingui/macro';
 import ScrollToBottom from 'react-scroll-to-bottom';
+
 const electron = require('electron');
 const clipboard = electron.clipboard;
-							
+const pty = require('node-pty');	
+						
 const PY_MAC_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const PY_WIN_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const HODL_HELP_PATH = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'] + '/.hddcoin/mainnet/hodl/hodlhelp.txt';
 const fullPath = (existsSync((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER))) ? ((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER)) : path.join(__dirname, '../../../venv/bin');
 const ENV_HDDCOIN = ((process.platform === 'win32') ? '$env:Path += ";' : 'export PATH="$PATH:') + fullPath + '"';
 const SHELL = (process.platform === 'win32') ? 'powershell.exe' : 'bash';
-const pty = require('node-pty');
+
 
 // HODL Help / Instructions Stylying
 const StyledPaperContainer = styled(Paper)`
@@ -145,7 +147,7 @@ export default class HDDappsHODLTerminal extends React.Component {
         <DashboardTitle>
             <Trans>HDDcoin HODL and Apps Terminal</Trans>
         </DashboardTitle>    
-		
+
 			<div id="xterm" style={{ height: "55vh", width: "100%" }} />
 
 		<StyledPaperContainer>

@@ -9,16 +9,16 @@ import c from "ansi-colors";
 import path from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { Trans } from '@lingui/macro';
+
+const electron = require('electron');
+const clipboard = electron.clipboard;
+const pty = require('node-pty');
 							
 const PY_MAC_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const PY_WIN_DIST_FOLDER = '../../../app.asar.unpacked/daemon';
 const fullPath = (existsSync((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER))) ? ((process.platform === 'win32') ? path.join(__dirname, PY_WIN_DIST_FOLDER) : path.join(__dirname, PY_MAC_DIST_FOLDER)) : path.join(__dirname, '../../../venv/bin');
 const ENV_HDDCOIN = ((process.platform === 'win32') ? '$env:Path += ";' : 'export PATH="$PATH:') + fullPath + '"';
 const SHELL = (process.platform === 'win32') ? 'powershell.exe' : 'bash';
-
-const pty = require('node-pty');
-const electron = require('electron');
-const clipboard = electron.clipboard;
 
 const term = new Terminal({
   convertEol: true,
@@ -63,9 +63,9 @@ term.onKey(key => {
     ptyProcess.write('\x1b[D')
   } else if (char === "Delete" || char === "Insert" || char === "Home" || char === "End" || char === "PageUp" || char === "PageDown" || char === "Escape" || char === "F1" || char === "F2" || char === "F3" || char === "F4" || char === "F5" || char === "F6" || char === "F7" || char === "F8" || char === "F9" || char === "F10" || char === "F11" || char === "F12") {
     ptyProcess.write('')
-  } else if (term.hasSelection() && key.domEvent.ctrlKey && key.domEvent.key === "c") {
+  } else if (term.hasSelection() && (key.domEvent.ctrlKey || key.domEvent.CmdKey) && key.domEvent.key === "c") {
     clipboard.writeText(term.getSelected())
-  } else if (key.domEvent.ctrlKey && key.domEvent.key === "v") {
+  } else if ((key.domEvent.ctrlKey || key.domEvent.CmdKey) && key.domEvent.key === "v") {
     term.focus();
     ptyProcess.write(clipboard.readText())
   } else {
@@ -97,10 +97,10 @@ export default class HDDappsUtilityTerminal extends React.Component {
 	   <Grid xs={12} md={12} lg={12} item>
 	   
 		  <Flex flexDirection="column" flexGrow="1" alignItems="center">
-
+			
 			<DashboardTitle>
 				<Link to="/dashboard/hddapps/utilityterminal" color="textPrimary">
-					<Trans>HDDcoin HODL and Apps Terminal</Trans>
+					<Trans>HDDcoin Terminal Utility</Trans>
 				</Link>
 			</DashboardTitle>
 			

@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router-dom';
-import { Flex } from '@hddcoin/core';
-import { Button, Grid, Typography, Link, Card, Divider } from '@material-ui/core';
-import { CardHero } from '@hddcoin/core';
+import { Flex, Link, CardHero } from '@hddcoin/core';
+import { Button, Grid, Typography, Divider } from '@material-ui/core';
+import useOpenExternal from '../../hooks/useOpenExternal';
 import { HDDappsHODLHero as HDDappsHODLHeroIcon } from '@hddcoin/icons';
 
 const StyledHDDappsIcon = styled(HDDappsHODLHeroIcon)`
@@ -13,10 +13,10 @@ const StyledHDDappsIcon = styled(HDDappsHODLHeroIcon)`
 
 export default function HDDappsHODL() {
   const history = useHistory();
+  const openExternal = useOpenExternal();
 
-  function hddAppsLearnMore() {
-            window.open(
-              "https://hddcoin.org/hodl", "_blank");
+  function hddAppsURLbuttonClickHODL() {
+            openExternal('https://hddcoin.org/hodl');
         }
   
    function hddAppsOpenHODLTerminal() {
@@ -40,20 +40,22 @@ export default function HDDappsHODL() {
 
 		  <Divider />		  
 		  
-		  <Typography variant="body1">
+		  <Typography variant="body1">		
+			
 			<Trans>
-              HDDcoin HODL offers Coin Holders the opportunity to earn rewards on HDD locked in a Contract for specific durations. 
-              Contracts are secured and managed 100% on-chain using a Smart Coin Contract coded in CLVM (the on-chain programming language used by HDDcoin).  
+			  {'HDDcoin HODL offers Coin Holders the opportunity to earn rewards on HDD locked in a Contract for specific durations. Contracts are secured and managed 100% on-chain using a Smart Coin Contract coded in CLVM (the on-chain programming language used by HDDcoin). '}
 			  <Link
                 target="_blank"
-                href="https://hddcoin.org/hodl"
-              >
-                Learn more
+                href="https://hddcoin.org/hodl/"
+			  >
+				Learn more
 			  </Link>
 			</Trans>
+			
 		  </Typography>
 		  
 		  <Flex gap={1}>
+		  
             <Button
               onClick={hddAppsOpenHODLTerminal}
               variant="contained"
@@ -64,13 +66,14 @@ export default function HDDappsHODL() {
             </Button>
 			
             <Button
-              onClick={hddAppsLearnMore}
+              onClick={hddAppsURLbuttonClickHODL}
               variant="outlined"
               color="primary"
               fullWidth
             >
               <Trans>Learn about HODL</Trans>
             </Button>
+			
           </Flex>
 		  
         </CardHero>
