@@ -76,7 +76,20 @@ if [ "$(uname)" = "Linux" ]; then
 	elif type pacman && [ -f "/etc/arch-release" ]; then
 		# Arch Linux
 		echo "Installing on Arch Linux."
-		sudo pacman -S --needed python git
+		echo "Python <= 3.9.9 is required. Installing python-3.9.9-1"
+		case $(uname -m) in
+			x86_64)
+				sudo pacman -U --needed https://archive.archlinux.org/packages/p/python/python-3.9.9-1-x86_64.pkg.tar.zst
+				;;
+			aarch64)
+				sudo pacman -U --needed http://tardis.tiny-vps.com/aarm/packages/p/python/python-3.9.9-1-aarch64.pkg.tar.xz
+				;;
+			*)
+				echo "Incompatible CPU architecture. Must be x86_64 or aarch64."
+				exit 1
+				;;
+			esac
+		sudo pacman -S --needed git
 	elif type yum && [ ! -f "/etc/redhat-release" ] && [ ! -f "/etc/centos-release" ] && [ ! -f "/etc/fedora-release" ]; then
 		# AMZN 2
 		echo "Installing on Amazon Linux 2."
