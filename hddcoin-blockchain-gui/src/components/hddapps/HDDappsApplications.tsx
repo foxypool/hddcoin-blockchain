@@ -16,7 +16,7 @@ export default function HDDappsApplications() {
   const openExternal = useOpenExternal();
 
   function hddAppsURLbuttonClickExplorer() {
-            openExternal('https://explorer.hddcoin.org/');
+            openExternal('http://explorer.hddcoin.org/');
         }
 		
   function hddAppsURLbuttonClickRoadmap() {
