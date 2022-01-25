@@ -269,7 +269,7 @@ export default function Block() {
       value: (
         <Link
           target="_blank"
-          href={`https://www.hddcoinexplorer.com/blockchain/puzzlehash/${blockRecord.farmer_puzzle_hash}`}
+          href={`http://explorer.hddcoin.org/search/?query=${blockRecord.farmer_puzzle_hash}`}
         >
           {currencyCode
             ? toBech32m(
@@ -285,7 +285,7 @@ export default function Block() {
       value: (
         <Link
           target="_blank"
-          href={`https://www.hddcoinexplorer.com/blockchain/puzzlehash/${blockRecord.pool_puzzle_hash}`}
+          href={`http://explorer.hddcoin.org/search/?query=${blockRecord.pool_puzzle_hash}`}
         >
           {currencyCode
             ? toBech32m(

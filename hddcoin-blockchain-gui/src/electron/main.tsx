@@ -509,8 +509,9 @@ if (!handleSquirrelEvent()) {
       },
     ];
 
-    if (process.platform === 'linux' || process.platform === 'win32') {
+    {
       // Help menu (Windows, Linux)
+	  // Added MacOS temporarily 
       template[4].submenu.push(
         {
           type: 'separator',
