@@ -39,7 +39,7 @@ export default function HDDappsUtility() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-			{'Prefer to work in command line? Open a Terminal window with the HDDcoin executable conveniently loaded for your Opearting System. Want to examine your HDDcoin Client log? Open a window within the Client with your recent logs loaded and updated in real time. '}
+			{'Prefer to work in Command Line? Open a Terminal within the Client with the HDDcoin executable conveniently loaded for your Operating System. Want to examine your Client logs? Open a Window with your recent logs loaded and updated in real time.'}
 			</Trans>
 		  </Typography>
 		  
