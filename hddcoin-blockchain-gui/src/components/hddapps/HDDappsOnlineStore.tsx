@@ -36,7 +36,7 @@ export default function HDDappsOnlineStore() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-			{'Many merch on the HDDcoin Online Store are currently ON SALE during our special promotion. Go grab your favorite items quickly while these offer lasts. The default Store payment method is HDD. All major Credit/Debit Cards and PayPal are also accepted. '}
+			{'Many products on the HDDcoin Online Store are currently ON SALE during our special promotion. Go  grab your favorite items quickly while these offers last. The default Store payment method is HDD. PayPal and all major Credit/Debit Cards also accepted. '}
 			  <Link
                 target="_blank"
                 href="https://store.hddcoin.org/"

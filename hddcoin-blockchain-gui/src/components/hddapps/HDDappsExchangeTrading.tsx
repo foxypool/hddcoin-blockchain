@@ -40,7 +40,7 @@ export default function HDDappsExchangeTrading() {
 		  
           <Typography variant="body1">
             <Trans>              
-			{'The HDD/USDT pair is currently trading on XT.com, a top-20 Exchange with great reputation, trading volumes, and customer support. XT.com has over 2 million registered users, more than 200,000 active users monthly, and more than 7 million users in its ecosystem. '}
+			{'The HDD/USDT cryptocurrency pair is currently trading on XT.com, a top-20 Exchange with great reputation, trading volumes, and customer support. XT.com has over 2 million registered users, 200,000 active users monthly, and 7 million users in its ecosystem. '}
 			  <Link
                 target="_blank"
                 href="https://hddcoin.org/exchanges/"

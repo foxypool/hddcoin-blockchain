@@ -43,7 +43,7 @@ export default function HDDappsHODL() {
 		  <Typography variant="body1">		
 			
 			<Trans>
-			  {'HDDcoin HODL offers Coin Holders the opportunity to earn rewards on HDD locked in a Contract for specific durations. Contracts are secured and managed 100% on-chain using a Smart Coin Contract coded in CLVM (the on-chain programming language used by HDDcoin). '}
+			  {'HDDcoin HODL offers coin holders the opportunity to earn rewards on HDD locked in a contract for specific durations. Contracts are secured and managed 100% on-chain using a Smart Coin coded in CLVM (the on-chain programming language used by HDDcoin). '}
 			  <Link
                 target="_blank"
                 href="https://hddcoin.org/hodl/"

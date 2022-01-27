@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import LayoutMain from '../layout/LayoutMain';
 import { Trans } from '@lingui/macro';
-import { Flex, Link } from '@hddcoin/core';
+import { Flex } from '@hddcoin/core';
 import { Grid, Typography } from '@material-ui/core';
 
 import HDDappsHODL from './HDDappsHODL';
@@ -27,9 +27,7 @@ export default function HDDapps() {
 		
       title={
         <>
-          <Link to="/dashboard/hddapps" color="textPrimary">
-            <Trans>HDDcoin Applications and Utilities</Trans>
-          </Link>
+          <Trans>HDDcoin Applications and Utilities</Trans>
 		  <HDDappsHeaderTarget />
         </>
       }

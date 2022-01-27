@@ -39,7 +39,7 @@ export default function HDDappsUtility() {
 		  
 		  <Typography variant="body1">
 			<Trans>
-			{'Prefer to work in Command Line? Open a Terminal within the Client with the HDDcoin executable conveniently loaded for your Operating System. Want to examine your Client logs? Open a Window with your recent logs loaded and updated in real time.'}
+			{'The HDDcoin Terminal Utility opens directly in the GUI, enabling users to conveniently work in Command Line. The HDDcoin Client Logs Utility opens directly in the GUI, with the logs updated in real time. More HDDcoin Utility Tools are under development.'}
 			</Trans>
 		  </Typography>
 		  
@@ -50,7 +50,7 @@ export default function HDDappsUtility() {
               color="primary"
               fullWidth
             >
-              <Trans>Open HDDcoin Terminal</Trans>
+              <Trans>Open Terminal</Trans>
             </Button>
 			
             <Button
@@ -59,7 +59,7 @@ export default function HDDappsUtility() {
               color="primary"
               fullWidth
             >
-              <Trans>Open HDDcoin Logs</Trans>
+              <Trans>Open Client Logs</Trans>
             </Button>
           </Flex>
 		  

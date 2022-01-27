@@ -40,7 +40,7 @@ export default function HDDappsApplications() {
 		  
           <Typography variant="body1">
             <Trans>              
-			{'Use the HDDcoin Blockchain Explorer to review activities on the blockchain. HDDcoin is working on other projects including applications and games that will run on the HDDcoin blockchain. Check out our Road Map for more details. '}
+			{'The HDDcoin Blockchain Explorer displays all blocks and provides top coin holders, pre-farm tracking and more insights. HDDcoin is working on other applications, games and services that will run on the blockchain. Review our Road Map for more details. '}
 			  <Link
                 target="_blank"
                 href="https://hddcoin.org/roadmap/"

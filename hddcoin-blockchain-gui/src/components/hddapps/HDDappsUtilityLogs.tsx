@@ -60,7 +60,7 @@ export default class HDDappsUtilityLogs extends React.Component {
   componentDidMount() {
 	  
 	// Load HDDcoin Logs
-	let logCheckTimer = setInterval(() => this.checkHDDcoinLogFile(), 3000);
+	let logCheckTimer = setInterval(() => this.checkHDDcoinLogFile(), 5000);
 	this.checkHDDcoinLogFile();
     this.setState({logTimer: logCheckTimer});
   }

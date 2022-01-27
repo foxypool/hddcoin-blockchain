@@ -36,7 +36,7 @@ export default function HDDappsNFTMarketPlace() {
 		  
           <Typography variant="body1">
             <Trans>
-			{'HDDcoin NFT Marketplace offers our community, artists and investors the opportunity to buy and sell unique digital assets from art, audio/music, videos and other digital files, to entire virtual worlds, while using the HDDcoin blockchain to record public proof of ownership. '} 
+			{'The HDDcoin NFT Marketplace offers our community, artists and investors a platform to buy and sell unique digital assets secured and publicly verifiable on the blockchain. This includes art, audio/music, video, virtual worlds and other digital files. '} 
 			  <Link
                 target="_blank"
                 href="https://hddcoin.org/nft/"
