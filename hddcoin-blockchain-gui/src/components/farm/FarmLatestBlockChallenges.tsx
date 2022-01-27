@@ -65,7 +65,7 @@ export default function FarmLatestBlockChallenges() {
           *Want to explore HDDcoin’s blocks further? Check out{' '}
           <Link
             color="primary"
-            href="https://www.hddcoinexplorer.com/"
+            href="http://explorer.hddcoin.org/"
             target="_blank"
           >
             HDDcoin Explorer

@@ -450,13 +450,32 @@ if (!handleSquirrelEvent()) {
             type: 'separator',
           },
 		  {
-            label: i18n._(/* i18n */ { id: 'Visit HDDcoin Website' }),
+            label: i18n._(/* i18n */ { id: 'HDDcoin Website' }),
             click: () => {
               openExternal(
                 'https://hddcoin.org',
               );
             },
-          },
+          },		  
+		  {
+            label: i18n._(/* i18n */ { id: 'HDDcoin Blockchain Explorer' }),
+            click: () => {
+              openExternal(
+                'http://explorer.hddcoin.org',
+              );
+            },
+          },		  
+		  {
+            label: i18n._(/* i18n */ { id: 'HDDcoin Online Store' }),
+            click: () => {
+              openExternal(
+                'https://store.hddcoin.org',
+              );
+            },
+          },		  
+		  {
+            type: 'separator',
+          },		  
 		  {
             label: i18n._(/* i18n */ { id: 'Join our Discord Server' }),
             click: () => {
@@ -509,8 +528,9 @@ if (!handleSquirrelEvent()) {
       },
     ];
 
-    if (process.platform === 'linux' || process.platform === 'win32') {
+    {
       // Help menu (Windows, Linux)
+	  // Added MacOS temporarily 
       template[4].submenu.push(
         {
           type: 'separator',

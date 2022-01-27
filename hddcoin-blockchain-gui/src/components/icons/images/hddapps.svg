@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAFdSURBVFiF7Ze9SgNBFEbPjX8RC/cVLGxSaGy0FR9AbH0GG6219GV8A6sgFkI6QRALrW0kRAvBH/gssivDJFnd2QFXmANbzJ2Zw8fA7O41STSVWXdgZovADrDiz3m8AQ9AX9LztEV1fVacnJl1gWPgBbgDPktkC8AaMAMcSHqaEKy+TxJ5wB6wV4x/8wCHwPmUudq+orgLnFUR5fvmgStg26tH8bXyY10H7kuOfSKS3oE+0PWmoviKcO2qIochkHm1KL7iBg0AqyH0ieJr/bzk70jhQknhQinCCVgKdGSMrr9LFF8R7hpYrWoxszawme93ieJrAUjqActmtl/RdwI8Srpwi7F87l9JBzgF5oBL4KNEkgEbjI7/SNLAXxDD9x3OkW4BHcY/SS5D4Ba4kfRasq6Wbyxck/gXr5JGknqIYF/qIVIPMZnUQzSOFC6UFC6U1EOE+lIPEepLPUQoX0OZX+VCzuXgAAAAAElFTkSuQmCC" width="39" height="39" /></svg>
+<svg width="39" height="39" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <rect stroke-width="3" rx="4" id="svg_1" height="15" width="15" y="1.71969" x="1.74337" stroke="#2aa22a" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_2" height="15" width="15" y="1.65954" x="22.12985" stroke="#006600" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_3" height="15" width="15" y="22.25905" x="1.68024" stroke="#006600" fill="none"/>
+  <rect stroke-width="3" rx="4" id="svg_4" height="15" width="15" y="22.25905" x="22.23936" stroke="#2aa22a" fill="none"/>
+ </g>
+</svg>

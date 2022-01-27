@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import { Trans } from '@lingui/macro';
-import { Button, CardStep, Select, Flex, Loading } from '@hddcoin/core';
+import { Button, CardStep, Select, Flex, Loading, Link } from '@hddcoin/core';
 import {
   Box,
   Grid,
@@ -136,12 +136,13 @@ const PlotAddNFT = forwardRef((props: Props, ref) => {
         <>
           <Typography variant="subtitle1">
             <Trans> 
-			  HDDcoin supports pooling for OG plots. Pooling with NFT plots, 
-			  which were not created with the HDDcoin Client is not yet supported. 
-			  Please visit https://hddcoin/pooling/ to learn more, 
-			  to check out currently supported OG pools, and to find out when support for 
-			  NFT pooling with plots not created with the HDDcoin Client will become available.			  
+				{'HDDcoin supports pooling for OG plots. Pooling with NFT plots, which were not created with the HDDcoin Client is not yet supported. Please visit '}		 
+				<Link target="_blank" href="https://hddcoin/pooling/">
+					https://hddcoin/pooling/
+				</Link>            
+				{' to learn more, to check out currently supported OG pools, and to find out when support for NFT pooling with plots not created with the HDDcoin Client will become available.'}		  
             </Trans>
+            
           </Typography>
           {/*  // Hide Join Pool Button
           <Box>

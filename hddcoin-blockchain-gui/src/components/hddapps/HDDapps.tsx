@@ -1,52 +1,95 @@
 import React from 'react';
-import { Trans } from '@lingui/macro';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { Flex, Link } from '@hddcoin/core';
 import LayoutMain from '../layout/LayoutMain';
+import { Trans } from '@lingui/macro';
+import { Flex } from '@hddcoin/core';
+import { Grid, Typography } from '@material-ui/core';
+
 import HDDappsHODL from './HDDappsHODL';
-import HDDappsTerminal from './HDDappsTerminal';
-import DashboardTitle from '../dashboard/DashboardTitle';
-import { Paper } from '@material-ui/core';
-import path from 'path';
+import HDDappsOnlineStore from './HDDappsOnlineStore';
+import HDDappsNFTMarketPlace from './HDDappsNFTMarketPlace';
+import HDDappsExchangeTrading from './HDDappsExchangeTrading';
+import HDDappsUtility from './HDDappsUtility';
+import HDDappsApplications from './HDDappsApplications';
+import HDDappsHODLTerminal from './HDDappsHODLTerminal';
+import HDDappsUtilityTerminal from './HDDappsUtilityTerminal';
+import HDDappsUtilityLogs from './HDDappsUtilityLogs';
+import { HDDappsHeaderTarget } from './HDDappsHeader';
+import { HDDappsHeaderSource } from './HDDappsHeader';
 
 export default function HDDapps() {
+	
   const { path } = useRouteMatch();
 
   return (
-    <LayoutMain
+  
+    <LayoutMain 
+		
       title={
         <>
-          <Link to="/dashboard/hddapps" color="textPrimary">
-            <Trans>HDD Apps</Trans>
-          </Link>
+          <Trans>HDDcoin Applications and Utilities</Trans>
+		  <HDDappsHeaderTarget />
         </>
       }
-    >
+	>	
 	
-      <Flex flexDirection="column" gap={3}>
-	  
-        <Switch>
+		<>	
+		<Flex flexDirection="column" gap={1} alignItems="center">
 		
-		  <DashboardTitle>
-			<Trans>HDDcoin HODL Program</Trans>
-		  </DashboardTitle>
-		
-		  <Route path={path} exact>
-            <HDDappsHODL />
-          </Route>		 
-		  
-		  <DashboardTitle>
-			<Trans>HDDcoin Terminal</Trans>
-		  </DashboardTitle>
-			
-		  <Route path={path} exact>
-            <HDDappsTerminal />
-          </Route>
-		  
-        </Switch>
-		
-      </Flex>
-	  
+			<Switch>
+			  
+			  <Route path={path} exact>
+				<div>
+				
+				  <Grid container spacing={4} alignItems="stretch">
+				  
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsHODL headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsOnlineStore headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsNFTMarketPlace headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsExchangeTrading headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsUtility headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsApplications headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+				  </Grid>
+				  
+				</div>
+
+			  </Route>
+			  
+			  <Route path={`${path}/hodlterminal`} exact>
+				<HDDappsHODLTerminal />
+			  </Route>
+			  
+			  <Route path={`${path}/utilityterminal`} exact>
+				<HDDappsUtilityTerminal />
+			  </Route>
+			  
+			  <Route path={`${path}/utilitylogs`} exact>
+				<HDDappsUtilityLogs />
+			  </Route>
+			  
+			</Switch>
+
+		</Flex>	     
+		</> 
+	 
     </LayoutMain>
   );
 }
