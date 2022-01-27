@@ -122,7 +122,7 @@ kwargs = dict(
         "hddcoin.ssl": ["hddcoin_ca.crt", "hddcoin_ca.key", "dst_root_ca.pem"],
         "mozilla-ca": ["cacert.pem"],
     },
-    version="2.0.0",
+    version="2.0.1",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     zip_safe=False,
