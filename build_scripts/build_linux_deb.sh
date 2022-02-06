@@ -47,7 +47,7 @@ cd hddcoin-blockchain-gui || exit
 
 echo "npm build"
 npm install
-npm audit fix
+#npm audit fix
 ./node_modules/.bin/electron-rebuild -f -w node-pty
 npm run build
 LAST_EXIT_CODE=$?
