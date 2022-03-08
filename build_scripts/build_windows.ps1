@@ -121,7 +121,7 @@ Copy-Item "node_modules\node-pty\build\Release\winpty-agent.exe" -Destination "b
 Write-Output "   ---"
 Write-Output "Increase the stack for hddcoin command for (hddcoin plots create) chiapos limitations"
 # editbin.exe needs to be in the path
-# editbin.exe /STACK:8000000 daemon\hddcoin.exe
+editbin.exe /STACK:8000000 daemon\hddcoin.exe
 Write-Output "   ---"
 
 $packageVersion = "$env:HDDCOIN_INSTALLER_VERSION"
