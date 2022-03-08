@@ -50,9 +50,13 @@ function openAbout() {
   });
   aboutWindow.loadURL(`data:text/html;charset=utf-8,${about}`);
 
-  aboutWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url);
-    return { action: 'deny' }
+  aboutWindow.webContents.on('will-navigate', (e, url) => {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
+  aboutWindow.webContents.on('new-window', (e, url) => {
+    e.preventDefault();
+    shell.openExternal(url);
   });
 
   aboutWindow.once('closed', () => {

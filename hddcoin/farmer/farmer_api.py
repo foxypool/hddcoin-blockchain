@@ -474,6 +474,9 @@ class FarmerAPI:
 
         self.farmer.sps[new_signage_point.challenge_chain_sp].append(new_signage_point)
         self.farmer.cache_add_time[new_signage_point.challenge_chain_sp] = uint64(int(time.time()))
+        # track time between new signage points
+        timer_start = time.time()
+        self.farmer.last_sp_change = timer_start
         self.farmer.state_changed("new_signage_point", {"sp_hash": new_signage_point.challenge_chain_sp})
 
     @api_request
@@ -497,6 +500,8 @@ class FarmerAPI:
 
     @api_request
     async def farming_info(self, request: farmer_protocol.FarmingInfo):
+        timer_end = time.time()
+        time_elapsed = round((timer_end - self.farmer.last_sp_change), 2)
         self.farmer.state_changed(
             "new_farming_info",
             {
@@ -507,6 +512,7 @@ class FarmerAPI:
                     "proofs": request.proofs,
                     "total_plots": request.total_plots,
                     "timestamp": request.timestamp,
+                    "time_elapsed": time_elapsed,
                 }
             },
         )

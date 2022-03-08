@@ -14,6 +14,8 @@ import HDDappsApplications from './HDDappsApplications';
 import HDDappsHODLTerminal from './HDDappsHODLTerminal';
 import HDDappsUtilityTerminal from './HDDappsUtilityTerminal';
 import HDDappsUtilityLogs from './HDDappsUtilityLogs';
+import HDDappsThirdPartyHDDBet from './HDDappsThirdPartyHDDBet';
+import HDDappsThirdPartyOtherApps from './HDDappsThirdPartyOtherApps';
 import { HDDappsHeaderTarget } from './HDDappsHeader';
 import { HDDappsHeaderSource } from './HDDappsHeader';
 
@@ -65,6 +67,14 @@ export default function HDDapps() {
 					
 					<Grid item xs={12} sm={6} md={6}>
 					  <HDDappsApplications headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsThirdPartyHDDBet headerTag={HDDappsHeaderSource} />
+					</Grid>
+					
+					<Grid item xs={12} sm={6} md={6}>
+					  <HDDappsThirdPartyOtherApps headerTag={HDDappsHeaderSource} />
 					</Grid>
 					
 				  </Grid>

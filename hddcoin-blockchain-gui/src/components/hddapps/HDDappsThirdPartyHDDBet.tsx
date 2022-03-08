@@ -5,24 +5,20 @@ import { useHistory } from 'react-router-dom';
 import { Flex, Link, CardHero } from '@hddcoin/core';
 import { Button, Grid, Typography, Divider } from '@material-ui/core';
 import useOpenExternal from '../../hooks/useOpenExternal';
-import { HDDappsApplicationsHero as HDDappsApplicationsHeroIcon } from '@hddcoin/icons';
+import { HDDappsThirdPartyHDDBetHero as HDDappsThirdPartyHDDBetHeroIcon } from '@hddcoin/icons';
 
-const StyledHDDappsIcon = styled(HDDappsApplicationsHeroIcon)`
+const StyledHDDappsIcon = styled(HDDappsThirdPartyHDDBetHeroIcon)`
   font-size: 4rem;
 `;
 
-export default function HDDappsApplications() {
+export default function HDDappsThirdPartyHDDBet() {
   const history = useHistory();
   const openExternal = useOpenExternal();
 
-  function hddAppsURLbuttonClickExplorer() {
-            openExternal('https://explorer.hddcoin.org/');
+  function hddAppsURLbuttonClickHDDBet() {
+            openExternal('https://hddcoin.bet/');
         }
 		
-  function hddAppsURLbuttonClickRoadmap() {
-            openExternal('https://graphs.hddcoin.org/');
-        }
-
   return (
     <Grid container>
       <Grid xs={12} md={12} lg={12} item>
@@ -32,7 +28,7 @@ export default function HDDappsApplications() {
 		  
 		  <Typography variant="h5">
 		    <Trans>
-			  HDDcoin Explorer & Graphs
+			  Third Party App -- Bet
 			</Trans>
           </Typography>
 		  
@@ -40,34 +36,29 @@ export default function HDDappsApplications() {
 		  
           <Typography variant="body1">
             <Trans>              
-			{'HDDcoin Blockchain Explorer tracks chain transactions, our top coin holders and pre-farm. HDDcoin Blockchain Graphs charts our Netspace, Mempool, Price, ROI, Profitablilty, etc. More services and applications coming up. Review our Road Map for more details. '}
+			
+			{'"Bet on HDDcoins" is a betting service offered to the community by HDDcoin Bet. This is a non-affiliated, third-party application built on top of the HDDcoin Blockchain. Visit their website to learn about the Project or play for a chance to win the Jackpot. '}
+			
 			  <Link
                 target="_blank"
-                href="https://hddcoin.org/roadmap/"
+                href="https://hddcoin.bet/"
               >
                 Learn more
 			 </Link>
+					
             </Trans>
           </Typography>
 		  	
 		  <Flex gap={1}>
             <Button
-              onClick={hddAppsURLbuttonClickExplorer}
+              onClick={hddAppsURLbuttonClickHDDBet}
               variant="contained"
               color="primary"
-              fullWidth
+              //fullWidth
             >
-              <Trans>Open Explorer</Trans>
+              <Trans>Bet on HDDcoins</Trans>
             </Button>
 			
-            <Button
-              onClick={hddAppsURLbuttonClickRoadmap}
-              variant="outlined"
-              color="primary"
-              fullWidth
-            >
-              <Trans>Open Graphs</Trans>
-            </Button>
           </Flex>	  
 		  
         </CardHero>

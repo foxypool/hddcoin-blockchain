@@ -24,7 +24,8 @@ The goal of HDDcoin is to reshape the global financial system through the power 
 **BLOCKCHAIN RESOURCES:**
 - Website: https://hddcoin.org
 - Online Store: https://store.hddcoin.org
-- Explorer: https://alltheblocks.net/hddcoin
+- Explorer: https://explorer.hddcoin.org
+- Graphs: https://graphs.hddcoin.org
 - White Paper: https://hddcoin.org/white-paper
 - Roadmap: https://hddcoin.org/roadmap
 - Calculator: https://chiaforkscalculator.com/hddcoin

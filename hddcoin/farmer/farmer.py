@@ -115,6 +115,9 @@ class Farmer:
         # to periodically clear the memory
         self.cache_add_time: Dict[bytes32, uint64] = {}
 
+        # Time the last signage point changed
+        self.last_sp_change = 0
+
         # Interval to request plots from connected harvesters
         self.update_harvester_cache_interval = UPDATE_HARVESTER_CACHE_INTERVAL
 
