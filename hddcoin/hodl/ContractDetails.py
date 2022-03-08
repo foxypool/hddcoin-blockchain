@@ -86,7 +86,7 @@ class ContractDetails:
             sc = W  # better contrast in this view
         flavor = ""
         if self.status == "PAID":
-            flavor = f"{H}  ← WOOHOO!!{_}"
+            flavor = f"{H} <- WOOHOO!!{_}"
         daysRemaining = max(0, (self.timestamp_payout - time.time())) / 86400
         wait_time_days = f"{daysRemaining:.2f}"
         payout_date = datetime.datetime.fromtimestamp(self.timestamp_payout,

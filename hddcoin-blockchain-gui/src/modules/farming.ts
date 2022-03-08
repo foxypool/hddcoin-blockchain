@@ -102,7 +102,7 @@ export default function farmingReducer(
       if (command === 'new_farming_info') {
         const last_farming_info = [
           data.farming_info,
-          ...state.farmer.last_farming_info,
+          ...state.farmer.last_farming_info // .slice(0,200),
         ];
         return {
           ...state,
@@ -129,7 +129,9 @@ export default function farmingReducer(
       }
       if (command === 'new_signage_point') {
         const signage_point = data;
-
+        // const last_signage_point = state.farmer.signage_points[0]
+        // let cts = Date.now()
+        // const signage_point = {...data,timestamp:cts,interval: last_signage_point?cts-last_signage_point.timestamp:0};
         const signage_points = [signage_point, ...state.farmer.signage_points];
         return {
           ...state,

@@ -42,6 +42,10 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App() {
   const { value: darkMode } = useDarkMode();
+  if (isElectron()) {
+    const { nativeTheme } = window.require('@electron/remote');
+    nativeTheme.themeSource = darkMode ? 'dark' : 'light';
+  }
   const [locale] = useLocale(defaultLocale);
 
   const theme = useMemo(() => {

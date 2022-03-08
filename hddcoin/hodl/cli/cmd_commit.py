@@ -228,9 +228,9 @@ def _confirmContractRequest(fingerprint: int,
     start_s = time.monotonic()
 
     if commit_hdd > 1000:
-        flavor = f"{R}← WHALE ALERT!!! Woohoo! {Y}:D"
+        flavor = f"{R}<- WHALE ALERT!!! Woohoo! {Y}:D"
     elif commit_hdd > 100:
-        flavor = f"{W}← Niiiiice!"
+        flavor = f"{W}<- Niiiiice!"
     else:
         flavor = ""
 

@@ -12,6 +12,8 @@ export { default as HDDappsNFTMarketPlaceHero } from './HDDappsNFTMarketPlaceHer
 export { default as HDDappsExchangeTradingHero } from './HDDappsExchangeTradingHero';
 export { default as HDDappsUtilityHero } from './HDDappsUtilityHero';
 export { default as HDDappsApplicationsHero } from './HDDappsApplicationsHero';
+export { default as HDDappsThirdPartyHDDBetHero } from './HDDappsThirdPartyHDDBetHero';
+export { default as HDDappsThirdPartyOtherAppsHero } from './HDDappsThirdPartyOtherAppsHero';
 export { default as PlotHero } from './PlotHero';
 export { default as Settings } from './Settings';
 export { default as Status } from './Status';
